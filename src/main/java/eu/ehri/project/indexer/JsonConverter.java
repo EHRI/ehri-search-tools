@@ -1,6 +1,5 @@
 package eu.ehri.project.indexer;
 
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.jayway.jsonpath.InvalidPathException;
 import com.jayway.jsonpath.JsonPath;
@@ -9,8 +8,6 @@ import org.codehaus.jackson.JsonToken;
 import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
 
-import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -20,32 +17,15 @@ import java.util.*;
  */
 public class JsonConverter {
 
-    private static final String[] dateStrings = {
-            "lastUpdated"
-    };
+    /**
+     * Set of key -> JsonPath extractors
+     */
+    private static final Map<String,JsonPath> jsonPaths = Utils.loadPaths();
 
-    private static final Map<String,String> paths = ImmutableMap.<String,String>builder()
-        .put("id", "$.id")
-        .put("itemId", "$.id")
-        .put("type", "$.type")
-        .put("name", "$.data.name")
-        .put("typeOfEntity", "$.data.typeOfEntity")
-        .put("depthOfDescription", "$.data.depthOfDescription")
-        .put("levelOfDescription", "$.data.levelOfDescription")
-        .put("scope", "$.data.scope")
-        .put("publicationStatus", "$.data.publicationStatus")
-        .put("lastUpdated", "$.relationships.lifecycleEvent[0].data.timestamp")
-        .put("accessPoints", "$.relationships.relatesTo[*].data.name")
-        .put("parallelFormsOfName", "$.data.parallelFormsOfName[*]")
-        .put("otherFormsOfName", "$.data.otherFormsOfName[*]")
-        .put("identifier", "$.data.identifier")
-        .put("languageCode", "$.data.languageCode")
-        .put("repositoryId", "$.relationships.heldBy[0].id")
-        .put("repositoryName", "$.relationships.heldBy[0].relationships.describes[0].data.name")
-        .put("parentId",            "$.relationships.childOf[0].id")
-        .put("countryCode",         "$.relationships.hasCountry[0].id")
-        .put("holderName",          "$.relationships.heldBy[0].relationships.describes[0].data.name")
-    .build();
+    /**
+     * Keys which have types that require special handling.
+     */
+    private static final Map<String,List<String>> types = Utils.loadTypeKeys();
 
     /**
      * Get data for items where most of it resides in the description
@@ -74,12 +54,12 @@ public class JsonConverter {
     public static Map<String,Object> getData(JsonNode node) {
         Map<String, Object> data = Maps.newHashMap();
 
-        for (Map.Entry<String,String> attrPath : paths.entrySet()) {
+        for (Map.Entry<String,JsonPath> attrPath : jsonPaths.entrySet()) {
             String attr = attrPath.getKey();
-            String path = attrPath.getValue();
+            JsonPath path = attrPath.getValue();
 
             try {
-                data.put(attr, JsonPath.read(node.toString(), path));
+                data.put(attr, path.read(node.toString()));
             } catch (InvalidPathException e) {
             }
         }
@@ -88,7 +68,7 @@ public class JsonConverter {
         while (dataFields.hasNext()) {
             Map.Entry<String,JsonNode> field = dataFields.next();
             String key = field.getKey();
-            if (!paths.containsKey(key)) {
+            if (!jsonPaths.containsKey(key)) {
                 JsonToken value = field.getValue().asToken();
                 switch (value) {
                     case VALUE_STRING: data.put(key + "_s", field.getValue().asText()); break;
@@ -104,9 +84,12 @@ public class JsonConverter {
         }
 
         // Fix date format
-        for (String key : dateStrings) {
-            if (data.containsKey(key)) {
-                data.put(key, fixDates((String)data.get(key)));
+        List<String> dateKeys = types.get("date");
+        if (dateKeys != null) {
+            for (String key : dateKeys) {
+                if (data.containsKey(key)) {
+                    data.put(key, fixDates((String)data.get(key)));
+                }
             }
         }
 

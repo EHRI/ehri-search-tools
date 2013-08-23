@@ -70,27 +70,32 @@ public class Indexer {
         int items = 0;
 
         JsonGenerator generator = f.createJsonGenerator(pw);
-        generator.writeStartArray();
-        generator.writeRaw('\n');
+        try {
+            generator.writeStartArray();
+            generator.writeRaw('\n');
 
-        while (jp.nextToken() == JsonToken.START_OBJECT) {
+            while (jp.nextToken() == JsonToken.START_OBJECT) {
 
-            JsonNode node = mapper.readValue(jp, JsonNode.class);
+                JsonNode node = mapper.readValue(jp, JsonNode.class);
 
-            Iterator<JsonNode> elements = node.path("relationships").path("describes").getElements();
-            List<JsonNode> descriptions = Lists.newArrayList(elements);
+                Iterator<JsonNode> elements = node.path("relationships").path("describes").getElements();
+                List<JsonNode> descriptions = Lists.newArrayList(elements);
 
-            if (descriptions.size() > 0) {
-                for (JsonNode description : descriptions) {
-                    writer.writeValue(generator, JsonConverter.getDescribedData(description, node));
+                if (descriptions.size() > 0) {
+                    for (JsonNode description : descriptions) {
+                        writer.writeValue(generator, JsonConverter.getDescribedData(description, node));
+                        generator.writeRaw('\n');
+                    }
+                } else {
+                    writer.writeValue(generator, JsonConverter.getData(node));
                     generator.writeRaw('\n');
                 }
-            } else {
-                writer.writeValue(generator, JsonConverter.getData(node));
-                generator.writeRaw('\n');
             }
+            generator.writeEndArray();
+        } finally {
+            generator.flush();
+            generator.close();
         }
-        generator.writeEndArray();
         pw.flush();
         //System.out.println("DONE");
         pw.close();
@@ -170,7 +175,7 @@ public class Indexer {
     public static void main(String[] args) throws IOException {
 
         for (String type :  args) {
-            printType(type);
+            indexType(type);
         }
     }
 }
