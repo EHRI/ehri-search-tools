@@ -15,10 +15,10 @@ import java.util.*;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)
+ *
+ * Convert from EHRI graph JSON to Solr documents.
  */
 public class JsonConverter {
-
-    private static SimpleDateFormat out = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
 
     private static final String[] dateStrings = {
             "lastUpdated"
