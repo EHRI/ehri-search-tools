@@ -4,18 +4,13 @@ import com.google.common.collect.Lists;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.JsonToken;
+import org.codehaus.jackson.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -55,6 +50,55 @@ public class Indexer {
             throw new RuntimeException(e);
         }
     }
+
+    public static void printType(String type) throws IOException{
+
+        PrintWriter pw = new PrintWriter(System.out, true);
+
+        WebResource fetchResource = client.resource("http://localhost:7474/ehri/" + type + "/list?limit=100000");
+
+        ClientResponse response = fetchResource.accept(MediaType.APPLICATION_JSON)
+                .type(MediaType.APPLICATION_JSON)
+                .get(ClientResponse.class);
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(response.getEntityInputStream()));
+
+        JsonFactory f = new JsonFactory();
+        JsonParser jp = f.createJsonParser(br);
+
+        jp.nextToken();
+        int items = 0;
+
+        JsonGenerator generator = f.createJsonGenerator(pw);
+        generator.writeStartArray();
+        generator.writeRaw('\n');
+
+        while (jp.nextToken() == JsonToken.START_OBJECT) {
+
+            JsonNode node = mapper.readValue(jp, JsonNode.class);
+
+            Iterator<JsonNode> elements = node.path("relationships").path("describes").getElements();
+            List<JsonNode> descriptions = Lists.newArrayList(elements);
+
+            if (descriptions.size() > 0) {
+                for (JsonNode description : descriptions) {
+                    writer.writeValue(generator, JsonConverter.getDescribedData(description, node));
+                    generator.writeRaw('\n');
+                }
+            } else {
+                writer.writeValue(generator, JsonConverter.getData(node));
+                generator.writeRaw('\n');
+            }
+        }
+        generator.writeEndArray();
+        pw.flush();
+        //System.out.println("DONE");
+        pw.close();
+        jp.close();
+        response.close();
+    }
+
+
 
     public static void indexType(String type) throws IOException{
 
@@ -126,7 +170,7 @@ public class Indexer {
     public static void main(String[] args) throws IOException {
 
         for (String type :  args) {
-            indexType(type);
+            printType(type);
         }
     }
 }
