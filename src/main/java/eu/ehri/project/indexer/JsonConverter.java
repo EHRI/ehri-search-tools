@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * Convert from EHRI graph JSON to Solr documents.
  */
-public class JsonConverter {
+class JsonConverter {
 
     /**
      * Set of key -> JsonPath extractors

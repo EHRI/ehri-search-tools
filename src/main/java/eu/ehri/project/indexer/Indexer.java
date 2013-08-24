@@ -11,6 +11,7 @@ import org.codehaus.jackson.map.ObjectWriter;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
 import java.io.*;
 import java.util.Iterator;
 import java.util.List;
@@ -20,9 +21,13 @@ import java.util.List;
  */
 public class Indexer {
 
-    // TODO: Move to external configuration
-    public static final String SOLR_URL = "http://localhost:8983/solr/portal";
-    public static final String EHRI_URL = "http://localhost:7474/ehri";
+    /**
+     * Default service end points.
+     *
+     * TODO: Store these in a properties file?
+     */
+    public static final String DEFAULT_SOLR_URL = "http://localhost:8983/solr/portal";
+    public static final String DEFAULT_EHRI_URL = "http://localhost:7474/ehri";
 
     // JSON mapper and writer
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -30,6 +35,45 @@ public class Indexer {
 
     // Reusable Jersey client
     private static final Client client = Client.create();
+
+    /**
+     * Fields.
+     */
+    private final String solrUrl;
+    private final String ehriUrl;
+
+    /**
+     * Builder for an Indexer. More options to come.
+     */
+    public static class Builder {
+        private String solrUrl = DEFAULT_SOLR_URL;
+        private String ehriUrl = DEFAULT_EHRI_URL;
+
+        public String getSolrUrl() {
+            return solrUrl;
+        }
+
+        public void setSolrUrl(String solrUrl) {
+            this.solrUrl = solrUrl;
+        }
+
+        public String getEhriUrl() {
+            return ehriUrl;
+        }
+
+        public void setEhriUrl(String ehriUrl) {
+            this.ehriUrl = ehriUrl;
+        }
+
+        public Indexer build() {
+            return new Indexer(this);
+        }
+    }
+
+    private Indexer(Builder builder) {
+        this.solrUrl = builder.getSolrUrl();
+        this.ehriUrl = builder.getEhriUrl();
+    }
 
     /**
      * A class for holding interesting stats.
@@ -41,9 +85,12 @@ public class Indexer {
     /**
      * Commit the Solr updates.
      */
-    public static void commit() {
-        WebResource commitResource = client.resource(SOLR_URL + "/update?commit=true&optimize=true");
+    public void commit() {
+        WebResource commitResource = client.resource(
+                UriBuilder.fromPath(solrUrl).segment("update").build());
         ClientResponse response = commitResource
+                .queryParam("commit", "true")
+                .queryParam("optimize", "true")
                 .type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class);
         if (Response.Status.OK.getStatusCode() != response.getStatus()) {
@@ -57,9 +104,11 @@ public class Indexer {
      * @param ios      The input stream containing update JSON
      * @param doCommit Whether or not to commit the update
      */
-    public static void doIndex(InputStream ios, boolean doCommit) {
-        WebResource resource = client.resource(SOLR_URL + "/update?commit=" + doCommit);
+    public void doIndex(InputStream ios, boolean doCommit) {
+        WebResource resource = client.resource(
+                UriBuilder.fromPath(solrUrl).segment("update").build());
         ClientResponse response = resource
+                .queryParam("commit", String.valueOf(doCommit))
                 .type(MediaType.APPLICATION_JSON)
                 .entity(ios)
                 .post(ClientResponse.class);
@@ -76,41 +125,53 @@ public class Indexer {
      * @param stats A Stats object for storing metrics
      * @throws IOException
      */
-    public static void convertType(String type, OutputStream out, Stats stats) throws IOException {
+    private void convertType(String type, OutputStream out, Stats stats) throws IOException {
 
-        WebResource fetchResource = client.resource(EHRI_URL + "/" + type + "/list?limit=100000");
+        WebResource resource = client.resource(
+            UriBuilder.fromPath(ehriUrl).segment(type).segment("list").build());
 
-        ClientResponse response = fetchResource.accept(MediaType.APPLICATION_JSON)
+        ClientResponse response = resource
+                .queryParam("limit", "100000") // Ugly, but there's a default limit
+                .accept(MediaType.APPLICATION_JSON)
                 .type(MediaType.APPLICATION_JSON)
                 .get(ClientResponse.class);
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(response.getEntityInputStream()));
-
-        JsonFactory f = new JsonFactory();
-        JsonParser jp = f.createJsonParser(br);
-
         try {
-            jp.nextToken();
+            if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+                throw new RuntimeException("Unexpected response from EHRI REST: " + response.getStatus());
+            }
 
-            JsonGenerator generator = f.createJsonGenerator(out);
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(response.getEntityInputStream()));
+
+            JsonFactory f = new JsonFactory();
+            JsonParser jp = f.createJsonParser(br);
+
             try {
-                generator.writeStartArray();
-                generator.writeRaw('\n');
-                while (jp.nextToken() == JsonToken.START_OBJECT) {
-                    JsonNode node = mapper.readValue(jp, JsonNode.class);
-                    convertItem(node, generator);
-                    stats.itemCount++;
+                jp.nextToken();
+
+                JsonGenerator generator = f.createJsonGenerator(out);
+                try {
+                    generator.writeStartArray();
+                    generator.writeRaw('\n');
+                    while (jp.nextToken() == JsonToken.START_OBJECT) {
+                        JsonNode node = mapper.readValue(jp, JsonNode.class);
+                        convertItem(node, generator);
+                        stats.itemCount++;
+                    }
+                    generator.writeEndArray();
+                    generator.writeRaw('\n');
+                } finally {
+                    generator.flush();
+                    generator.close();
                 }
-                generator.writeEndArray();
-                generator.writeRaw('\n');
             } finally {
-                generator.flush();
-                generator.close();
+                jp.close();
+                br.close();
             }
         } finally {
-            jp.close();
+            response.close();
         }
-        response.close();
     }
 
     /**
@@ -121,7 +182,7 @@ public class Indexer {
      *                  the converted data
      * @throws IOException
      */
-    private static void convertItem(JsonNode node, JsonGenerator generator) throws IOException {
+    private void convertItem(JsonNode node, JsonGenerator generator) throws IOException {
         Iterator<JsonNode> elements = node.path("relationships").path("describes").getElements();
         List<JsonNode> descriptions = Lists.newArrayList(elements);
 
@@ -143,7 +204,7 @@ public class Indexer {
      * @param type The type of item to index
      * @throws IOException
      */
-    public static void indexType(String type) throws IOException {
+    public void indexType(String type) throws IOException {
 
         System.out.println("Indexing: " + type);
         long startTime = System.nanoTime();
@@ -185,7 +246,7 @@ public class Indexer {
      * @param types An array of type strings
      * @throws IOException
      */
-    public static void print(String[] types) throws IOException {
+    public void print(String[] types) throws IOException {
         OutputStream pw = new PrintStream(System.out);
         try {
             for (String type : types) {
@@ -202,7 +263,7 @@ public class Indexer {
      * @param types An array of type strings
      * @throws IOException
      */
-    public static void index(String[] types) throws IOException {
+    public void index(String[] types) throws IOException {
         for (String type : types) {
             indexType(type);
         }
@@ -214,13 +275,26 @@ public class Indexer {
         Options options = new Options();
         options.addOption("p", "print", false,
                 "Print converted JSON instead of indexing");
+        options.addOption("s", "solr", true,
+                "Base URL for Solr service (minus the action segment)");
+        options.addOption("e", "ehri", true,
+                "Base URL for EHRI REST service");
         CommandLineParser parser = new PosixParser();
         CommandLine cmd = parser.parse( options, args);
 
+        Indexer.Builder builder = new Indexer.Builder();
+        if (cmd.hasOption("solr")) {
+            builder.setSolrUrl(cmd.getOptionValue("solr"));
+        }
+        if (cmd.hasOption("ehri")) {
+            builder.setEhriUrl(cmd.getOptionValue("ehri"));
+        }
+        Indexer indexer = builder.build();
+
         if (cmd.hasOption("print")) {
-            print(cmd.getArgs());
+            indexer.print(cmd.getArgs());
         } else {
-            index(cmd.getArgs());
+            indexer.index(cmd.getArgs());
         }
     }
 }

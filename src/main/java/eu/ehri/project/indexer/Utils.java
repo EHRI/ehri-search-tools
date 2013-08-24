@@ -14,7 +14,7 @@ import java.util.Properties;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class Utils {
+class Utils {
 
     public static Map<String,JsonPath> loadPaths() {
         Properties pathProperties = loadProperties("paths.properties");
