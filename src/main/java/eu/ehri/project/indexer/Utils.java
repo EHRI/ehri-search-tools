@@ -17,34 +17,18 @@ import java.util.Properties;
 public class Utils {
 
     public static Map<String,JsonPath> loadPaths() {
-        Properties pathProperties = new Properties();
-        InputStream pathIs = Utils.class.getClassLoader().getResourceAsStream("paths.properties");
-        if (pathIs == null)
-            throw new RuntimeException("Cannot load paths.properties resource");
-        try {
-            pathProperties.load(pathIs);
-        } catch (IOException e) {
-            throw new RuntimeException("Invalid paths.properties file", e);
-        }
-
-
+        Properties pathProperties = loadProperties("paths.properties");
         ImmutableMap.Builder<String, JsonPath> pathBuilder = ImmutableMap.builder();
         for (String pathKey : pathProperties.stringPropertyNames()) {
+            // NB: Paths given in the properties file do not include the
+            // leading '$.' JsonPath expects, so we add that.
             pathBuilder.put(pathKey, JsonPath.compile("$." + pathProperties.getProperty(pathKey)));
         }
         return pathBuilder.build();
     }
 
     public static Map<String,List<String>> loadTypeKeys() {
-        Properties typeProperties = new Properties();
-        InputStream typeIs = Utils.class.getClassLoader().getResourceAsStream("types.properties");
-        if (typeIs == null)
-            throw new RuntimeException("Cannot load types.properties resource");
-        try {
-            typeProperties.load(typeIs);
-        } catch (IOException e) {
-            throw new RuntimeException("Invalid types.properties file", e);
-        }
+        Properties typeProperties = loadProperties("types.properties");
         ImmutableMap.Builder<String, List<String>> typeBuilder = ImmutableMap.builder();
         Splitter splitter = Splitter.on(",");
         for (String typeKey : typeProperties.stringPropertyNames()) {
@@ -53,5 +37,18 @@ public class Utils {
             typeBuilder.put(typeKey, Lists.newArrayList(keys));
         }
         return typeBuilder.build();
+    }
+
+    public static Properties loadProperties(String resourceName) {
+        Properties properties = new Properties();
+        InputStream pathIs = Utils.class.getClassLoader().getResourceAsStream(resourceName);
+        if (pathIs == null)
+            throw new RuntimeException("Cannot load resource: " + resourceName);
+        try {
+            properties.load(pathIs);
+        } catch (IOException e) {
+            throw new RuntimeException("Invalid properties file: " + resourceName, e);
+        }
+        return properties;
     }
 }

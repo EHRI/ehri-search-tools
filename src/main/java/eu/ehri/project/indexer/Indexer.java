@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import org.apache.commons.cli.*;
 import org.codehaus.jackson.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
@@ -19,17 +20,29 @@ import java.util.List;
  */
 public class Indexer {
 
-    private static ObjectMapper mapper = new ObjectMapper();
-    private static ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
-    private static Client client = Client.create();
+    // TODO: Move to external configuration
+    public static final String SOLR_URL = "http://localhost:8983/solr/portal";
+    public static final String EHRI_URL = "http://localhost:7474/ehri";
 
+    // JSON mapper and writer
+    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
+
+    // Reusable Jersey client
+    private static final Client client = Client.create();
+
+    /**
+     * A class for holding interesting stats.
+     */
     private static class Stats {
         public int itemCount = 0;
     }
 
+    /**
+     * Commit the Solr updates.
+     */
     public static void commit() {
-        WebResource commitResource = client.resource
-                ("http://localhost:8983/solr/portal/update?commit=true&optimize=true");
+        WebResource commitResource = client.resource(SOLR_URL + "/update?commit=true&optimize=true");
         ClientResponse response = commitResource
                 .type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class);
@@ -38,9 +51,14 @@ public class Indexer {
         }
     }
 
+    /**
+     * Index some JSON data.
+     *
+     * @param ios      The input stream containing update JSON
+     * @param doCommit Whether or not to commit the update
+     */
     public static void doIndex(InputStream ios, boolean doCommit) {
-        WebResource resource = client.resource
-                ("http://localhost:8983/solr/portal/update?commit=" + doCommit);
+        WebResource resource = client.resource(SOLR_URL + "/update?commit=" + doCommit);
         ClientResponse response = resource
                 .type(MediaType.APPLICATION_JSON)
                 .entity(ios)
@@ -50,9 +68,17 @@ public class Indexer {
         }
     }
 
-    public static void printType(String type, OutputStream out, Stats stats) throws IOException{
+    /**
+     * Write converted JSON data to an output stream.
+     *
+     * @param type  The type of item to reindex
+     * @param out   The output stream for converted JSON
+     * @param stats A Stats object for storing metrics
+     * @throws IOException
+     */
+    public static void convertType(String type, OutputStream out, Stats stats) throws IOException {
 
-        WebResource fetchResource = client.resource("http://localhost:7474/ehri/" + type + "/list?limit=100000");
+        WebResource fetchResource = client.resource(EHRI_URL + "/" + type + "/list?limit=100000");
 
         ClientResponse response = fetchResource.accept(MediaType.APPLICATION_JSON)
                 .type(MediaType.APPLICATION_JSON)
@@ -89,8 +115,10 @@ public class Indexer {
 
     /**
      * Convert a individual item from the stream and write the results.
-     * @param node
-     * @param generator
+     *
+     * @param node      A JSON node representing a single item
+     * @param generator The JSON generator with which to write
+     *                  the converted data
      * @throws IOException
      */
     private static void convertItem(JsonNode node, JsonGenerator generator) throws IOException {
@@ -111,64 +139,88 @@ public class Indexer {
 
     /**
      * Index a specific entity type.
-     * @param type
-     * @param temp
+     *
+     * @param type The type of item to index
      * @throws IOException
      */
-    public static void indexType(String type, File temp) throws IOException{
+    public static void indexType(String type) throws IOException {
 
         System.out.println("Indexing: " + type);
         long startTime = System.nanoTime();
         Stats stats = new Stats();
 
-        // Write the converted JSON to the temp file...
-        OutputStream out = new FileOutputStream(temp);
+        File tempFile = File.createTempFile(type, "json");
         try {
-            printType(type, out, stats);
+            // Write the converted JSON to the tempFile file...
+            OutputStream out = new FileOutputStream(tempFile);
+            try {
+                convertType(type, out, stats);
+            } finally {
+                out.close();
+            }
+
+            // Load the tempFile file as an input stream and index it...
+            InputStream ios = new FileInputStream(tempFile);
+            try {
+                doIndex(ios, false);
+            } finally {
+                ios.close();
+            }
         } finally {
-             out.close();
+            tempFile.delete();
         }
 
-        // Load the temp file as an input stream and index it...
-        InputStream ios = new FileInputStream(temp);
-        try {
-            doIndex(ios, false);
-        } finally {
-            ios.close();
-        }
 
         long endTime = System.nanoTime();
-        double duration = ((double)(endTime - startTime)) / 1000000000.0;
+        double duration = ((double) (endTime - startTime)) / 1000000000.0;
 
         System.out.println("Indexing completed in " + duration);
         System.out.println("Items indexed: " + stats.itemCount);
         System.out.println("Items per second: " + (stats.itemCount / duration));
     }
 
+    /**
+     * Print converted data to StdOut.
+     *
+     * @param types An array of type strings
+     * @throws IOException
+     */
     public static void print(String[] types) throws IOException {
         OutputStream pw = new PrintStream(System.out);
         try {
-            for (String type :  types) {
-                printType(type, pw, new Stats());
+            for (String type : types) {
+                convertType(type, pw, new Stats());
             }
         } finally {
             pw.close();
         }
     }
 
+    /**
+     * Index a set of content types.
+     *
+     * @param types An array of type strings
+     * @throws IOException
+     */
     public static void index(String[] types) throws IOException {
-        for (String type :  types) {
-            File temp = File.createTempFile(type, "json");
-            try {
-                indexType(type, temp);
-            } finally {
-                temp.delete();
-            }
+        for (String type : types) {
+            indexType(type);
         }
         commit();
     }
 
-    public static void main(String[] args) throws IOException {
-        index(args);
+    public static void main(String[] args) throws IOException, ParseException {
+
+        Options options = new Options();
+        options.addOption("p", "print", false,
+                "Print converted JSON instead of indexing");
+        CommandLineParser parser = new PosixParser();
+        CommandLine cmd = parser.parse( options, args);
+
+        if (cmd.hasOption("print")) {
+            print(cmd.getArgs());
+        } else {
+            index(cmd.getArgs());
+        }
     }
 }
