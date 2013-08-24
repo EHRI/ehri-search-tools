@@ -95,11 +95,11 @@ class JsonConverter {
 
         if (descriptions.size() > 0) {
             for (JsonNode description : descriptions) {
-                writer.writeValue(generator, JsonConverter.getDescribedData(description, node));
+                writer.writeValue(generator, getDescribedData(description, node));
                 generator.writeRaw('\n');
             }
         } else {
-            writer.writeValue(generator, JsonConverter.getData(node));
+            writer.writeValue(generator, getData(node));
             generator.writeRaw('\n');
         }
     }
