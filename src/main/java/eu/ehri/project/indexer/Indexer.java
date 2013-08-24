@@ -1,21 +1,15 @@
 package eu.ehri.project.indexer;
 
 import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import org.apache.commons.cli.*;
-import org.codehaus.jackson.*;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.io.*;
-import java.util.Iterator;
-import java.util.List;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)
@@ -30,10 +24,6 @@ public class Indexer {
     public static final String DEFAULT_SOLR_URL = "http://localhost:8983/solr/portal";
     public static final String DEFAULT_EHRI_URL = "http://localhost:7474/ehri";
 
-    // JSON mapper and writer
-    private static final ObjectMapper mapper = new ObjectMapper();
-    private static final ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
-
     // Reusable Jersey client
     private static final Client client = Client.create();
 
@@ -42,6 +32,7 @@ public class Indexer {
      */
     private final String solrUrl;
     private final String ehriUrl;
+    private final JsonConverter converter = new JsonConverter();
 
     /**
      * Builder for an Indexer. More options to come.
@@ -79,7 +70,7 @@ public class Indexer {
     /**
      * A class for holding interesting stats.
      */
-    private static class Stats {
+    public static class Stats {
         private long startTime = System.nanoTime();
 
         public int itemCount = 0;
@@ -130,69 +121,6 @@ public class Indexer {
     }
 
     /**
-     * Write converted JSON data to an output stream.
-     *
-     * @param in    The type of item to reindex
-     * @param out   The output stream for converted JSON
-     * @param stats A Stats object for storing metrics
-     * @throws IOException
-     */
-    private void convertStream(InputStream in, OutputStream out, Stats stats) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(in));
-
-        JsonFactory f = new JsonFactory();
-        JsonParser jp = f.createJsonParser(br);
-
-        try {
-            jp.nextToken();
-
-            JsonGenerator generator = f.createJsonGenerator(out);
-            try {
-                generator.writeStartArray();
-                generator.writeRaw('\n');
-                while (jp.nextToken() == JsonToken.START_OBJECT) {
-                    JsonNode node = mapper.readValue(jp, JsonNode.class);
-                    convertItem(node, generator);
-                    stats.itemCount++;
-                }
-                generator.writeEndArray();
-                generator.writeRaw('\n');
-            } finally {
-                generator.flush();
-                generator.close();
-            }
-        } finally {
-            jp.close();
-            br.close();
-        }
-    }
-
-    /**
-     * Convert a individual item from the stream and write the results.
-     *
-     * @param node      A JSON node representing a single item
-     * @param generator The JSON generator with which to write
-     *                  the converted data
-     * @throws IOException
-     */
-    private void convertItem(JsonNode node, JsonGenerator generator) throws IOException {
-        Iterator<JsonNode> elements = node.path("relationships").path("describes").getElements();
-        List<JsonNode> descriptions = Lists.newArrayList(elements);
-
-        if (descriptions.size() > 0) {
-            for (JsonNode description : descriptions) {
-                writer.writeValue(generator, JsonConverter.getDescribedData(description, node));
-                generator.writeRaw('\n');
-            }
-        } else {
-            writer.writeValue(generator, JsonConverter.getData(node));
-            generator.writeRaw('\n');
-        }
-    }
-
-
-    /**
      * Index a specific entity jobId.
      *
      * @param stream An input stream consisting of a JSON list
@@ -208,7 +136,7 @@ public class Indexer {
             OutputStream out = new FileOutputStream(tempFile);
 
             try {
-                convertStream(stream, out, stats);
+                converter.convertStream(stream, out, stats);
             } finally {
                 out.close();
             }
@@ -238,7 +166,7 @@ public class Indexer {
             ClientResponse response = getJsonResponseForIds(ids);
             try {
                 checkResponse(response);
-                convertStream(response.getEntityInputStream(), pw, stats);
+                converter.convertStream(response.getEntityInputStream(), pw, stats);
             } finally {
                 response.close();
             }
@@ -261,7 +189,7 @@ public class Indexer {
                 ClientResponse response = getJsonResponseForType(type);
                 try {
                     checkResponse(response);
-                    convertStream(response.getEntityInputStream(), pw, stats);
+                    converter.convertStream(response.getEntityInputStream(), pw, stats);
                 } finally {
                     response.close();
                 }

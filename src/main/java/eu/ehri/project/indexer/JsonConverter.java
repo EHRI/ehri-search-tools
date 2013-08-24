@@ -1,13 +1,16 @@
 package eu.ehri.project.indexer;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jayway.jsonpath.InvalidPathException;
 import com.jayway.jsonpath.JsonPath;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonToken;
+import org.codehaus.jackson.*;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.ObjectWriter;
 import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
 
+import java.io.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +31,79 @@ class JsonConverter {
      * Keys which have types that require special handling.
      */
     private static final Map<String,List<String>> types = Utils.loadTypeKeys();
+
+    // JSON mapper and writer
+    static final ObjectMapper mapper = new ObjectMapper();
+    static final ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
+
+    /**
+     * Default constructor.
+     */
+    public JsonConverter() {
+    }
+
+    /**
+     * Write converted JSON data to an output stream.
+     *
+     * @param in    The type of item to reindex
+     * @param out   The output stream for converted JSON
+     * @param stats A Stats object for storing metrics
+     * @throws java.io.IOException
+     */
+    void convertStream(InputStream in, OutputStream out, Indexer.Stats stats) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+
+        JsonFactory f = new JsonFactory();
+        JsonParser jp = f.createJsonParser(br);
+
+        try {
+            jp.nextToken();
+
+            JsonGenerator generator = f.createJsonGenerator(out);
+            try {
+                generator.writeStartArray();
+                generator.writeRaw('\n');
+                while (jp.nextToken() == JsonToken.START_OBJECT) {
+                    JsonNode node = mapper.readValue(jp, JsonNode.class);
+                    convertItem(node, generator);
+                    stats.itemCount++;
+                }
+                generator.writeEndArray();
+                generator.writeRaw('\n');
+            } finally {
+                generator.flush();
+                generator.close();
+            }
+        } finally {
+            jp.close();
+            br.close();
+        }
+    }
+
+    /**
+     * Convert a individual item from the stream and write the results.
+     *
+     * @param node      A JSON node representing a single item
+     * @param generator The JSON generator with which to write
+     *                  the converted data
+     * @throws java.io.IOException
+     */
+    void convertItem(JsonNode node, JsonGenerator generator) throws IOException {
+        Iterator<JsonNode> elements = node.path("relationships").path("describes").getElements();
+        List<JsonNode> descriptions = Lists.newArrayList(elements);
+
+        if (descriptions.size() > 0) {
+            for (JsonNode description : descriptions) {
+                writer.writeValue(generator, JsonConverter.getDescribedData(description, node));
+                generator.writeRaw('\n');
+            }
+        } else {
+            writer.writeValue(generator, JsonConverter.getData(node));
+            generator.writeRaw('\n');
+        }
+    }
+
 
     /**
      * Get data for items where most of it resides in the description
