@@ -156,7 +156,7 @@ public class Indexer {
         Options options = new Options();
         options.addOption("p", "print", false,
                 "Print converted JSON to stdout. Also implied by --noindex.");
-        options.addOption("p", "pretty", false,
+        options.addOption("P", "pretty", false,
                 "Pretty print out JSON given by --print.");
         options.addOption("s", "solr", true,
                 "Base URL for Solr service (minus the action segment).");
@@ -189,7 +189,7 @@ public class Indexer {
         if (cmd.hasOption("ehri")) {
             builder.setEhriUrl(cmd.getOptionValue("ehri"));
         }
-        if (cmd.hasOption("noindex") || cmd.hasOption("print")) {
+        if (cmd.hasOption("noindex") || cmd.hasOption("print") || cmd.hasOption("pretty")) {
             builder.addWriter(new OutputStreamWriter(System.out, cmd.hasOption("pretty")));
         }
         if (!(cmd.hasOption("noconvert") || cmd.hasOption("noindex"))) {
