@@ -1,6 +1,7 @@
 package eu.ehri.project.indexer;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.Optional;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -13,6 +14,11 @@ import java.io.*;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)
+ *         <p/>
+ *         Pull data from the EHRI REST API and index it in Solr.
+ *         <p/>
+ *         NB: Eventually this class should look more like
+ *         a producer -> transformer -> consumer thing.
  */
 public class Indexer {
 
@@ -27,12 +33,92 @@ public class Indexer {
     // Reusable Jersey client
     private static final Client client = Client.create();
 
-    /**
-     * Fields.
-     */
-    private final String solrUrl;
     private final String ehriUrl;
     private final JsonConverter converter = new JsonConverter();
+    private final SolrIndexer solrIndexer;
+    private final WriteOperation writeOperation;
+
+    /**
+     * Process a stream of data representing a list of EHRI items.
+     */
+    private interface WriteOperation {
+        /**
+         * Do something with a stream of input data.
+         *
+         * @param stream
+         * @param stats
+         * @param tag
+         * @throws IOException
+         */
+        public void processStream(InputStream stream, Stats stats, String tag) throws IOException;
+
+        /**
+         * Actions to run after the stream or streams have been fully
+         * processed.
+         *
+         * @param stats
+         */
+        public void finish(Stats stats);
+    }
+
+    /**
+     * Operation which converts the item stream, saves the results to a
+     * temporary file
+     */
+    public class IndexOperation implements WriteOperation {
+
+        @Override
+        public void processStream(InputStream stream, Stats stats, String tag) throws IOException {
+            File tempFile = File.createTempFile(tag, "json");
+            try {
+                // Write the converted JSON to the tempFile file...
+                OutputStream out = new FileOutputStream(tempFile);
+
+                try {
+                    converter.convertStream(stream, out, stats);
+                } finally {
+                    out.close();
+                }
+
+                // Load the tempFile file as an input stream and index it...
+                InputStream ios = new FileInputStream(tempFile);
+                try {
+                    solrIndexer.update(ios, false);
+                } finally {
+                    ios.close();
+                }
+            } finally {
+                tempFile.delete();
+            }
+        }
+
+        @Override
+        public void finish(Stats stats) {
+            solrIndexer.commit();
+            stats.printReport();
+        }
+    }
+
+    /**
+     * Operation which just prints the converted stream to StdOut.
+     */
+    public class PrintOperation implements WriteOperation {
+
+        @Override
+        public void processStream(InputStream stream, Stats stats, String tag) throws IOException {
+            OutputStream pw = new PrintStream(System.out);
+            try {
+                converter.convertStream(stream, pw, stats);
+            } finally {
+                pw.close();
+            }
+        }
+
+        @Override
+        public void finish(Stats stats) {
+            // No-op
+        }
+    }
 
     /**
      * Builder for an Indexer. More options to come.
@@ -40,6 +126,7 @@ public class Indexer {
     public static class Builder {
         private String solrUrl = DEFAULT_SOLR_URL;
         private String ehriUrl = DEFAULT_EHRI_URL;
+        private boolean print = false;
 
         public String getSolrUrl() {
             return solrUrl;
@@ -57,14 +144,25 @@ public class Indexer {
             this.ehriUrl = ehriUrl;
         }
 
+        public boolean printOnly() {
+            return print;
+        }
+
+        public void setPrintOnly() {
+            print = true;
+        }
+
         public Indexer build() {
             return new Indexer(this);
         }
     }
 
     private Indexer(Builder builder) {
-        this.solrUrl = builder.getSolrUrl();
+        this.solrIndexer = new SolrIndexer(builder.getSolrUrl());
         this.ehriUrl = builder.getEhriUrl();
+        this.writeOperation = builder.printOnly()
+                ? new PrintOperation()
+                : new IndexOperation();
     }
 
     /**
@@ -86,126 +184,12 @@ public class Indexer {
     }
 
     /**
-     * Commit the Solr updates.
-     */
-    public void commit() {
-        WebResource commitResource = client.resource(
-                UriBuilder.fromPath(solrUrl).segment("update").build());
-        ClientResponse response = commitResource
-                .queryParam("commit", "true")
-                .queryParam("optimize", "true")
-                .type(MediaType.APPLICATION_JSON)
-                .post(ClientResponse.class);
-        if (Response.Status.OK.getStatusCode() != response.getStatus()) {
-            throw new RuntimeException("Error with Solr commit: " + response.getEntity(String.class));
-        }
-    }
-
-    /**
-     * Index some JSON data.
-     *
-     * @param ios      The input stream containing update JSON
-     * @param doCommit Whether or not to commit the update
-     */
-    private void doIndex(InputStream ios, boolean doCommit) {
-        WebResource resource = client.resource(
-                UriBuilder.fromPath(solrUrl).segment("update").build());
-        ClientResponse response = resource
-                .queryParam("commit", String.valueOf(doCommit))
-                .type(MediaType.APPLICATION_JSON)
-                .entity(ios)
-                .post(ClientResponse.class);
-        if (Response.Status.OK.getStatusCode() != response.getStatus()) {
-            throw new RuntimeException("Error with Solr upload: " + response.getEntity(String.class));
-        }
-    }
-
-    /**
-     * Index a specific entity jobId.
-     *
-     * @param stream An input stream consisting of a JSON list
-     * @param jobId  The jobId of item to index
-     * @param stats  A statistics object
-     * @throws IOException
-     */
-    private void indexStream(InputStream stream, String jobId, Stats stats) throws IOException {
-
-        File tempFile = File.createTempFile(jobId, "json");
-        try {
-            // Write the converted JSON to the tempFile file...
-            OutputStream out = new FileOutputStream(tempFile);
-
-            try {
-                converter.convertStream(stream, out, stats);
-            } finally {
-                out.close();
-            }
-
-            // Load the tempFile file as an input stream and index it...
-            InputStream ios = new FileInputStream(tempFile);
-            try {
-                doIndex(ios, false);
-            } finally {
-                ios.close();
-            }
-        } finally {
-            tempFile.delete();
-        }
-    }
-
-    /**
-     * Print converted data to StdOut.
-     *
-     * @param ids An array of item id strings
-     * @throws IOException
-     */
-    public void printIds(String[] ids) throws IOException {
-        OutputStream pw = new PrintStream(System.out);
-        Stats stats = new Stats();
-        try {
-            ClientResponse response = getJsonResponseForIds(ids);
-            try {
-                checkResponse(response);
-                converter.convertStream(response.getEntityInputStream(), pw, stats);
-            } finally {
-                response.close();
-            }
-        } finally {
-            pw.close();
-        }
-    }
-
-    /**
-     * Print converted data to StdOut.
-     *
-     * @param types An array of type strings
-     * @throws IOException
-     */
-    public void printTypes(String[] types) throws IOException {
-        OutputStream pw = new PrintStream(System.out);
-        Stats stats = new Stats();
-        try {
-            for (String type : types) {
-                ClientResponse response = getJsonResponseForType(type);
-                try {
-                    checkResponse(response);
-                    converter.convertStream(response.getEntityInputStream(), pw, stats);
-                } finally {
-                    response.close();
-                }
-            }
-        } finally {
-            pw.close();
-        }
-    }
-
-    /**
      * Index a set of content types.
      *
      * @param types An array of type strings
      * @throws IOException
      */
-    public void indexTypes(String... types) throws IOException {
+    public void processTypes(String... types) throws IOException {
         System.out.println("Indexing: " + Joiner.on(", ").join(types));
         Stats stats = new Stats();
 
@@ -213,13 +197,12 @@ public class Indexer {
             ClientResponse response = getJsonResponseForType(type);
             try {
                 checkResponse(response);
-                indexStream(response.getEntityInputStream(), type, stats);
+                writeOperation.processStream(response.getEntityInputStream(), stats, type);
             } finally {
                 response.close();
             }
         }
-        commit();
-        stats.printReport();
+        writeOperation.finish(stats);
     }
 
     /**
@@ -228,7 +211,7 @@ public class Indexer {
      * @param ids An array of item id strings
      * @throws IOException
      */
-    public void indexIds(String... ids) throws IOException {
+    public void processIds(String... ids) throws IOException {
         String jobId = Joiner.on("-").join(ids);
         System.out.println("Indexing: " + Joiner.on(", ").join(ids));
         Stats stats = new Stats();
@@ -236,19 +219,18 @@ public class Indexer {
         ClientResponse response = getJsonResponseForIds(ids);
         try {
             checkResponse(response);
-            indexStream(response.getEntityInputStream(), jobId, stats);
+            writeOperation.processStream(response.getEntityInputStream(), stats, jobId);
         } finally {
             response.close();
         }
 
-        commit();
-        stats.printReport();
+        writeOperation.finish(stats);
     }
 
     /**
      * Check a REST API response is good.
      *
-     * @param response  The response object to check
+     * @param response The response object to check
      */
     private void checkResponse(ClientResponse response) {
         if (response.getStatus() != Response.Status.OK.getStatusCode()) {
@@ -259,8 +241,8 @@ public class Indexer {
     /**
      * Get API response for a given entity type.
      *
-     * @param type  A REST type string
-     * @return      The response object
+     * @param type A REST type string
+     * @return The response object
      */
     private ClientResponse getJsonResponseForType(String type) {
         WebResource resource = client.resource(
@@ -275,8 +257,8 @@ public class Indexer {
     /**
      * Get type-agnostic API response for a set of item ids.
      *
-     * @param ids   A set of item ids
-     * @return      The response object
+     * @param ids A set of item ids
+     * @return The response object
      */
     private ClientResponse getJsonResponseForIds(String[] ids) {
         WebResource resource = client.resource(
@@ -312,20 +294,15 @@ public class Indexer {
         if (cmd.hasOption("ehri")) {
             builder.setEhriUrl(cmd.getOptionValue("ehri"));
         }
+        if (cmd.hasOption("print")) {
+            builder.setPrintOnly();
+        }
         Indexer indexer = builder.build();
 
-        if (cmd.hasOption("print")) {
-            if (cmd.hasOption("items")) {
-                indexer.printIds(cmd.getArgs());
-            } else {
-                indexer.printTypes(cmd.getArgs());
-            }
+        if (cmd.hasOption("items")) {
+            indexer.processIds(cmd.getArgs());
         } else {
-            if (cmd.hasOption("items")) {
-                indexer.indexIds(cmd.getArgs());
-            } else {
-                indexer.indexTypes(cmd.getArgs());
-            }
+            indexer.processTypes(cmd.getArgs());
         }
     }
 }
