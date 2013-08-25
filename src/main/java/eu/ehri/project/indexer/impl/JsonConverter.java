@@ -32,6 +32,11 @@ public class JsonConverter implements Converter<JsonNode> {
      */
     private static final Map<String,List<String>> types = Utils.loadTypeKeys();
 
+    /**
+     * Keys which need a default value
+     */
+    private static final Map<String,List<String>> defaults = Utils.loadDefaultKeys();
+
     // JSON mapper
     static final ObjectMapper mapper = new ObjectMapper();
 
@@ -145,6 +150,13 @@ public class JsonConverter implements Converter<JsonNode> {
                 if (data.containsKey(key)) {
                     data.put(key, fixDates((String)data.get(key)));
                 }
+            }
+        }
+
+        // Add defaults
+        for (Map.Entry<String,List<String>> entry : defaults.entrySet()) {
+            if (!data.containsKey(entry.getKey())) {
+                data.put(entry.getKey(), entry.getValue());
             }
         }
 

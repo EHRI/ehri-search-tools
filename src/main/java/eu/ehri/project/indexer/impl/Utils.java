@@ -18,25 +18,37 @@ class Utils {
 
     public static Map<String,JsonPath> loadPaths() {
         Properties pathProperties = loadProperties("paths.properties");
-        ImmutableMap.Builder<String, JsonPath> pathBuilder = ImmutableMap.builder();
+        ImmutableMap.Builder<String, JsonPath> builder = ImmutableMap.builder();
         for (String pathKey : pathProperties.stringPropertyNames()) {
             // NB: Paths given in the properties file do not include the
             // leading '$.' JsonPath expects, so we add that.
-            pathBuilder.put(pathKey, JsonPath.compile("$." + pathProperties.getProperty(pathKey)));
+            builder.put(pathKey, JsonPath.compile("$." + pathProperties.getProperty(pathKey)));
         }
-        return pathBuilder.build();
+        return builder.build();
     }
 
     public static Map<String,List<String>> loadTypeKeys() {
         Properties typeProperties = loadProperties("types.properties");
-        ImmutableMap.Builder<String, List<String>> typeBuilder = ImmutableMap.builder();
+        ImmutableMap.Builder<String, List<String>> builder = ImmutableMap.builder();
         Splitter splitter = Splitter.on(",");
         for (String typeKey : typeProperties.stringPropertyNames()) {
             String commaSepKeys = typeProperties.getProperty(typeKey);
             Iterable<String> keys = splitter.split(commaSepKeys);
-            typeBuilder.put(typeKey, Lists.newArrayList(keys));
+            builder.put(typeKey, Lists.newArrayList(keys));
         }
-        return typeBuilder.build();
+        return builder.build();
+    }
+
+    public static Map<String,List<String>> loadDefaultKeys() {
+        Properties typeProperties = loadProperties("defaults.properties");
+        ImmutableMap.Builder<String, List<String>> builder = ImmutableMap.builder();
+        Splitter splitter = Splitter.on(",");
+        for (String typeKey : typeProperties.stringPropertyNames()) {
+            String commaSepKeys = typeProperties.getProperty(typeKey);
+            Iterable<String> keys = splitter.split(commaSepKeys);
+            builder.put(typeKey, Lists.newArrayList(keys));
+        }
+        return builder.build();
     }
 
     public static Properties loadProperties(String resourceName) {
