@@ -5,11 +5,8 @@ import com.google.common.collect.Maps;
 import com.jayway.jsonpath.InvalidPathException;
 import com.jayway.jsonpath.JsonPath;
 import eu.ehri.project.indexer.Converter;
-import eu.ehri.project.indexer.Indexer;
-import eu.ehri.project.indexer.impl.Utils;
 import org.codehaus.jackson.*;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
 import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
 
@@ -35,53 +32,13 @@ public class JsonConverter implements Converter<JsonNode> {
      */
     private static final Map<String,List<String>> types = Utils.loadTypeKeys();
 
-    // JSON mapper and writer
+    // JSON mapper
     static final ObjectMapper mapper = new ObjectMapper();
-    static final ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
 
     /**
      * Default constructor.
      */
     public JsonConverter() {
-    }
-
-    /**
-     * Write converted JSON data to an output stream.
-     *
-     * @param in    The type of item to reindex
-     * @param out   The output stream for converted JSON
-     * @param stats A Stats object for storing metrics
-     * @throws java.io.IOException
-     */
-    void convertStream(InputStream in, OutputStream out, Indexer.Stats stats) throws IOException {
-
-        BufferedReader br = new BufferedReader(new InputStreamReader(in));
-
-        JsonFactory f = new JsonFactory();
-        JsonParser jp = f.createJsonParser(br);
-
-        try {
-            jp.nextToken();
-
-            JsonGenerator generator = f.createJsonGenerator(out);
-            try {
-                generator.writeStartArray();
-                generator.writeRaw('\n');
-                while (jp.nextToken() == JsonToken.START_OBJECT) {
-                    JsonNode node = mapper.readValue(jp, JsonNode.class);
-                    convertItem(node, generator);
-                    stats.itemCount++;
-                }
-                generator.writeEndArray();
-                generator.writeRaw('\n');
-            } finally {
-                generator.flush();
-                generator.close();
-            }
-        } finally {
-            jp.close();
-            br.close();
-        }
     }
 
     /**
@@ -106,21 +63,6 @@ public class JsonConverter implements Converter<JsonNode> {
         }
         return out;
     }
-
-    /**
-     * Convert a individual item from the stream and write the results.
-     *
-     * @param node      A JSON node representing a single item
-     * @param generator The JSON generator with which to write
-     *                  the converted data
-     * @throws java.io.IOException
-     */
-    void convertItem(JsonNode node, JsonGenerator generator) throws IOException {
-        for (JsonNode out : convert(node)) {
-            writer.writeValue(generator, out);
-        }
-    }
-
 
     /**
      * Get data for items where most of it resides in the description
