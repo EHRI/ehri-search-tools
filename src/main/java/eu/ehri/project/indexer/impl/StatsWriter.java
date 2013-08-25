@@ -27,9 +27,7 @@ public class StatsWriter implements Writer<JsonNode> {
     public void write(JsonNode t) {
         stats.incrementCount();
         if (vv) {
-            pw.println(t.path("type").asText() + " -> "
-                    + t.path("itemId").asText() + " -> "
-                    + t.path("id").asText());
+            pw.println(t.path("type").asText() + " : " + t.path("id").asText());
         }
     }
 
