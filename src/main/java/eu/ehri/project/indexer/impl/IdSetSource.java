@@ -30,7 +30,7 @@ class IdSetSource extends ServiceSource implements CloseableIterable<JsonNode> {
         }
 
         return resource
-                .queryParam("limit", "100000") // Ugly, but there's a default limit
+                .queryParam("limit", "-1") // Ugly, but there's a default limit
                 .accept(MediaType.APPLICATION_JSON)
                 .type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
     }

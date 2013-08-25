@@ -26,7 +26,7 @@ class TypeSource extends ServiceSource implements CloseableIterable<JsonNode> {
         WebResource resource = client.resource(
                 UriBuilder.fromPath(RestServiceSource.URL).segment(type).segment("list").build());
         return resource
-                .queryParam("limit", "100000") // Ugly, but there's a default limit
+                .queryParam("limit", "-1") // Ugly, but there's a default limit
                 .accept(MediaType.APPLICATION_JSON)
                 .type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
     }
