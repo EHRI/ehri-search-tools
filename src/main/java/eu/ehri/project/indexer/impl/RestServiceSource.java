@@ -27,7 +27,7 @@ public class RestServiceSource implements CloseableIterable<JsonNode> {
         List<String> ids = Lists.newArrayList();
         for (String spec : specs) {
             if (spec.contains("|")) {
-                Iterable<String> split = Splitter.on("|").limit(1).split(spec);
+                Iterable<String> split = Splitter.on("|").limit(2).split(spec);
                 String type = Iterables.get(split, 0);
                 String id = Iterables.get(split, 1);
                 readers.add(new ChildItemSource(client, type, id));

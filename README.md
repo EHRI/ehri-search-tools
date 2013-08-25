@@ -19,3 +19,9 @@ usage: indexer
  -s,--solr <arg>   Base URL for Solr service (minus the action segment).
  -v,--verbose      Print index stats.
 ```
+
+TODO:
+* Add proper logging
+* Add proper error handling
+* Ensure all resources are properly cleaned up
+* Add option to index all child items of an item

@@ -25,7 +25,6 @@ class ChildItemSource extends ServiceSource implements CloseableIterable<JsonNod
     
     @Override
     ClientResponse getResponse() {
-        System.err.println("Initializing reader... " + this);
         WebResource resource = client.resource(
                 UriBuilder.fromPath(RestServiceSource.URL).segment(type).segment(id).segment("list").build());
         return resource
