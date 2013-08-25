@@ -20,7 +20,7 @@ import java.util.Map;
  *
  * Convert from EHRI graph JSON to Solr documents.
  */
-class JsonConverter {
+public class JsonConverter {
 
     /**
      * Set of key -> JsonPath extractors
@@ -82,6 +82,29 @@ class JsonConverter {
     }
 
     /**
+     * Convert a individual item into one or more output items
+     *
+     * @param node      A JSON node representing a single item
+     * @return          The output nodes
+     *                  the converted data
+     * @throws java.io.IOException
+     */
+    public Iterable<JsonNode> convertItem(JsonNode node) throws IOException {
+        List<JsonNode> out = Lists.newArrayList();
+        Iterator<JsonNode> elements = node.path("relationships").path("describes").getElements();
+        List<JsonNode> descriptions = Lists.newArrayList(elements);
+
+        if (descriptions.size() > 0) {
+            for (JsonNode description : descriptions) {
+                out.add(mapper.valueToTree(getDescribedData(description, node)));
+            }
+        } else {
+            out.add(mapper.valueToTree(getData(node)));
+        }
+        return out;
+    }
+
+    /**
      * Convert a individual item from the stream and write the results.
      *
      * @param node      A JSON node representing a single item
@@ -90,17 +113,8 @@ class JsonConverter {
      * @throws java.io.IOException
      */
     void convertItem(JsonNode node, JsonGenerator generator) throws IOException {
-        Iterator<JsonNode> elements = node.path("relationships").path("describes").getElements();
-        List<JsonNode> descriptions = Lists.newArrayList(elements);
-
-        if (descriptions.size() > 0) {
-            for (JsonNode description : descriptions) {
-                writer.writeValue(generator, getDescribedData(description, node));
-                generator.writeRaw('\n');
-            }
-        } else {
-            writer.writeValue(generator, getData(node));
-            generator.writeRaw('\n');
+        for (JsonNode out : convertItem(node)) {
+            writer.writeValue(generator, out);
         }
     }
 

@@ -47,7 +47,7 @@ public class SolrIndexer {
      * @param ios      The input stream containing update JSON
      * @param doCommit Whether or not to commit the update
      */
-    void update(InputStream ios, boolean doCommit) {
+    public void update(InputStream ios, boolean doCommit) {
         WebResource resource = client.resource(
                 UriBuilder.fromPath(solrUrl).segment("update").build());
         ClientResponse response = resource
