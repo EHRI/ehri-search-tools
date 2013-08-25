@@ -25,3 +25,4 @@ TODO:
 * Add proper error handling
 * Ensure all resources are properly cleaned up
 * Add option to index all child items of an item
+* Add some tests!
