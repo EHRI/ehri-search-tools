@@ -4,16 +4,12 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
 import eu.ehri.project.indexer.CloseableIterable;
-import eu.ehri.project.indexer.JsonConverter;
+import eu.ehri.project.indexer.impl.JsonConverter;
+import eu.ehri.project.indexer.Writer;
 import org.codehaus.jackson.JsonNode;
 
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
@@ -25,7 +21,7 @@ public class RestServiceSource implements CloseableIterable<JsonNode> {
     public static final String URL = "http://localhost:7474/ehri";
 
     private final Client client = Client.create();
-    private List<ServiceReader> readers = Lists.newArrayList();
+    private List<ServiceSource> readers = Lists.newArrayList();
 
     public RestServiceSource(String... specs) {
         List<String> ids = Lists.newArrayList();
@@ -34,45 +30,25 @@ public class RestServiceSource implements CloseableIterable<JsonNode> {
                 Iterable<String> split = Splitter.on("|").limit(1).split(spec);
                 String type = Iterables.get(split, 0);
                 String id = Iterables.get(split, 1);
-                readers.add(new ChildReader(client, type, id));
+                readers.add(new ChildItemSource(client, type, id));
             } else if (spec.startsWith("@")) {
                 ids.add(spec.substring(1));
             } else {
-                readers.add(new TypeReader(client, spec));
+                readers.add(new TypeSource(client, spec));
             }
         }
-        readers.add(new IdSetReader(client, ids.toArray(new String[ids.size()])));
+        readers.add(new IdSetSource(client, ids.toArray(new String[ids.size()])));
     }
 
     @Override
     public void close() {
-        for (ServiceReader reader : readers) {
+        for (ServiceSource reader : readers) {
             reader.close();
         }
     }
 
     @Override
     public Iterator<JsonNode> iterator() {
-        return Iterables.concat(readers.toArray(new ServiceReader[readers.size()])).iterator();
-    }
-
-    public static void main(String[] args) {
-        RestServiceSource src = new RestServiceSource(args);
-        //NodePrintWriter npw = new NodePrintWriter(System.out);
-        IndexWriter npw = new IndexWriter();
-        JsonConverter converter = new JsonConverter();
-
-        try {
-            for (JsonNode node : src) {
-                for (JsonNode out : converter.convertItem(node)) {
-                    npw.write(out);
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException("Error converting items: ", e);
-        } finally {
-            src.close();
-            npw.close();
-        }
+        return Iterables.concat(readers.toArray(new ServiceSource[readers.size()])).iterator();
     }
 }

@@ -9,30 +9,39 @@ import org.codehaus.jackson.JsonToken;
 import org.codehaus.jackson.map.MappingIterator;
 import org.codehaus.jackson.map.ObjectMapper;
 
+import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.util.Iterator;
 
 /**
 * @author Mike Bryant (http://github.com/mikesname)
 */
-abstract class ServiceReader implements CloseableIterable<JsonNode> {
+abstract class ServiceSource implements CloseableIterable<JsonNode> {
     private final JsonFactory jsonFactory = new JsonFactory();
     private final ObjectMapper mapper = new ObjectMapper();
     private ClientResponse response = null;
-
+    private JsonParser jsonParser = null;
     abstract ClientResponse getResponse();
 
     public void close() {
-        System.err.println("Closing reader: " + this);
-        if (response != null)
+        if (response != null) {
             response.close();
+        }
+        if (jsonParser != null) {
+            try {
+                jsonParser.close();
+            } catch (IOException e) {
+                throw new RuntimeException("Error closing JSON parser", e);
+            }
+        }
     }
 
     @Override
     public Iterator<JsonNode> iterator() {
         response = getResponse();
+        checkResponse(response);
         try {
-            JsonParser jsonParser = jsonFactory.createJsonParser(
+            jsonParser = jsonFactory.createJsonParser(
                     response.getEntityInputStream());
             JsonToken firstToken = jsonParser.nextToken();
             if (firstToken != JsonToken.START_ARRAY) {
@@ -64,6 +73,17 @@ abstract class ServiceReader implements CloseableIterable<JsonNode> {
             };
         } catch (IOException e) {
             throw new RuntimeException("Error reading JSON stream: ", e);
+        }
+    }
+
+    /**
+     * Check a REST API response is good.
+     *
+     * @param response The response object to check
+     */
+    private void checkResponse(ClientResponse response) {
+        if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+            throw new RuntimeException("Unexpected response from EHRI REST: " + response.getStatus());
         }
     }
 }

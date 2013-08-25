@@ -1,5 +1,6 @@
 package eu.ehri.project.indexer.impl;
 
+import eu.ehri.project.indexer.Writer;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.JsonNode;
@@ -13,7 +14,7 @@ import java.io.PrintWriter;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class NodePrintWriter {
+public class OutputStreamWriter implements Writer<JsonNode> {
 
     private static final JsonFactory factory = new JsonFactory();
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -22,10 +23,15 @@ public class NodePrintWriter {
     private final OutputStream out;
     private JsonGenerator generator;
     private PrintWriter pw;
+    private final boolean pretty;
 
+    public OutputStreamWriter(OutputStream out) {
+        this(out, false);
+    }
 
-    public NodePrintWriter(OutputStream out) {
+    public OutputStreamWriter(OutputStream out, boolean pretty) {
         this.out = out;
+        this.pretty = pretty;
     }
 
     public void write(JsonNode node) {
@@ -33,9 +39,11 @@ public class NodePrintWriter {
             if (generator == null) {
                 pw = new PrintWriter(out);
                 generator = factory.createJsonGenerator(pw);
+                if (pretty) {
+                    generator.useDefaultPrettyPrinter();
+                }
                 generator.writeStartArray();
             }
-            generator.writeRaw('\n');
             writer.writeValue(generator, node);
         } catch (IOException e) {
             throw new RuntimeException("Error writing json data: ", e);
@@ -47,10 +55,8 @@ public class NodePrintWriter {
         if (generator != null) {
             try {
                 generator.writeEndArray();
-                generator.writeRaw('\n');
                 generator.flush();
-                generator.close();
-                pw.close();
+                pw.flush();
             } catch (IOException e) {
                 throw new RuntimeException("Error closing JSON writer: ", e);
             }

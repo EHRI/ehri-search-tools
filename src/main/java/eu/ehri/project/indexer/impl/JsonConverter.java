@@ -1,9 +1,12 @@
-package eu.ehri.project.indexer;
+package eu.ehri.project.indexer.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jayway.jsonpath.InvalidPathException;
 import com.jayway.jsonpath.JsonPath;
+import eu.ehri.project.indexer.Converter;
+import eu.ehri.project.indexer.Indexer;
+import eu.ehri.project.indexer.impl.Utils;
 import org.codehaus.jackson.*;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
@@ -20,7 +23,7 @@ import java.util.Map;
  *
  * Convert from EHRI graph JSON to Solr documents.
  */
-public class JsonConverter {
+public class JsonConverter implements Converter<JsonNode> {
 
     /**
      * Set of key -> JsonPath extractors
@@ -89,7 +92,7 @@ public class JsonConverter {
      *                  the converted data
      * @throws java.io.IOException
      */
-    public Iterable<JsonNode> convertItem(JsonNode node) throws IOException {
+    public Iterable<JsonNode> convert(JsonNode node) throws IOException {
         List<JsonNode> out = Lists.newArrayList();
         Iterator<JsonNode> elements = node.path("relationships").path("describes").getElements();
         List<JsonNode> descriptions = Lists.newArrayList(elements);
@@ -113,7 +116,7 @@ public class JsonConverter {
      * @throws java.io.IOException
      */
     void convertItem(JsonNode node, JsonGenerator generator) throws IOException {
-        for (JsonNode out : convertItem(node)) {
+        for (JsonNode out : convert(node)) {
             writer.writeValue(generator, out);
         }
     }

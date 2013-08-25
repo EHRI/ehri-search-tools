@@ -12,22 +12,23 @@ import javax.ws.rs.core.UriBuilder;
 /**
 * @author Mike Bryant (http://github.com/mikesname)
 */
-class ChildReader extends ServiceReader implements CloseableIterable<JsonNode> {
+class IdSetSource extends ServiceSource implements CloseableIterable<JsonNode> {
     private final Client client;
-    private final String type;
-    private final String id;
+    private final String[] idSet;
 
-    public ChildReader(Client client, String type, String id) {
+    public IdSetSource(Client client, String[] idSet) {
         this.client = client;
-        this.type = type;
-        this.id = id;
+        this.idSet = idSet;
     }
-    
+
     @Override
-    ClientResponse getResponse() {
-        System.err.println("Initializing reader... " + this);
+    public ClientResponse getResponse() {
         WebResource resource = client.resource(
-                UriBuilder.fromPath(RestServiceSource.URL).segment(type).segment(id).segment("list").build());
+                UriBuilder.fromPath(RestServiceSource.URL).segment("entities").build());
+        for (String id : idSet) {
+            resource = resource.queryParam("id", id);
+        }
+
         return resource
                 .queryParam("limit", "100000") // Ugly, but there's a default limit
                 .accept(MediaType.APPLICATION_JSON)

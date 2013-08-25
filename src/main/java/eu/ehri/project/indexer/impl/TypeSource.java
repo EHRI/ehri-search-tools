@@ -8,29 +8,23 @@ import org.codehaus.jackson.JsonNode;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
-import java.util.Iterator;
 
 /**
 * @author Mike Bryant (http://github.com/mikesname)
 */
-class IdSetReader extends ServiceReader implements CloseableIterable<JsonNode> {
+class TypeSource extends ServiceSource implements CloseableIterable<JsonNode> {
     private final Client client;
-    private final String[] idSet;
+    private final String type;
 
-    public IdSetReader(Client client, String[] idSet) {
+    public TypeSource(Client client, String type) {
         this.client = client;
-        this.idSet = idSet;
+        this.type = type;
     }
-
+    
     @Override
-    public ClientResponse getResponse() {
-        System.err.println("Initializing reader... " + this);
+    ClientResponse getResponse() {
         WebResource resource = client.resource(
-                UriBuilder.fromPath(RestServiceSource.URL).segment("entities").build());
-        for (String id : idSet) {
-            resource = resource.queryParam("id", id);
-        }
-
+                UriBuilder.fromPath(RestServiceSource.URL).segment(type).segment("list").build());
         return resource
                 .queryParam("limit", "100000") // Ugly, but there's a default limit
                 .accept(MediaType.APPLICATION_JSON)

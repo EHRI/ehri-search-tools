@@ -2,29 +2,24 @@ package eu.ehri.project.indexer.impl;
 
 import com.google.common.io.FileBackedOutputStream;
 import eu.ehri.project.indexer.SolrIndexer;
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonGenerator;
+import eu.ehri.project.indexer.Writer;
 import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class IndexWriter {
+public class IndexWriter implements Writer<JsonNode> {
 
+    private final String solrUrl;
     private final FileBackedOutputStream out;
-    private NodePrintWriter npw;
+    private OutputStreamWriter npw;
 
-
-    public IndexWriter() {
+    public IndexWriter(String solrUrl) {
+        this.solrUrl = solrUrl;
         this.out = new FileBackedOutputStream(1024 * 1024);
-        this.npw = new NodePrintWriter(out);
+        this.npw = new OutputStreamWriter(out);
     }
 
     public void write(JsonNode node) {
@@ -33,7 +28,7 @@ public class IndexWriter {
 
     public void close() {
         npw.close();
-        SolrIndexer indexer = new SolrIndexer("http://localhost:8983/solr/portal");
+        SolrIndexer indexer = new SolrIndexer(solrUrl);
         try {
             indexer.update(out.getSupplier().getInput(), true);
         } catch (IOException e) {
