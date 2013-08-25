@@ -16,13 +16,21 @@ import java.util.Properties;
  */
 class Utils {
 
-    public static Map<String,JsonPath> loadPaths() {
+    private static final Splitter splitter = Splitter.on(",");
+
+    public static Map<String,List<JsonPath>> loadPaths() {
         Properties pathProperties = loadProperties("paths.properties");
-        ImmutableMap.Builder<String, JsonPath> builder = ImmutableMap.builder();
+        ImmutableMap.Builder<String, List<JsonPath>> builder = ImmutableMap.builder();
         for (String pathKey : pathProperties.stringPropertyNames()) {
             // NB: Paths given in the properties file do not include the
             // leading '$.' JsonPath expects, so we add that.
-            builder.put(pathKey, JsonPath.compile("$." + pathProperties.getProperty(pathKey)));
+            String commaSepPaths = pathProperties.getProperty(pathKey);
+            Iterable<String> paths = splitter.split(commaSepPaths);
+            List<JsonPath> compiledPaths = Lists.newArrayList();
+            for (String path : paths) {
+                compiledPaths.add(JsonPath.compile("$." + path));
+            }
+            builder.put(pathKey, compiledPaths);
         }
         return builder.build();
     }
@@ -30,7 +38,6 @@ class Utils {
     public static Map<String,List<String>> loadTypeKeys() {
         Properties typeProperties = loadProperties("types.properties");
         ImmutableMap.Builder<String, List<String>> builder = ImmutableMap.builder();
-        Splitter splitter = Splitter.on(",");
         for (String typeKey : typeProperties.stringPropertyNames()) {
             String commaSepKeys = typeProperties.getProperty(typeKey);
             Iterable<String> keys = splitter.split(commaSepKeys);
@@ -42,7 +49,6 @@ class Utils {
     public static Map<String,List<String>> loadDefaultKeys() {
         Properties typeProperties = loadProperties("defaults.properties");
         ImmutableMap.Builder<String, List<String>> builder = ImmutableMap.builder();
-        Splitter splitter = Splitter.on(",");
         for (String typeKey : typeProperties.stringPropertyNames()) {
             String commaSepKeys = typeProperties.getProperty(typeKey);
             Iterable<String> keys = splitter.split(commaSepKeys);

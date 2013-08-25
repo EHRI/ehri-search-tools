@@ -25,7 +25,7 @@ public class JsonConverter implements Converter<JsonNode> {
     /**
      * Set of key -> JsonPath extractors
      */
-    private static final Map<String,JsonPath> jsonPaths = Utils.loadPaths();
+    private static final Map<String,List<JsonPath>> jsonPaths = Utils.loadPaths();
 
     /**
      * Keys which have types that require special handling.
@@ -110,15 +110,17 @@ public class JsonConverter implements Converter<JsonNode> {
         final String nodeString = node.toString();
 
         // Extract specific properties
-        for (Map.Entry<String,JsonPath> attrPath : jsonPaths.entrySet()) {
+        for (Map.Entry<String,List<JsonPath>> attrPath : jsonPaths.entrySet()) {
             String attr = attrPath.getKey();
-            JsonPath path = attrPath.getValue();
-
-            try {
-                data.put(attr, path.read(nodeString));
-            } catch (InvalidPathException e) {
-                // Intentionally ignore invalid paths - we might
-                // want to take a smarter approach in future.
+            // First successfully matched path wins...
+            for (JsonPath path : attrPath.getValue()) {
+                try {
+                    data.put(attr, path.read(nodeString));
+                    break;
+                } catch (InvalidPathException e) {
+                    // Intentionally ignore invalid paths - we might
+                    // want to take a smarter approach in future.
+                }
             }
         }
 
