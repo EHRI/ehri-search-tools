@@ -1,27 +1,36 @@
 package eu.ehri.project.indexer.impl;
 
-import com.google.common.collect.Lists;
-import eu.ehri.project.indexer.Indexer;
 import eu.ehri.project.indexer.Writer;
+import org.codehaus.jackson.JsonNode;
 
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.util.List;
+import java.io.*;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class StatsWriter<T> implements Writer<T> {
+public class StatsWriter implements Writer<JsonNode> {
 
-    private final Indexer.Stats stats = new Indexer.Stats();
-    private final PrintWriter pw;
+    private final Stats stats = new Stats();
+    private final PrintStream pw;
+    public final boolean vv;
 
-    public StatsWriter(PrintStream out) {
-        this.pw = new PrintWriter(out);
+    public StatsWriter(OutputStream out, boolean veryVerbose) {
+        this.pw = new PrintStream(new BufferedOutputStream(out));
+        this.vv = veryVerbose;
+
     }
 
-    public void write(T t) {
-        stats.itemCount++;
+    public StatsWriter(PrintStream out) {
+        this(out, false);
+    }
+
+    public void write(JsonNode t) {
+        stats.incrementCount();
+        if (vv) {
+            pw.println(t.path("type").asText() + " -> "
+                    + t.path("itemId").asText() + " -> "
+                    + t.path("id").asText());
+        }
     }
 
     public void close() {

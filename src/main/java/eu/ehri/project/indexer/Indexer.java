@@ -133,24 +133,6 @@ public class Indexer {
         }
     }
 
-    /**
-     * A class for holding interesting stats.
-     */
-    public static class Stats {
-        private long startTime = System.nanoTime();
-
-        public int itemCount = 0;
-
-        public void printReport(PrintWriter pw) {
-            long endTime = System.nanoTime();
-            double duration = ((double) (endTime - startTime)) / 1000000000.0;
-
-            pw.write("Indexing completed in " + duration + "\n");
-            pw.write("Items indexed: " + itemCount + "\n");
-            pw.write("Items per second: " + (itemCount / duration) + "\n");
-        }
-    }
-
     public static void main(String[] args) throws IOException, ParseException {
 
         Options options = new Options();
@@ -170,6 +152,8 @@ public class Indexer {
                 "Don't convert data to index format. Implies --noindex.");
         options.addOption("v", "verbose", false,
                 "Print index stats.");
+        options.addOption("V", "veryVerbose", false,
+                "Print individual item ids");
         options.addOption("h", "help", false,
                 "Print this message.");
 
@@ -200,9 +184,8 @@ public class Indexer {
         } else {
             builder.setConverter(new JsonConverter());
         }
-
-        if (cmd.hasOption("verbose")) {
-            builder.addWriter(new StatsWriter<JsonNode>(System.err));
+        if (cmd.hasOption("verbose") || cmd.hasOption("veryVerbose")) {
+            builder.addWriter(new StatsWriter(System.err, cmd.hasOption("veryVerbose")));
         }
         if (cmd.hasOption("file")) {
             String fileName = cmd.getOptionValue("file");
