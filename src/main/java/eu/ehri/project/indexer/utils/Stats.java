@@ -1,11 +1,11 @@
-package eu.ehri.project.indexer.sink.impl;
+package eu.ehri.project.indexer.utils;
 
 import java.io.PrintStream;
 
 /**
  * A class for holding interesting stats.
  */
-class Stats {
+public class Stats {
     private final long startTime = System.nanoTime();
 
     private int itemCount = 0;

@@ -7,25 +7,26 @@ import org.codehaus.jackson.JsonNode;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.URI;
 import java.util.Iterator;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)
- *
- * Fetch JSON from a web resource. It must accept and
- * return MediaType application/json.
+ *         <p/>
+ *         Fetch JSON from a web resource. It must accept and
+ *         return MediaType application/json.
  */
-class WebSource implements Source<JsonNode> {
+public class WebSource implements Source<JsonNode> {
     private final Client client;
-    private final String url;
+    private final URI url;
     private ClientResponse response = null;
     private InputStreamSource ios = null;
 
-    public WebSource(String url) {
+    public WebSource(URI url) {
         this(Client.create(), url);
     }
 
-    public WebSource(Client client, String url) {
+    public WebSource(Client client, URI url) {
         this.client = client;
         this.url = url;
     }
