@@ -14,11 +14,11 @@ import java.util.Iterator;
  *         <p/>
  *         Use a file as a node source.
  */
-public class FileSource implements Source<JsonNode> {
-    private final InputStreamSource ios;
+public class FileJsonSource implements Source<JsonNode> {
+    private final InputStreamJsonSource ios;
     private final FileInputStream fis;
 
-    public FileSource(String fileName) {
+    public FileJsonSource(String fileName) {
         try {
             File file = new File(fileName);
             if (!(file.exists() || file.isFile())) {
@@ -26,7 +26,7 @@ public class FileSource implements Source<JsonNode> {
                         "File does not exists, or is not a plain file: " + fileName);
             }
             this.fis = new FileInputStream(new File(fileName));
-            this.ios = new InputStreamSource(fis);
+            this.ios = new InputStreamJsonSource(fis);
         } catch (FileNotFoundException e) {
             throw new SourceException("File not found: " + fileName, e);
         }

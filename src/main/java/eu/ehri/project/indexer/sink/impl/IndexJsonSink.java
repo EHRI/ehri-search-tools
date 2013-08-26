@@ -10,16 +10,16 @@ import java.io.IOException;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class IndexingSink implements Sink<JsonNode> {
+public class IndexJsonSink implements Sink<JsonNode> {
 
     private final Index index;
     private final FileBackedOutputStream out;
-    private final OutputStreamSink npw;
+    private final OutputStreamJsonSink npw;
 
-    public IndexingSink(Index index) {
+    public IndexJsonSink(Index index) {
         this.index = index;
         this.out = new FileBackedOutputStream(1024 * 1024);
-        this.npw = new OutputStreamSink(out);
+        this.npw = new OutputStreamJsonSink(out);
     }
 
     public void write(JsonNode node) {

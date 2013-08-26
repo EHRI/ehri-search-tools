@@ -12,14 +12,14 @@ import static junit.framework.Assert.assertEquals;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class InputStreamSourceTest {
+public class InputStreamJsonSourceTest {
 
     private static String testResource = "inputdoc.json";
 
     @Test
     public void testDocContainsOneNode() throws Exception {
         InputStream stream = getClass().getClassLoader().getResourceAsStream(testResource);
-        Source<JsonNode> source = new InputStreamSource(stream);
+        Source<JsonNode> source = new InputStreamJsonSource(stream);
         try {
             assertEquals(1, Iterables.size(source));
         } finally {

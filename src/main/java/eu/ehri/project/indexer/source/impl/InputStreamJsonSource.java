@@ -14,13 +14,13 @@ import java.util.Iterator;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class InputStreamSource implements Source<JsonNode> {
+public class InputStreamJsonSource implements Source<JsonNode> {
     private static final JsonFactory jsonFactory = new JsonFactory();
     private static final ObjectMapper mapper = new ObjectMapper();
     private final InputStream ios;
     private JsonParser jsonParser;
 
-    public InputStreamSource(InputStream ios) {
+    public InputStreamJsonSource(InputStream ios) {
         this.ios = ios;
     }
 

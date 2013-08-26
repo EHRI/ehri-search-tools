@@ -2,7 +2,7 @@ package eu.ehri.project.indexer.converter.impl;
 
 import com.google.common.collect.Iterables;
 import eu.ehri.project.indexer.source.Source;
-import eu.ehri.project.indexer.source.impl.InputStreamSource;
+import eu.ehri.project.indexer.source.impl.InputStreamJsonSource;
 import org.codehaus.jackson.JsonNode;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class JsonConverterTest {
     @Before
     public void setUp() throws Exception {
         InputStream stream = getClass().getClassLoader().getResourceAsStream(testResource);
-        Source<JsonNode> source = new InputStreamSource(stream);
+        Source<JsonNode> source = new InputStreamJsonSource(stream);
         try {
             inputNode = Iterables.get(source, 0);
         } finally {

@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class OutputStreamSink implements Sink<JsonNode> {
+public class OutputStreamJsonSink implements Sink<JsonNode> {
 
     private static final JsonFactory factory = new JsonFactory();
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -25,11 +25,11 @@ public class OutputStreamSink implements Sink<JsonNode> {
     private PrintWriter pw;
     private final boolean pretty;
 
-    public OutputStreamSink(OutputStream out) {
+    public OutputStreamJsonSink(OutputStream out) {
         this(out, false);
     }
 
-    public OutputStreamSink(OutputStream out, boolean pretty) {
+    public OutputStreamJsonSink(OutputStream out, boolean pretty) {
         this.out = out;
         this.pretty = pretty;
     }

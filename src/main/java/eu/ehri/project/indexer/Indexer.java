@@ -216,12 +216,12 @@ public class Indexer {
 
         // Determine if we're printing the data...
         if (cmd.hasOption("noindex") || cmd.hasOption("print") || cmd.hasOption("pretty")) {
-            builder.addSink(new OutputStreamSink(System.out, cmd.hasOption("pretty")));
+            builder.addSink(new OutputStreamJsonSink(System.out, cmd.hasOption("pretty")));
         }
 
         // Determine if we need to actually index the data...
         if (!(cmd.hasOption("noconvert") || cmd.hasOption("noindex"))) {
-            builder.addSink(new IndexingSink(new SolrIndex(solrUrl)));
+            builder.addSink(new IndexJsonSink(new SolrIndex(solrUrl)));
         }
 
         // Determine if we want to convert the data or print the incoming
@@ -260,15 +260,15 @@ public class Indexer {
         if (cmd.hasOption("file")) {
             String fileName = cmd.getOptionValue("file");
             if (fileName.trim().equals("-")) {
-                builder.addSource(new InputStreamSource(System.in));
+                builder.addSource(new InputStreamJsonSource(System.in));
             } else {
-                builder.addSource(new FileSource(fileName));
+                builder.addSource(new FileJsonSource(fileName));
             }
         }
 
         // Parse the command line specs...
         for (URI uri : urlsFromSpecs(ehriUrl, cmd.getArgs())) {
-            builder.addSource(new WebSource(uri));
+            builder.addSource(new WebJsonSource(uri));
         }
 
         Indexer indexer = builder.build();

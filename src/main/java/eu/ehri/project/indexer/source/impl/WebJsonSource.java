@@ -16,17 +16,17 @@ import java.util.Iterator;
  *         Fetch JSON from a web resource. It must accept and
  *         return MediaType application/json.
  */
-public class WebSource implements Source<JsonNode> {
+public class WebJsonSource implements Source<JsonNode> {
     private final Client client;
     private final URI url;
     private ClientResponse response = null;
-    private InputStreamSource ios = null;
+    private InputStreamJsonSource ios = null;
 
-    public WebSource(URI url) {
+    public WebJsonSource(URI url) {
         this(Client.create(), url);
     }
 
-    public WebSource(Client client, URI url) {
+    public WebJsonSource(Client client, URI url) {
         this.client = client;
         this.url = url;
     }
@@ -50,7 +50,7 @@ public class WebSource implements Source<JsonNode> {
     public Iterator<JsonNode> iterator() {
         response = getResponse();
         checkResponse(response);
-        ios = new InputStreamSource(response.getEntityInputStream());
+        ios = new InputStreamJsonSource(response.getEntityInputStream());
         return ios.iterator();
     }
 
