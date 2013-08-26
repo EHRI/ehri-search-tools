@@ -1,6 +1,6 @@
-package eu.ehri.project.indexer.impl;
+package eu.ehri.project.indexer.sink.impl;
 
-import eu.ehri.project.indexer.Writer;
+import eu.ehri.project.indexer.sink.Sink;
 import org.codehaus.jackson.JsonNode;
 
 import java.io.BufferedOutputStream;
@@ -10,19 +10,19 @@ import java.io.PrintStream;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class StatsWriter implements Writer<JsonNode> {
+public class StatsSink implements Sink<JsonNode> {
 
     private final Stats stats = new Stats();
     private final PrintStream pw;
     private final boolean vv;
 
-    public StatsWriter(OutputStream out, boolean veryVerbose) {
+    public StatsSink(OutputStream out, boolean veryVerbose) {
         this.pw = new PrintStream(new BufferedOutputStream(out));
         this.vv = veryVerbose;
 
     }
 
-    public StatsWriter(PrintStream out) {
+    public StatsSink(PrintStream out) {
         this(out, false);
     }
 
@@ -34,7 +34,7 @@ public class StatsWriter implements Writer<JsonNode> {
     }
 
     public void close() {
-        // Abusing close here!
+        // Abusing finish here!
         stats.printReport(pw);
         pw.flush();
     }

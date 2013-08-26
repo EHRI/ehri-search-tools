@@ -1,9 +1,9 @@
-package eu.ehri.project.indexer.impl;
+package eu.ehri.project.indexer.source.impl;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import eu.ehri.project.indexer.CloseableIterable;
+import eu.ehri.project.indexer.source.Source;
 import org.codehaus.jackson.JsonNode;
 
 import javax.ws.rs.core.MediaType;
@@ -12,7 +12,7 @@ import javax.ws.rs.core.UriBuilder;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-class TypeSource extends ServiceSource implements CloseableIterable<JsonNode> {
+class TypeSource extends ServiceSource implements Source<JsonNode> {
     private final Client client;
     private final String serviceUrl;
     private final String type;

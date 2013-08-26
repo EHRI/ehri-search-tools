@@ -1,10 +1,10 @@
-package eu.ehri.project.indexer.impl;
+package eu.ehri.project.indexer.source.impl;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.sun.jersey.api.client.Client;
-import eu.ehri.project.indexer.CloseableIterable;
+import eu.ehri.project.indexer.source.Source;
 import org.codehaus.jackson.JsonNode;
 
 import java.util.Iterator;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class RestServiceSource implements CloseableIterable<JsonNode> {
+public class RestServiceSource implements Source<JsonNode> {
 
     private final List<ServiceSource> readers = Lists.newArrayList();
 
@@ -36,9 +36,9 @@ public class RestServiceSource implements CloseableIterable<JsonNode> {
     }
 
     @Override
-    public void close() {
+    public void finish() {
         for (ServiceSource reader : readers) {
-            reader.close();
+            reader.finish();
         }
     }
 

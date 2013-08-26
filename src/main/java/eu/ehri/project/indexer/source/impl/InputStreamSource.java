@@ -1,6 +1,6 @@
-package eu.ehri.project.indexer.impl;
+package eu.ehri.project.indexer.source.impl;
 
-import eu.ehri.project.indexer.CloseableIterable;
+import eu.ehri.project.indexer.source.Source;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParser;
@@ -14,7 +14,7 @@ import java.util.Iterator;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class InputStreamSource implements CloseableIterable<JsonNode> {
+public class InputStreamSource implements Source<JsonNode> {
     private final JsonFactory jsonFactory = new JsonFactory();
     private final ObjectMapper mapper = new ObjectMapper();
     private JsonParser jsonParser;
@@ -24,7 +24,7 @@ public class InputStreamSource implements CloseableIterable<JsonNode> {
         this.ios = ios;
     }
 
-    public void close() {
+    public void finish() {
         if (jsonParser != null) {
             try {
                 jsonParser.close();
@@ -45,19 +45,6 @@ public class InputStreamSource implements CloseableIterable<JsonNode> {
             return mapper.readValues(jsonParser, JsonNode.class);
         } catch (IOException e) {
             throw new RuntimeException("Error reading JSON stream: ", e);
-        }
-    }
-
-    public static void main(String[] args) {
-        InputStreamSource ios = new InputStreamSource(System.in);
-        OutputStreamWriter npw = new OutputStreamWriter(System.out);
-        try {
-            for (JsonNode n : ios) {
-                npw.write(n);
-            }
-        } finally {
-            ios.close();
-            npw.close();
         }
     }
 }

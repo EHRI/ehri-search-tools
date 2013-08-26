@@ -1,10 +1,10 @@
-package eu.ehri.project.indexer.impl;
+package eu.ehri.project.indexer.converter.impl;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jayway.jsonpath.InvalidPathException;
 import com.jayway.jsonpath.JsonPath;
-import eu.ehri.project.indexer.Converter;
+import eu.ehri.project.indexer.converter.Converter;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonToken;
 import org.codehaus.jackson.map.ObjectMapper;

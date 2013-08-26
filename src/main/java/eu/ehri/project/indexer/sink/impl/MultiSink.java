@@ -1,24 +1,24 @@
-package eu.ehri.project.indexer.impl;
+package eu.ehri.project.indexer.sink.impl;
 
 import com.google.common.collect.Lists;
-import eu.ehri.project.indexer.Writer;
+import eu.ehri.project.indexer.sink.Sink;
 
 import java.util.List;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  *         <p/>
- *         Aggregate several writers together.
+ *         Aggregate several sink together.
  */
-public class MultiWriter<T, W extends Writer<T>> implements Writer<T> {
+public class MultiSink<T, W extends Sink<T>> implements Sink<T> {
 
     private final List<W> writers;
 
-    public MultiWriter(W... writers) {
+    public MultiSink(W... writers) {
         this.writers = Lists.newArrayList(writers);
     }
 
-    public MultiWriter(List<W> writers) {
+    public MultiSink(List<W> writers) {
         this.writers = Lists.newArrayList(writers);
     }
 

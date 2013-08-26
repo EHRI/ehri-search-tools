@@ -1,7 +1,7 @@
-package eu.ehri.project.indexer.impl;
+package eu.ehri.project.indexer.source.impl;
 
 import com.sun.jersey.api.client.ClientResponse;
-import eu.ehri.project.indexer.CloseableIterable;
+import eu.ehri.project.indexer.source.Source;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParser;
@@ -16,7 +16,7 @@ import java.util.Iterator;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-abstract class ServiceSource implements CloseableIterable<JsonNode> {
+abstract class ServiceSource implements Source<JsonNode> {
     private final JsonFactory jsonFactory = new JsonFactory();
     private final ObjectMapper mapper = new ObjectMapper();
     private ClientResponse response = null;
@@ -24,7 +24,7 @@ abstract class ServiceSource implements CloseableIterable<JsonNode> {
 
     abstract ClientResponse getResponse();
 
-    public void close() {
+    public void finish() {
         if (response != null) {
             response.close();
         }
@@ -50,14 +50,14 @@ abstract class ServiceSource implements CloseableIterable<JsonNode> {
             }
 
             // Instead of just returning the mapping iterator, we override it
-            // to close the web resource once hasNext returns false...
+            // to finish the web resource once hasNext returns false...
             final MappingIterator<JsonNode> mappingIterator = mapper.readValues(jsonParser, JsonNode.class);
             return new Iterator<JsonNode>() {
                 @Override
                 public boolean hasNext() {
                     boolean next = mappingIterator.hasNext();
                     if (!next) {
-                        close();
+                        finish();
                     }
                     return next;
                 }

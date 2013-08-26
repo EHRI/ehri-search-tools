@@ -1,9 +1,9 @@
-package eu.ehri.project.indexer.impl;
+package eu.ehri.project.indexer.source.impl;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
-import eu.ehri.project.indexer.CloseableIterable;
+import eu.ehri.project.indexer.source.Source;
 import org.codehaus.jackson.JsonNode;
 
 import javax.ws.rs.core.MediaType;
@@ -12,23 +12,25 @@ import javax.ws.rs.core.UriBuilder;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-class ChildItemSource extends ServiceSource implements CloseableIterable<JsonNode> {
+class IdSetSource extends ServiceSource implements Source<JsonNode> {
     private final Client client;
     private final String serviceUrl;
-    private final String type;
-    private final String id;
+    private final String[] idSet;
 
-    public ChildItemSource(Client client, String serviceUrl, String type, String id) {
+    public IdSetSource(Client client, String serviceUrl, String[] idSet) {
         this.client = client;
         this.serviceUrl = serviceUrl;
-        this.type = type;
-        this.id = id;
+        this.idSet = idSet;
     }
 
     @Override
-    ClientResponse getResponse() {
+    public ClientResponse getResponse() {
         WebResource resource = client.resource(
-                UriBuilder.fromPath(serviceUrl).segment(type).segment(id).segment("list").build());
+                UriBuilder.fromPath(serviceUrl).segment("entities").build());
+        for (String id : idSet) {
+            resource = resource.queryParam("id", id);
+        }
+
         return resource
                 .queryParam("limit", "-1") // Ugly, but there's a default limit
                 .accept(MediaType.APPLICATION_JSON)

@@ -1,4 +1,4 @@
-package eu.ehri.project.indexer.impl;
+package eu.ehri.project.indexer.sink.impl;
 
 import java.io.PrintStream;
 

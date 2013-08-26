@@ -1,4 +1,4 @@
-package eu.ehri.project.indexer.impl;
+package eu.ehri.project.indexer.converter.impl;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableMap;

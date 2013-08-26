@@ -1,8 +1,8 @@
-package eu.ehri.project.indexer.impl;
+package eu.ehri.project.indexer.sink.impl;
 
 import com.google.common.io.FileBackedOutputStream;
-import eu.ehri.project.indexer.SolrIndexer;
-import eu.ehri.project.indexer.Writer;
+import eu.ehri.project.indexer.index.Index;
+import eu.ehri.project.indexer.sink.Sink;
 import org.codehaus.jackson.JsonNode;
 
 import java.io.IOException;
@@ -10,16 +10,16 @@ import java.io.IOException;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class IndexWriter implements Writer<JsonNode> {
+public class IndexingSink implements Sink<JsonNode> {
 
-    private final String solrUrl;
+    private final Index index;
     private final FileBackedOutputStream out;
-    private final OutputStreamWriter npw;
+    private final OutputStreamSink npw;
 
-    public IndexWriter(String solrUrl) {
-        this.solrUrl = solrUrl;
+    public IndexingSink(Index index) {
+        this.index = index;
         this.out = new FileBackedOutputStream(1024 * 1024);
-        this.npw = new OutputStreamWriter(out);
+        this.npw = new OutputStreamSink(out);
     }
 
     public void write(JsonNode node) {
@@ -28,9 +28,8 @@ public class IndexWriter implements Writer<JsonNode> {
 
     public void close() {
         npw.close();
-        SolrIndexer indexer = new SolrIndexer(solrUrl);
         try {
-            indexer.update(out.getSupplier().getInput(), true);
+            index.update(out.getSupplier().getInput(), true);
         } catch (IOException e) {
             throw new RuntimeException("Error updating Solr: ", e);
         } finally {

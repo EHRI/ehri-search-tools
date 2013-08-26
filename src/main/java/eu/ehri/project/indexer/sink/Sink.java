@@ -1,9 +1,9 @@
-package eu.ehri.project.indexer;
+package eu.ehri.project.indexer.sink;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public interface Writer<T> {
+public interface Sink<T> {
     public void write(T t);
 
     public void close();

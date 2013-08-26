@@ -1,6 +1,6 @@
-package eu.ehri.project.indexer.impl;
+package eu.ehri.project.indexer.sink.impl;
 
-import eu.ehri.project.indexer.Writer;
+import eu.ehri.project.indexer.sink.Sink;
 import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.JsonNode;
@@ -14,7 +14,7 @@ import java.io.PrintWriter;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class OutputStreamWriter implements Writer<JsonNode> {
+public class OutputStreamSink implements Sink<JsonNode> {
 
     private static final JsonFactory factory = new JsonFactory();
     private static final ObjectMapper mapper = new ObjectMapper();
@@ -25,11 +25,11 @@ public class OutputStreamWriter implements Writer<JsonNode> {
     private PrintWriter pw;
     private final boolean pretty;
 
-    public OutputStreamWriter(OutputStream out) {
+    public OutputStreamSink(OutputStream out) {
         this(out, false);
     }
 
-    public OutputStreamWriter(OutputStream out, boolean pretty) {
+    public OutputStreamSink(OutputStream out, boolean pretty) {
         this.out = out;
         this.pretty = pretty;
     }
