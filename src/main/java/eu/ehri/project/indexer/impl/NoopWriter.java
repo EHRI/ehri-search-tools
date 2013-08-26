@@ -1,6 +1,5 @@
 package eu.ehri.project.indexer.impl;
 
-import eu.ehri.project.indexer.Indexer;
 import eu.ehri.project.indexer.Writer;
 
 /**

@@ -5,8 +5,8 @@ import java.io.PrintStream;
 /**
  * A class for holding interesting stats.
  */
-public class Stats {
-    private long startTime = System.nanoTime();
+class Stats {
+    private final long startTime = System.nanoTime();
 
     private int itemCount = 0;
 

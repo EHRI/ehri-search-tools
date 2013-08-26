@@ -5,5 +5,6 @@ package eu.ehri.project.indexer;
  */
 public interface Writer<T> {
     public void write(T t);
+
     public void close();
 }

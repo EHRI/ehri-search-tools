@@ -1,14 +1,12 @@
 package eu.ehri.project.indexer;
 
 import com.google.common.collect.Lists;
-import com.sun.jersey.api.client.Client;
 import eu.ehri.project.indexer.impl.*;
-import eu.ehri.project.indexer.impl.OutputStreamWriter;
 import org.apache.commons.cli.*;
 import org.codehaus.jackson.JsonNode;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import java.io.*;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -25,14 +23,9 @@ public class Indexer {
      * <p/>
      * TODO: Store these in a properties file?
      */
-    public static final String DEFAULT_SOLR_URL = "http://localhost:8983/solr/portal";
-    public static final String DEFAULT_EHRI_URL = "http://localhost:7474/ehri";
+    private static final String DEFAULT_SOLR_URL = "http://localhost:8983/solr/portal";
+    private static final String DEFAULT_EHRI_URL = "http://localhost:7474/ehri";
 
-    // Reusable Jersey client
-    private static final Client client = Client.create();
-
-    private final String ehriUrl;
-    private final SolrIndexer solrIndexer;
     private final CloseableIterable<JsonNode> source;
     private final Writer<JsonNode> writer;
     private final Converter<JsonNode> converter;
@@ -41,11 +34,8 @@ public class Indexer {
      * Builder for an Indexer. More options to come.
      */
     public static class Builder {
-        private String solrUrl = DEFAULT_SOLR_URL;
-        private String ehriUrl = DEFAULT_EHRI_URL;
-
         private CloseableIterable<JsonNode> source = null;
-        private List<Writer<JsonNode>> writers = Lists.newArrayList();
+        private final List<Writer<JsonNode>> writers = Lists.newArrayList();
 
         private Converter<JsonNode> converter;
 
@@ -56,29 +46,12 @@ public class Indexer {
 
         private Writer<JsonNode> getWriter() {
             if (writers.size() > 1) {
-                return new MultiWriter<JsonNode, Writer<JsonNode>>(
-                    writers.toArray(new Writer[writers.size()]));
+                return new MultiWriter<JsonNode, Writer<JsonNode>>(writers);
             } else if (writers.size() == 1) {
                 return writers.get(0);
             } else {
                 return new NoopWriter<JsonNode>();
             }
-        }
-
-        private String getSolrUrl() {
-            return solrUrl;
-        }
-
-        public void setSolrUrl(String solrUrl) {
-            this.solrUrl = solrUrl;
-        }
-
-        private String getEhriUrl() {
-            return ehriUrl;
-        }
-
-        public void setEhriUrl(String ehriUrl) {
-            this.ehriUrl = ehriUrl;
         }
 
         public CloseableIterable<JsonNode> getSource() {
@@ -111,22 +84,18 @@ public class Indexer {
     }
 
     private Indexer(Builder builder) {
-        this.solrIndexer = new SolrIndexer(builder.getSolrUrl());
-        this.ehriUrl = builder.getEhriUrl();
         this.writer = builder.getWriter();
         this.source = builder.getSource();
         this.converter = builder.getConverter();
     }
 
-    public void doIt() {
+    public void runIndex() {
         try {
             for (JsonNode node : source) {
                 for (JsonNode out : converter.convert(node)) {
                     writer.write(out);
                 }
             }
-        } catch (IOException e) {
-            throw new RuntimeException("Error converting items: ", e);
         } finally {
             source.close();
             writer.close();
@@ -174,18 +143,22 @@ public class Indexer {
             System.exit(1);
         }
 
-        Indexer.Builder builder = new Indexer.Builder();
-        if (cmd.hasOption("solr")) {
-            builder.setSolrUrl(cmd.getOptionValue("solr"));
-        }
+        String ehriUrl = DEFAULT_EHRI_URL;
         if (cmd.hasOption("ehri")) {
-            builder.setEhriUrl(cmd.getOptionValue("ehri"));
+            ehriUrl = cmd.getOptionValue("ehri");
         }
+        String solrUrl = DEFAULT_SOLR_URL;
+        if (cmd.hasOption("solr")) {
+            solrUrl = cmd.getOptionValue("solr");
+        }
+
+        Indexer.Builder builder = new Indexer.Builder();
+
         if (cmd.hasOption("noindex") || cmd.hasOption("print") || cmd.hasOption("pretty")) {
             builder.addWriter(new OutputStreamWriter(System.out, cmd.hasOption("pretty")));
         }
         if (!(cmd.hasOption("noconvert") || cmd.hasOption("noindex"))) {
-            builder.addWriter(new IndexWriter(builder.solrUrl));
+            builder.addWriter(new IndexWriter(solrUrl));
         }
         if (cmd.hasOption("noconvert")) {
             builder.setConverter(new NoopConverter<JsonNode>());
@@ -205,10 +178,10 @@ public class Indexer {
                 throw new NotImplementedException();
             }
         } else {
-            builder.setSource(new RestServiceSource(cmd.getArgs()));
+            builder.setSource(new RestServiceSource(ehriUrl, cmd.getArgs()));
         }
 
         Indexer indexer = builder.build();
-        indexer.doIt();
+        indexer.runIndex();
     }
 }

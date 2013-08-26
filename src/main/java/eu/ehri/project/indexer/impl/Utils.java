@@ -18,7 +18,7 @@ class Utils {
 
     private static final Splitter splitter = Splitter.on(",");
 
-    public static Map<String,List<JsonPath>> loadPaths() {
+    public static Map<String, List<JsonPath>> loadPaths() {
         Properties pathProperties = loadProperties("paths.properties");
         ImmutableMap.Builder<String, List<JsonPath>> builder = ImmutableMap.builder();
         for (String pathKey : pathProperties.stringPropertyNames()) {
@@ -35,7 +35,7 @@ class Utils {
         return builder.build();
     }
 
-    public static Map<String,List<String>> loadTypeKeys() {
+    public static Map<String, List<String>> loadTypeKeys() {
         Properties typeProperties = loadProperties("types.properties");
         ImmutableMap.Builder<String, List<String>> builder = ImmutableMap.builder();
         for (String typeKey : typeProperties.stringPropertyNames()) {
@@ -46,7 +46,7 @@ class Utils {
         return builder.build();
     }
 
-    public static Map<String,List<String>> loadDefaultKeys() {
+    public static Map<String, List<String>> loadDefaultKeys() {
         Properties typeProperties = loadProperties("defaults.properties");
         ImmutableMap.Builder<String, List<String>> builder = ImmutableMap.builder();
         for (String typeKey : typeProperties.stringPropertyNames()) {
@@ -57,7 +57,7 @@ class Utils {
         return builder.build();
     }
 
-    public static Properties loadProperties(String resourceName) {
+    private static Properties loadProperties(String resourceName) {
         Properties properties = new Properties();
         InputStream pathIs = Utils.class.getClassLoader().getResourceAsStream(resourceName);
         if (pathIs == null)

@@ -3,7 +3,9 @@ package eu.ehri.project.indexer.impl;
 import eu.ehri.project.indexer.Writer;
 import org.codehaus.jackson.JsonNode;
 
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)
@@ -12,7 +14,7 @@ public class StatsWriter implements Writer<JsonNode> {
 
     private final Stats stats = new Stats();
     private final PrintStream pw;
-    public final boolean vv;
+    private final boolean vv;
 
     public StatsWriter(OutputStream out, boolean veryVerbose) {
         this.pw = new PrintStream(new BufferedOutputStream(out));

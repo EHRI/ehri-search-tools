@@ -14,7 +14,7 @@ public class IndexWriter implements Writer<JsonNode> {
 
     private final String solrUrl;
     private final FileBackedOutputStream out;
-    private OutputStreamWriter npw;
+    private final OutputStreamWriter npw;
 
     public IndexWriter(String solrUrl) {
         this.solrUrl = solrUrl;

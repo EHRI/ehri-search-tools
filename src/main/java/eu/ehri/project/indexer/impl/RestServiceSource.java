@@ -5,11 +5,8 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.sun.jersey.api.client.Client;
 import eu.ehri.project.indexer.CloseableIterable;
-import eu.ehri.project.indexer.impl.JsonConverter;
-import eu.ehri.project.indexer.Writer;
 import org.codehaus.jackson.JsonNode;
 
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
@@ -18,26 +15,24 @@ import java.util.List;
  */
 public class RestServiceSource implements CloseableIterable<JsonNode> {
 
-    public static final String URL = "http://localhost:7474/ehri";
+    private final List<ServiceSource> readers = Lists.newArrayList();
 
-    private final Client client = Client.create();
-    private List<ServiceSource> readers = Lists.newArrayList();
-
-    public RestServiceSource(String... specs) {
+    public RestServiceSource(String serviceUrl, String... specs) {
         List<String> ids = Lists.newArrayList();
+        Client client = Client.create();
         for (String spec : specs) {
             if (spec.contains("|")) {
                 Iterable<String> split = Splitter.on("|").limit(2).split(spec);
                 String type = Iterables.get(split, 0);
                 String id = Iterables.get(split, 1);
-                readers.add(new ChildItemSource(client, type, id));
+                readers.add(new ChildItemSource(client, serviceUrl, type, id));
             } else if (spec.startsWith("@")) {
                 ids.add(spec.substring(1));
             } else {
-                readers.add(new TypeSource(client, spec));
+                readers.add(new TypeSource(client, serviceUrl, spec));
             }
         }
-        readers.add(new IdSetSource(client, ids.toArray(new String[ids.size()])));
+        readers.add(new IdSetSource(client, serviceUrl, ids.toArray(new String[ids.size()])));
     }
 
     @Override

@@ -14,13 +14,14 @@ import java.io.IOException;
 import java.util.Iterator;
 
 /**
-* @author Mike Bryant (http://github.com/mikesname)
-*/
+ * @author Mike Bryant (http://github.com/mikesname)
+ */
 abstract class ServiceSource implements CloseableIterable<JsonNode> {
     private final JsonFactory jsonFactory = new JsonFactory();
     private final ObjectMapper mapper = new ObjectMapper();
     private ClientResponse response = null;
     private JsonParser jsonParser = null;
+
     abstract ClientResponse getResponse();
 
     public void close() {

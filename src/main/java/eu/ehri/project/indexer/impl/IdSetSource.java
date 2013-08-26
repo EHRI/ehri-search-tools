@@ -10,21 +10,23 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
 /**
-* @author Mike Bryant (http://github.com/mikesname)
-*/
+ * @author Mike Bryant (http://github.com/mikesname)
+ */
 class IdSetSource extends ServiceSource implements CloseableIterable<JsonNode> {
     private final Client client;
+    private final String serviceUrl;
     private final String[] idSet;
 
-    public IdSetSource(Client client, String[] idSet) {
+    public IdSetSource(Client client, String serviceUrl, String[] idSet) {
         this.client = client;
+        this.serviceUrl = serviceUrl;
         this.idSet = idSet;
     }
 
     @Override
     public ClientResponse getResponse() {
         WebResource resource = client.resource(
-                UriBuilder.fromPath(RestServiceSource.URL).segment("entities").build());
+                UriBuilder.fromPath(serviceUrl).segment("entities").build());
         for (String id : idSet) {
             resource = resource.queryParam("id", id);
         }
