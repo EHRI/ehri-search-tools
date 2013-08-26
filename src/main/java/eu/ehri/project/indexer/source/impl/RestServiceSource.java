@@ -7,6 +7,8 @@ import com.sun.jersey.api.client.Client;
 import eu.ehri.project.indexer.source.Source;
 import org.codehaus.jackson.JsonNode;
 
+import javax.ws.rs.core.UriBuilder;
+import java.net.URI;
 import java.util.Iterator;
 import java.util.List;
 
@@ -15,35 +17,67 @@ import java.util.List;
  */
 public class RestServiceSource implements Source<JsonNode> {
 
-    private final List<ServiceSource> readers = Lists.newArrayList();
+    private final List<WebSource> readers = Lists.newArrayList();
 
     public RestServiceSource(String serviceUrl, String... specs) {
-        List<String> ids = Lists.newArrayList();
         Client client = Client.create();
-        for (String spec : specs) {
-            if (spec.contains("|")) {
-                Iterable<String> split = Splitter.on("|").limit(2).split(spec);
-                String type = Iterables.get(split, 0);
-                String id = Iterables.get(split, 1);
-                readers.add(new ChildItemSource(client, serviceUrl, type, id));
-            } else if (spec.startsWith("@")) {
-                ids.add(spec.substring(1));
-            } else {
-                readers.add(new TypeSource(client, serviceUrl, spec));
-            }
+        for (URI uri : urlsFromSpecs(serviceUrl, specs)) {
+            readers.add(new WebSource(client, uri.toString()));
         }
-        readers.add(new IdSetSource(client, serviceUrl, ids.toArray(new String[ids.size()])));
     }
 
     @Override
     public void finish() {
-        for (ServiceSource reader : readers) {
+        for (WebSource reader : readers) {
             reader.finish();
         }
     }
 
     @Override
     public Iterator<JsonNode> iterator() {
-        return Iterables.concat(readers.toArray(new ServiceSource[readers.size()])).iterator();
+        return Iterables.concat(
+                readers.toArray(new WebSource[readers.size()])).iterator();
+    }
+
+    /**
+     * Turn a list of specs into a set of EHRI REST URLs to download
+     * JSON lists from.
+     *
+     * This is gross and subject to change.
+     *
+     * @param serviceUrl    The base REST URL
+     * @param specs         A list of specs
+     * @return              A list of URLs
+     */
+    private List<URI> urlsFromSpecs(String serviceUrl, String... specs) {
+        List<URI> urls = Lists.newArrayList();
+        List<String> ids = Lists.newArrayList();
+        for (String spec : specs) {
+            // Item type and id - denotes fetching child items (?)
+            if (spec.contains("|")) {
+                Iterable<String> split = Splitter.on("|").limit(2).split(spec);
+                String type = Iterables.get(split, 0);
+                String id = Iterables.get(split, 1);
+                URI url = UriBuilder.fromPath(serviceUrl)
+                        .segment(type).segment(id).segment("list")
+                        .queryParam("limit", "-1").build();
+                urls.add(url);
+            } else if (spec.startsWith("@")) {
+                ids.add(spec.substring(1));
+            } else {
+                URI url = UriBuilder.fromPath(serviceUrl)
+                        .segment(spec).segment("list")
+                        .queryParam("limit", "-1").build();
+                urls.add(url);
+            }
+        }
+
+        // Unlike types or children, multiple ids are done in one request.
+        UriBuilder idBuilder = UriBuilder.fromPath(serviceUrl).segment("entities");
+        for (String id : ids) {
+            idBuilder = idBuilder.queryParam("id", id);
+        }
+        urls.add(idBuilder.queryParam("limit", "-1").build());
+        return urls;
     }
 }

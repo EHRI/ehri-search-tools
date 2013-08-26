@@ -15,10 +15,10 @@ import java.util.Iterator;
  * @author Mike Bryant (http://github.com/mikesname)
  */
 public class InputStreamSource implements Source<JsonNode> {
-    private final JsonFactory jsonFactory = new JsonFactory();
-    private final ObjectMapper mapper = new ObjectMapper();
-    private JsonParser jsonParser;
+    private static final JsonFactory jsonFactory = new JsonFactory();
+    private static final ObjectMapper mapper = new ObjectMapper();
     private final InputStream ios;
+    private JsonParser jsonParser;
 
     public InputStreamSource(InputStream ios) {
         this.ios = ios;
