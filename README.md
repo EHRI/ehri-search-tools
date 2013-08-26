@@ -9,6 +9,7 @@ service (Solr). The traditional way to do this would be something like:
 
 ```
 curl <WS-URL> | convert-json | curl -X POST "Content-type: application/json" <SOLR-UPDATE-URL> --data @-
+```
 
 Here, we just bundle the downloading and uploading bits as well, with some convenience syntax. There are ways to
 accomplish the shell pipeline approach using certain options detailed below.
