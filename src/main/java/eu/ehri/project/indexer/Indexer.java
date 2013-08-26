@@ -148,14 +148,15 @@ public class Indexer {
                 String id = Iterables.get(split, 1);
                 URI url = UriBuilder.fromPath(serviceUrl)
                         .segment(type).segment(id).segment("list")
-                        .queryParam("limit", "-1").build();
+                        .queryParam("limit", -1)
+                        .queryParam("all", true).build();
                 urls.add(url);
             } else if (spec.startsWith("@")) {
                 ids.add(spec.substring(1));
             } else {
                 URI url = UriBuilder.fromPath(serviceUrl)
                         .segment(spec).segment("list")
-                        .queryParam("limit", "-1").build();
+                        .queryParam("limit", -1).build();
                 urls.add(url);
             }
         }
@@ -165,7 +166,7 @@ public class Indexer {
         for (String id : ids) {
             idBuilder = idBuilder.queryParam("id", id);
         }
-        urls.add(idBuilder.queryParam("limit", "-1").build());
+        urls.add(idBuilder.queryParam("limit", -1).build());
         return urls;
     }
 

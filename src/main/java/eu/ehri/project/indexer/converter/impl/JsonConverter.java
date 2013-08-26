@@ -176,6 +176,9 @@ public class JsonConverter implements Converter<JsonNode> {
             }
         }
 
+        // HACK! Set isTopLevel attr for items where parentId is not defined
+        data.put("isTopLevel", !data.containsKey("parentId"));
+
         return data;
     }
 
