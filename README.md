@@ -1,5 +1,4 @@
-Indexer
-=======
+# Indexer
 
 **This is a work in progress!**
 
@@ -39,7 +38,7 @@ The default URIs for Solr and the REST service are:
 * http://localhost:8983/solr/portal
 ```
 
-h2. Examples:
+## Examples:
 
 Index documentary unit and repository types from default service endpoints:
 
@@ -84,7 +83,7 @@ cat data.json | java -jar indexer.jar -f - -v
 ```
 
 
-h2. TODO:
+## TODO:
 
 * Add proper logging
 * Add proper error handling
