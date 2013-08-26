@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import eu.ehri.project.indexer.converter.Converter;
 import eu.ehri.project.indexer.converter.impl.JsonConverter;
 import eu.ehri.project.indexer.converter.impl.NoopConverter;
+import eu.ehri.project.indexer.index.Index;
 import eu.ehri.project.indexer.index.impl.SolrIndex;
 import eu.ehri.project.indexer.sink.Sink;
 import eu.ehri.project.indexer.sink.impl.*;
@@ -171,26 +172,48 @@ public class Indexer {
 
     public static void main(String[] args) throws IOException, ParseException {
 
+        // Long opts
+        final String PRINT = "print";
+        final String PRETTY = "pretty";
+        final String CLEAR_ALL = "clear-all";
+        final String CLEAR_ID = "clear-id";
+        final String CLEAR_TYPE = "clear-type";
+        final String FILE = "file";
+        final String REST_URL = "rest";
+        final String SOLR_URL = "solr";
+        final String NO_INDEX = "noindex";
+        final String NO_CONVERT = "noconvert";
+        final String VERBOSE = "verbose";
+        final String VERY_VERBOSE = "veryverbose";
+        final String HELP = "help";
+
+
         Options options = new Options();
         options.addOption("p", "print", false,
                 "Print converted JSON to stdout. Also implied by --noindex.");
-        options.addOption("P", "pretty", false,
+        options.addOption("D", CLEAR_ALL, false,
+                "Clear entire index first (use with caution.)");
+        options.addOption("c", CLEAR_ID, true,
+                "Clear an individual id. Can be used multiple times.");
+        options.addOption("C", CLEAR_TYPE, true,
+                "Clear an item type. Can be used multiple times.");
+        options.addOption("P", PRETTY, false,
                 "Pretty print out JSON given by --print.");
-        options.addOption("s", "solr", true,
+        options.addOption("s", SOLR_URL, true,
                 "Base URL for Solr service (minus the action segment).");
-        options.addOption("f", "file", true,
+        options.addOption("f", FILE, true,
                 "Read input from a file instead of the REST service. Use '-' for stdin.");
-        options.addOption("e", "ehri", true,
+        options.addOption("r", REST_URL, true,
                 "Base URL for EHRI REST service.");
-        options.addOption("n", "noindex", false,
+        options.addOption("n", NO_INDEX, false,
                 "Don't perform actual indexing.");
-        options.addOption("n", "noconvert", false,
+        options.addOption("n", NO_CONVERT, false,
                 "Don't convert data to index format. Implies --noindex.");
-        options.addOption("v", "verbose", false,
+        options.addOption("v", VERBOSE, false,
                 "Print index stats.");
-        options.addOption("V", "veryverbose", false,
+        options.addOption("V", VERY_VERBOSE, false,
                 "Print individual item ids");
-        options.addOption("h", "help", false,
+        options.addOption("h", HELP, false,
                 "Print this message.");
 
         CommandLineParser parser = new PosixParser();
@@ -209,24 +232,42 @@ public class Indexer {
             System.exit(1);
         }
 
-        String ehriUrl = cmd.getOptionValue("ehri", DEFAULT_EHRI_URL);
-        String solrUrl = cmd.getOptionValue("solr", DEFAULT_SOLR_URL);
+        String ehriUrl = cmd.getOptionValue(REST_URL, DEFAULT_EHRI_URL);
+        String solrUrl = cmd.getOptionValue(SOLR_URL, DEFAULT_SOLR_URL);
 
         Indexer.Builder builder = new Indexer.Builder();
 
+        // Initialize the index...
+        Index index = new SolrIndex(solrUrl);
+
+        // Check if we need to clear the index...
+        boolean commitOnDelete = cmd.hasOption(NO_CONVERT) || cmd.hasOption(NO_INDEX);
+        if (cmd.hasOption(CLEAR_ALL)) {
+            index.deleteAll(commitOnDelete);
+        } else {
+            if (cmd.hasOption(CLEAR_ID)) {
+                String[] ids = cmd.getOptionValues(CLEAR_ID);
+                index.deleteItems(Lists.newArrayList(ids), commitOnDelete);
+            }
+            if (cmd.hasOption(CLEAR_TYPE)) {
+                String[] types = cmd.getOptionValues(CLEAR_TYPE);
+                index.deleteTypes(Lists.newArrayList(types), commitOnDelete);
+            }
+        }
+
         // Determine if we're printing the data...
-        if (cmd.hasOption("noindex") || cmd.hasOption("print") || cmd.hasOption("pretty")) {
-            builder.addSink(new OutputStreamJsonSink(System.out, cmd.hasOption("pretty")));
+        if (cmd.hasOption(NO_INDEX) || cmd.hasOption(PRINT) || cmd.hasOption(PRETTY)) {
+            builder.addSink(new OutputStreamJsonSink(System.out, cmd.hasOption(PRETTY)));
         }
 
         // Determine if we need to actually index the data...
-        if (!(cmd.hasOption("noconvert") || cmd.hasOption("noindex"))) {
-            builder.addSink(new IndexJsonSink(new SolrIndex(solrUrl)));
+        if (!(cmd.hasOption(NO_CONVERT) || cmd.hasOption(NO_INDEX))) {
+            builder.addSink(new IndexJsonSink(index));
         }
 
         // Determine if we want to convert the data or print the incoming
         // JSON as-is...
-        if (cmd.hasOption("noconvert")) {
+        if (cmd.hasOption(NO_CONVERT)) {
             builder.setConverter(new NoopConverter<JsonNode>());
         } else {
             builder.setConverter(new JsonConverter());
@@ -234,9 +275,9 @@ public class Indexer {
 
         // See if we want to print stats... if so create a callback sink
         // to count the individual items and optionally print them...
-        if (cmd.hasOption("verbose") || cmd.hasOption("veryverbose")) {
+        if (cmd.hasOption(VERBOSE) || cmd.hasOption(VERY_VERBOSE)) {
             final Stats stats = new Stats();
-            final boolean vv = cmd.hasOption("veryverbose");
+            final boolean vv = cmd.hasOption(VERY_VERBOSE);
             CallbackSink.Callback<JsonNode> cb = new CallbackSink.Callback<JsonNode>() {
                 @Override
                 public void call(JsonNode jsonNode) {
@@ -257,8 +298,8 @@ public class Indexer {
         }
 
         // Determine the source, either stdin, a file, or the rest service.
-        if (cmd.hasOption("file")) {
-            String fileName = cmd.getOptionValue("file");
+        if (cmd.hasOption(FILE)) {
+            String fileName = cmd.getOptionValue(FILE);
             if (fileName.trim().equals("-")) {
                 builder.addSource(new InputStreamJsonSource(System.in));
             } else {
@@ -271,7 +312,6 @@ public class Indexer {
             builder.addSource(new WebJsonSource(uri));
         }
 
-        Indexer indexer = builder.build();
-        indexer.runIndex();
+        builder.build().runIndex();
     }
 }

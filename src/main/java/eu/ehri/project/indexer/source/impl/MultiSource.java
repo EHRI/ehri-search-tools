@@ -11,7 +11,7 @@ import java.util.List;
  *         <p/>
  *         Aggregate multiple sources into one.
  */
-public class MultiSource<T> implements Source {
+public class MultiSource<T> implements Source<T> {
 
     private final List<Source<T>> readers;
 
