@@ -4,7 +4,9 @@ Indexer
 **This is a work in progress!**
 
 Notes: To build a jar, use `mvn clean compile assembly:single`. The `compile` phase must be present. See:
-http://stackoverflow.com/a/574650/285374.
+http://stackoverflow.com/a/574650/285374. There should then be a Jar called `ehri-indexer-1
+.0-SNAPSHOT-jar-with-dependencies.jar` inside the `target` folder, which you can execute with the usual `java -jar
+<file.jar> [OPTIONS] ... [ARGS]`.
 
 Current options:
 
@@ -29,12 +31,61 @@ usage: indexer  [OPTIONS] <spec> ... <specN>
  -V,--veryverbose        Print individual item ids
 
 Each <spec> should consist of:
-- an item type (all items of that type)
-- an item id prefixed with '@' (individual items)
-- a type|id (bar separated - all children of an item)
+* an item type (all items of that type)
+* an item id prefixed with '@' (individual items)
+* a type|id (bar separated - all children of an item)
+The default URIs for Solr and the REST service are:
+* http://localhost:7474/ehri
+* http://localhost:8983/solr/portal
 ```
 
-TODO:
+h2. Examples:
+
+Index documentary unit and repository types from default service endpoints:
+
+```
+java -jar indexer.jar documentaryUnit repository
+```
+
+Index individual item `us-005578`:
+
+```
+java -jar indexer.jar @us-005578
+```
+
+Pretty print (to stdout) the converted JSON output for all documentary units, but don't index:
+
+```
+java -jar indexer.jar --pretty --noindex documentaryUnit
+```
+
+Pretty print (to stdout) the raw REST service output:
+
+```
+java -jar indexer.jar --pretty --noindex --noconvert documentaryUnit
+```
+
+Clear the entire index:
+
+```
+java -jar indexer.jar --clear-all --noindex
+```
+
+Read the input JSON from a file instead of the REST service, outputting some stats:
+
+```
+java -jar indexer.jar -f data.json -v
+```
+
+Same as above, but piping the data through stdin (use '-' as the file name):
+
+```
+cat data.json | java -jar indexer.jar -f - -v
+```
+
+
+h2. TODO:
+
 * Add proper logging
 * Add proper error handling
 * Ensure all resources are properly cleaned up

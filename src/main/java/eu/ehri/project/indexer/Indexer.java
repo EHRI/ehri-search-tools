@@ -223,9 +223,12 @@ public class Indexer {
         String usage = "indexer  [OPTIONS] <spec> ... <specN>";
         String help = "\n" +
                 "Each <spec> should consist of:\n" +
-                "   - an item type (all items of that type)\n" +
-                "   - an item id prefixed with '@' (individual items)\n" +
-                "   - a type|id (bar separated - all children of an item)\n\n";
+                "   * an item type (all items of that type)\n" +
+                "   * an item id prefixed with '@' (individual items)\n" +
+                "   * a type|id (bar separated - all children of an item)\n\n\n" +
+                "The default URIs for Solr and the REST service are:\n" +
+                " * " + DEFAULT_EHRI_URL + "\n" +
+                " * " + DEFAULT_SOLR_URL + "\n\n";
 
         if (cmd.hasOption("help")) {
             HelpFormatter formatter = new HelpFormatter();
