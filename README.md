@@ -30,8 +30,9 @@ usage: indexer  [OPTIONS] <spec> ... <specN>
  -f,--file <arg>         Read input from a file instead of the REST
                          service. Use '-' for stdin.
  -h,--help               Print this message.
- -n,--noconvert          Don't convert data to index format. Implies
-                         --noindex.
+ -i,--index              Index the data. This is NOT the default for safety
+                         reasons.
+ -n,--noconvert          Don't convert data to index format.
  -P,--pretty             Pretty print out JSON given by --print.
  -p,--print              Print converted JSON to stdout. Also implied by
                          --noindex.
@@ -55,19 +56,19 @@ The default URIs for Solr and the REST service are:
 Index documentary unit and repository types from default service endpoints:
 
 ```
-java -jar indexer.jar documentaryUnit repository
+java -jar indexer.jar --index documentaryUnit repository
 ```
 
 Index individual item `us-005578`:
 
 ```
-java -jar indexer.jar @us-005578
+java -jar indexer.jar --index @us-005578
 ```
 
 Pretty print (to stdout) the converted JSON output for all documentary units, but don't index:
 
 ```
-java -jar indexer.jar --pretty --noindex documentaryUnit
+java -jar indexer.jar --pretty documentaryUnit
 ```
 
 Pretty print (to stdout) the raw REST service output:
@@ -79,19 +80,19 @@ java -jar indexer.jar --pretty --noindex --noconvert documentaryUnit
 Clear the entire index:
 
 ```
-java -jar indexer.jar --clear-all --noindex
+java -jar indexer.jar --clear-all
 ```
 
-Read the input JSON from a file instead of the REST service, outputting some stats:
+Index data read from a JSON file instead of the REST service, outputting some stats:
 
 ```
-java -jar indexer.jar -f data.json -v
+java -jar indexer.jar --index -f data.json -v
 ```
 
 Same as above, but piping the data through stdin (use '-' as the file name):
 
 ```
-cat data.json | java -jar indexer.jar -f - -v
+cat data.json | java -jar indexer.jar --index -f - -v
 ```
 
 

@@ -182,7 +182,7 @@ public class Indexer {
         final String FILE = "file";
         final String REST_URL = "rest";
         final String SOLR_URL = "solr";
-        final String NO_INDEX = "noindex";
+        final String INDEX = "index";
         final String NO_CONVERT = "noconvert";
         final String VERBOSE = "verbose";
         final String VERY_VERBOSE = "veryverbose";
@@ -206,8 +206,8 @@ public class Indexer {
                 "Read input from a file instead of the REST service. Use '-' for stdin.");
         options.addOption("r", REST_URL, true,
                 "Base URL for EHRI REST service.");
-        options.addOption("n", NO_INDEX, false,
-                "Don't perform actual indexing.");
+        options.addOption("i", INDEX, false,
+                "Index the data. This is NOT the default for safety reasons.");
         options.addOption("n", NO_CONVERT, false,
                 "Don't convert data to index format. Implies --noindex.");
         options.addOption("v", VERBOSE, false,
@@ -230,7 +230,7 @@ public class Indexer {
                 " * " + DEFAULT_EHRI_URL + "\n" +
                 " * " + DEFAULT_SOLR_URL + "\n\n";
 
-        if (cmd.hasOption("help")) {
+        if (cmd.hasOption(HELP)) {
             HelpFormatter formatter = new HelpFormatter();
             formatter.printHelp(usage, null, options, help);
             System.exit(1);
@@ -245,7 +245,7 @@ public class Indexer {
         Index index = new SolrIndex(solrUrl);
 
         // Check if we need to clear the index...
-        boolean commitOnDelete = cmd.hasOption(NO_CONVERT) || cmd.hasOption(NO_INDEX);
+        boolean commitOnDelete = cmd.hasOption(NO_CONVERT) || cmd.hasOption(INDEX);
         if (cmd.hasOption(CLEAR_ALL)) {
             index.deleteAll(commitOnDelete);
         } else {
@@ -260,12 +260,12 @@ public class Indexer {
         }
 
         // Determine if we're printing the data...
-        if (cmd.hasOption(NO_INDEX) || cmd.hasOption(PRINT) || cmd.hasOption(PRETTY)) {
+        if (!cmd.hasOption(INDEX) || cmd.hasOption(PRINT) || cmd.hasOption(PRETTY)) {
             builder.addSink(new OutputStreamJsonSink(System.out, cmd.hasOption(PRETTY)));
         }
 
         // Determine if we need to actually index the data...
-        if (!(cmd.hasOption(NO_CONVERT) || cmd.hasOption(NO_INDEX))) {
+        if (cmd.hasOption(INDEX)) {
             builder.addSink(new IndexJsonSink(index));
         }
 
