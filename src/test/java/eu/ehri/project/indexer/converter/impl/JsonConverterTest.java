@@ -9,9 +9,9 @@ import org.junit.Test;
 
 import java.io.InputStream;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotSame;
-import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertFalse;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)

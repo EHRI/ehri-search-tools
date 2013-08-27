@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.io.InputStream;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)
