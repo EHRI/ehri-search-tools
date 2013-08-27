@@ -95,6 +95,13 @@ Same as above, but piping the data through stdin (use '-' as the file name):
 cat data.json | java -jar indexer.jar --index -f - -v
 ```
 
+Read data from stdin, convert it, and pipe it to a Curl upload for indexing:
+
+```
+cat orig.json | java -jar indexer.jar -f - | curl -X POST -H "Content-type: application/json"
+"http://localhost:8983/solr/ehri/update?commit=true" --data @-
+```
+
 
 ## TODO:
 
