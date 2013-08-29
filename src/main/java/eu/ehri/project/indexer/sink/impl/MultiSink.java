@@ -14,10 +14,6 @@ public class MultiSink<T, W extends Sink<T>> implements Sink<T> {
 
     private final List<W> writers;
 
-    public MultiSink(W... writers) {
-        this.writers = Lists.newArrayList(writers);
-    }
-
     public MultiSink(List<W> writers) {
         this.writers = Lists.newArrayList(writers);
     }
@@ -28,9 +24,9 @@ public class MultiSink<T, W extends Sink<T>> implements Sink<T> {
         }
     }
 
-    public void close() {
+    public void finish() {
         for (W writer : writers) {
-            writer.close();
+            writer.finish();
         }
     }
 }

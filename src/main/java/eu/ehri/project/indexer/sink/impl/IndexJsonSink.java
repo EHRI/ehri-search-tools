@@ -26,18 +26,17 @@ public class IndexJsonSink implements Sink<JsonNode> {
         npw.write(node);
     }
 
-    public void close() {
-        npw.close();
+    public void finish() {
+        npw.finish();
         try {
             index.update(out.getSupplier().getInput(), true);
         } catch (IOException e) {
             throw new RuntimeException("Error updating Solr: ", e);
-        } finally {
-            try {
-                out.close();
-            } catch (IOException e) {
-                throw new RuntimeException("Error closing temp stream for index: ", e);
-            }
+        }
+        try {
+            out.close();
+        } catch (IOException e) {
+            throw new RuntimeException("Error closing temp stream for index: ", e);
         }
     }
 }

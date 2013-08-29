@@ -51,7 +51,7 @@ public class OutputStreamJsonSink implements Sink<JsonNode> {
 
     }
 
-    public void close() {
+    public void finish() {
         if (generator != null) {
             try {
                 generator.writeEndArray();

@@ -27,8 +27,7 @@ public class MultiSource<T> implements Source<T> {
     }
 
     @Override
-    public Iterator iterator() {
-        return Iterables.concat(
-                readers.toArray(new Source[readers.size()])).iterator();
+    public Iterator<T> iterator() {
+        return Iterables.<T>concat(readers).iterator();
     }
 }

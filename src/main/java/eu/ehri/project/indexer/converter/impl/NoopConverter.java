@@ -9,7 +9,7 @@ import eu.ehri.project.indexer.converter.Converter;
 public class NoopConverter<T> implements Converter<T> {
     @Override
     public Iterable<T> convert(T t) {
-        // This is ugly, but never mind
-        return Lists.<T>newArrayList(t);
+        //noinspection unchecked
+        return Lists.newArrayList(t);
     }
 }

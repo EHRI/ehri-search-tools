@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  *         <p/>
- *         Run a function on write and close.
+ *         Run a function on write and finish.
  */
 public class CallbackSink<T> implements Sink<T> {
 
@@ -24,17 +24,13 @@ public class CallbackSink<T> implements Sink<T> {
         callbacks = Lists.newArrayList(callback);
     }
 
-    public CallbackSink(List<Callback<T>> callbacks) {
-        this.callbacks = Lists.newArrayList(callbacks);
-    }
-
     public void write(T t) {
         for (Callback<T> cb : callbacks) {
             cb.call(t);
         }
     }
 
-    public void close() {
+    public void finish() {
         for (Callback<T> cb : callbacks) {
             cb.finish();
         }

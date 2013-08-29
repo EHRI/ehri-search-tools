@@ -6,5 +6,5 @@ package eu.ehri.project.indexer.sink;
 public interface Sink<T> {
     public void write(T t);
 
-    public void close();
+    public void finish();
 }

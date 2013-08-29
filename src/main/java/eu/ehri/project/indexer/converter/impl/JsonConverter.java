@@ -52,7 +52,6 @@ public class JsonConverter implements Converter<JsonNode> {
      * @param node A JSON node representing a single item
      * @return The output nodes
      *         the converted data
-     * @throws java.io.IOException
      */
     public Iterable<JsonNode> convert(JsonNode node) {
         List<JsonNode> out = Lists.newArrayList();

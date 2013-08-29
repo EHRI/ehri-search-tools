@@ -5,6 +5,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import eu.ehri.project.indexer.converter.Converter;
 import eu.ehri.project.indexer.converter.impl.JsonConverter;
+import eu.ehri.project.indexer.converter.impl.MultiConverter;
 import eu.ehri.project.indexer.converter.impl.NoopConverter;
 import eu.ehri.project.indexer.index.Index;
 import eu.ehri.project.indexer.index.impl.SolrIndex;
@@ -32,7 +33,7 @@ import java.util.List;
  *         converter, and one or more sink objects to get some JSON
  *         data, convert it to another format, and put it somewhere.
  */
-public class Indexer {
+public class Indexer<T> {
 
     /**
      * Default service end points.
@@ -42,88 +43,93 @@ public class Indexer {
     private static final String DEFAULT_SOLR_URL = "http://localhost:8983/solr/portal";
     private static final String DEFAULT_EHRI_URL = "http://localhost:7474/ehri";
 
-    private final Source<JsonNode> source;
-    private final Sink<JsonNode> writer;
-    private final Converter<JsonNode> converter;
+    private final Source<T> source;
+    private final Sink<T> writer;
+    private final Converter<T> converter;
 
     /**
      * Builder for an Indexer. More options to come.
      */
-    public static class Builder {
-        private final List<Source<JsonNode>> sources = Lists.newArrayList();
-        private final List<Sink<JsonNode>> writers = Lists.newArrayList();
+    public static class Builder<T> {
+        private final List<Source<T>> sources = Lists.newArrayList();
+        private final List<Sink<T>> writers = Lists.newArrayList();
+        private List<Converter<T>> converters = Lists.newArrayList();
 
-        private Converter<JsonNode> converter;
-
-        public Builder addSink(Sink<JsonNode> writer) {
+        public Builder<T> addSink(Sink<T> writer) {
             writers.add(writer);
             return this;
         }
 
-        private Sink<JsonNode> getWriter() {
+        private Sink<T> getSink() {
             if (writers.size() > 1) {
-                return new MultiSink<JsonNode, Sink<JsonNode>>(writers);
+                return new MultiSink<T, Sink<T>>(writers);
             } else if (writers.size() == 1) {
                 return writers.get(0);
             } else {
-                return new NoopSink<JsonNode>();
+                return new NoopSink<T>();
             }
         }
 
-        public Source<JsonNode> getSources() {
+        public Source<T> getSource() {
             if (sources.size() > 1) {
-                return new MultiSource<JsonNode>(sources);
+                return new MultiSource<T>(sources);
             } else if (sources.size() == 1) {
                 return sources.get(0);
             } else {
-                return new NoopSource<JsonNode>();
+                return new NoopSource<T>();
             }
         }
 
-        public Builder addSource(Source<JsonNode> source) {
+        public Builder<T> addSource(Source<T> source) {
             this.sources.add(source);
             return this;
         }
 
-        public Converter<JsonNode> getConverter() {
-            return converter;
+        public Converter<T> getConverter() {
+            if (sources.size() > 1) {
+                return new MultiConverter<T>(converters);
+            } else if (sources.size() == 1) {
+                return converters.get(0);
+            } else {
+                return new NoopConverter<T>();
+            }
         }
 
-        public Builder setConverter(Converter<JsonNode> converter) {
-            this.converter = converter;
+        public Builder<T> addConverter(Converter<T> converter) {
+            this.converters.add(converter);
             return this;
         }
 
-        public Indexer build() {
+        public Indexer<T> build() {
             if (sources.isEmpty()) {
                 throw new IllegalStateException("Source has not been given");
             }
-            if (converter == null) {
+            if (converters.isEmpty()) {
                 throw new IllegalStateException("Converter has not been given");
             }
-            return new Indexer(this);
+            return new Indexer<T>(this);
         }
     }
 
-    private Indexer(Builder builder) {
-        this.writer = builder.getWriter();
-        this.source = builder.getSources();
+    private Indexer(Builder<T> builder) {
+        this.writer = builder.getSink();
+        this.source = builder.getSource();
         this.converter = builder.getConverter();
     }
 
     /**
      * Perform the actual actions.
      */
-    public void runIndex() {
+    public void iterate() {
         try {
-            for (JsonNode node : source) {
-                for (JsonNode out : converter.convert(node)) {
+            for (T item : source) {
+                for (T out : converter.convert(item)) {
                     writer.write(out);
                 }
             }
         } finally {
             source.finish();
-            writer.close();
+            writer.finish();
         }
     }
 
@@ -239,7 +245,7 @@ public class Indexer {
         String ehriUrl = cmd.getOptionValue(REST_URL, DEFAULT_EHRI_URL);
         String solrUrl = cmd.getOptionValue(SOLR_URL, DEFAULT_SOLR_URL);
 
-        Indexer.Builder builder = new Indexer.Builder();
+        Indexer.Builder<JsonNode> builder = new Indexer.Builder<JsonNode>();
 
         // Initialize the index...
         Index index = new SolrIndex(solrUrl);
@@ -271,10 +277,8 @@ public class Indexer {
 
         // Determine if we want to convert the data or print the incoming
         // JSON as-is...
-        if (cmd.hasOption(NO_CONVERT)) {
-            builder.setConverter(new NoopConverter<JsonNode>());
-        } else {
-            builder.setConverter(new JsonConverter());
+        if (!cmd.hasOption(NO_CONVERT)) {
+            builder.addConverter(new JsonConverter());
         }
 
         // See if we want to print stats... if so create a callback sink
@@ -316,6 +320,6 @@ public class Indexer {
             builder.addSource(new WebJsonSource(uri));
         }
 
-        builder.build().runIndex();
+        builder.build().iterate();
     }
 }

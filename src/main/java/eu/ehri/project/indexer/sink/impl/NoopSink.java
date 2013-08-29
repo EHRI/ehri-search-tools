@@ -15,6 +15,6 @@ public class NoopSink<T> implements Sink<T> {
     public void write(T t) {
     }
 
-    public void close() {
+    public void finish() {
     }
 }
