@@ -74,7 +74,7 @@ java -jar indexer.jar --pretty documentaryUnit
 Pretty print (to stdout) the raw REST service output:
 
 ```
-java -jar indexer.jar --pretty --noindex --noconvert documentaryUnit
+java -jar indexer.jar --pretty --noconvert documentaryUnit
 ```
 
 Clear the entire index:
