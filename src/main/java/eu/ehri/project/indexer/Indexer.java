@@ -86,9 +86,9 @@ public class Indexer<T> {
         }
 
         public Converter<T> getConverter() {
-            if (sources.size() > 1) {
+            if (converters.size() > 1) {
                 return new MultiConverter<T>(converters);
-            } else if (sources.size() == 1) {
+            } else if (converters.size() == 1) {
                 return converters.get(0);
             } else {
                 return new NoopConverter<T>();
@@ -103,9 +103,6 @@ public class Indexer<T> {
         public Indexer<T> build() {
             if (sources.isEmpty()) {
                 throw new IllegalStateException("Source has not been given");
-            }
-            if (converters.isEmpty()) {
-                throw new IllegalStateException("Converter has not been given");
             }
             return new Indexer<T>(this);
         }
