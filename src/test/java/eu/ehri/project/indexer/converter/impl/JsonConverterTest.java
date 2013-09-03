@@ -50,6 +50,5 @@ public class JsonConverterTest {
         JsonNode out = Iterables.get(new JsonConverter().convert(inputNode), 0);
         assertFalse(out.path("id").isMissingNode());
         assertFalse(out.path("type").isMissingNode());
-        assertFalse(out.path("accessibleTo").isMissingNode());
     }
 }
