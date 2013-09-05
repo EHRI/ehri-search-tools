@@ -188,7 +188,7 @@ public class Indexer<T> {
         final String INDEX = "index";
         final String NO_CONVERT = "noconvert";
         final String VERBOSE = "verbose";
-        final String VERY_VERBOSE = "veryverbose";
+        final String STATS = "stats";
         final String HELP = "help";
 
 
@@ -214,9 +214,9 @@ public class Indexer<T> {
         options.addOption("n", NO_CONVERT, false,
                 "Don't convert data to index format. Implies --noindex.");
         options.addOption("v", VERBOSE, false,
-                "Print index stats.");
-        options.addOption("V", VERY_VERBOSE, false,
-                "Print individual item ids");
+                "Print individual item ids to show progress.");
+        options.addOption("S", STATS, false,
+                "Print indexing stats");
         options.addOption("h", HELP, false,
                 "Print this message.");
 
@@ -280,14 +280,15 @@ public class Indexer<T> {
 
         // See if we want to print stats... if so create a callback sink
         // to count the individual items and optionally print them...
-        if (cmd.hasOption(VERBOSE) || cmd.hasOption(VERY_VERBOSE)) {
+        if (cmd.hasOption(VERBOSE) || cmd.hasOption(STATS)) {
             final Stats stats = new Stats();
-            final boolean vv = cmd.hasOption(VERY_VERBOSE);
+            final boolean printStats = cmd.hasOption(STATS);
+            final boolean printItems = cmd.hasOption(VERBOSE);
             CallbackSink.Callback<JsonNode> cb = new CallbackSink.Callback<JsonNode>() {
                 @Override
                 public void call(JsonNode jsonNode) {
                     stats.incrementCount();
-                    if (vv) {
+                    if (printItems) {
                         System.err.println(jsonNode.path("type").asText()
                                 + " -> " + jsonNode.path("id").asText());
                     }
@@ -295,7 +296,9 @@ public class Indexer<T> {
 
                 @Override
                 public void finish() {
-                    stats.printReport(System.err);
+                    if (printStats) {
+                        stats.printReport(System.err);
+                    }
                 }
             };
             //noinspection unchecked
