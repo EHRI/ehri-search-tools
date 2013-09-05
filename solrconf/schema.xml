@@ -145,6 +145,7 @@ also applies synonyms. -->
 <copyField source="title" dest="text"/>
 <copyField source="holderName" dest="text"/>
 <copyField source="addresses" dest="text"/>
+<copyField source="*_s" dest="text"/>
 <copyField source="*_t" dest="text"/>
 <copyField source="*_ss" dest="text"/>
 <copyField source="accessPoints" dest="text"/>
