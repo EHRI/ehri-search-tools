@@ -262,8 +262,8 @@ public class Indexer<T> {
         // Initialize the index...
         Index index = new SolrIndex(solrUrl);
 
-        // Check if we need to clear the index...
-        boolean commitOnDelete = cmd.hasOption(NO_CONVERT) || cmd.hasOption(INDEX);
+        // Check if we need to clear the index... do this if we're NOT indexing.
+        boolean commitOnDelete = !cmd.hasOption(INDEX);
         if (cmd.hasOption(CLEAR_ALL)) {
             index.deleteAll(commitOnDelete);
         } else {
