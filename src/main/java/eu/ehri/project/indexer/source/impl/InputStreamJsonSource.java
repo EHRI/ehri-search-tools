@@ -5,6 +5,7 @@ import org.codehaus.jackson.JsonFactory;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonToken;
+import org.codehaus.jackson.map.MappingIterator;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class InputStreamJsonSource implements Source<JsonNode> {
         this.ios = ios;
     }
 
-    public void finish() {
+    public void finish() throws SourceException {
         if (jsonParser != null) {
             try {
                 jsonParser.close();
@@ -35,14 +36,20 @@ public class InputStreamJsonSource implements Source<JsonNode> {
     }
 
     @Override
-    public Iterator<JsonNode> iterator() {
+    public Iterable<JsonNode> getIterable() throws SourceException {
         try {
             jsonParser = jsonFactory.createJsonParser(ios);
             JsonToken firstToken = jsonParser.nextToken();
             if (firstToken != JsonToken.START_ARRAY) {
                 throw new IllegalStateException("Excepted a JSON array, instead first token was: " + firstToken);
             }
-            return mapper.readValues(jsonParser, JsonNode.class);
+            final MappingIterator<JsonNode> iterator = mapper.readValues(jsonParser, JsonNode.class);
+            return new Iterable<JsonNode>() {
+                @Override
+                public Iterator<JsonNode> iterator() {
+                    return iterator;
+                }
+            };
         } catch (IOException e) {
             throw new RuntimeException("Error reading JSON stream: ", e);
         }

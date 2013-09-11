@@ -15,6 +15,7 @@ public class IndexJsonSink implements Sink<JsonNode> {
     private final Index index;
     private final FileBackedOutputStream out;
     private final OutputStreamJsonSink npw;
+    private int writeCount = 0;
 
     public IndexJsonSink(Index index) {
         this.index = index;
@@ -22,16 +23,20 @@ public class IndexJsonSink implements Sink<JsonNode> {
         this.npw = new OutputStreamJsonSink(out);
     }
 
-    public void write(JsonNode node) {
+    public void write(JsonNode node) throws SinkException {
+        writeCount++;
         npw.write(node);
     }
 
-    public void finish() {
+    public void finish() throws SinkException {
         npw.finish();
         try {
-            index.update(out.getSupplier().getInput(), true);
-        } catch (IOException e) {
-            throw new RuntimeException("Error updating Solr: ", e);
+            if (writeCount > 0) {
+                index.update(out.getSupplier().getInput(), true);
+                writeCount = 0;
+            }
+        } catch (Exception e) {
+            throw new SinkException("Error updating Solr: "+ e.getMessage());
         }
         try {
             out.close();

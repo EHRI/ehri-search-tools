@@ -1,9 +1,9 @@
 package eu.ehri.project.indexer.source.impl;
 
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import eu.ehri.project.indexer.source.Source;
 
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -13,21 +13,29 @@ import java.util.List;
  */
 public class MultiSource<T> implements Source<T> {
 
-    private final List<Source<T>> readers;
+    private final List<Source<T>> sources;
 
-    public MultiSource(List<Source<T>> readers) {
-        this.readers = readers;
+    public MultiSource(List<Source<T>> sources) {
+        this.sources = sources;
     }
 
     @Override
-    public void finish() {
-        for (Source<T> reader : readers) {
+    public void finish() throws SourceException {
+        for (Source<T> reader : sources) {
             reader.finish();
         }
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return Iterables.<T>concat(readers).iterator();
+    public Iterable<T> getIterable() throws SourceException {
+        return Iterables.concat(getReaders());
+    }
+
+    private Iterable<Iterable<T>> getReaders() throws SourceException {
+        List<Iterable<T>> readers = Lists.newArrayList();
+        for (Source<T> source: sources) {
+            readers.add(source.getIterable());
+        }
+        return readers;
     }
 }

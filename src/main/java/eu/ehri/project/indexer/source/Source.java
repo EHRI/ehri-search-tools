@@ -3,8 +3,8 @@ package eu.ehri.project.indexer.source;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public interface Source<T> extends Iterable<T> {
-    public class SourceException extends RuntimeException {
+public interface Source<T> {
+    public class SourceException extends Exception {
         public SourceException(String message) {
             super(message);
         }
@@ -13,6 +13,8 @@ public interface Source<T> extends Iterable<T> {
             super(message, e);
         }
     }
+
+    public Iterable<T> getIterable() throws SourceException;
 
     public void finish() throws SourceException;
 }

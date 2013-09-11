@@ -16,7 +16,12 @@ public class NoopSource<T> implements Source<T> {
     }
 
     @Override
-    public Iterator<T> iterator() {
-        return Iterators.emptyIterator();
+    public Iterable<T> getIterable() throws SourceException {
+        return new Iterable<T>() {
+            @Override
+            public Iterator<T> iterator() {
+                return Iterators.emptyIterator();
+            }
+        };
     }
 }

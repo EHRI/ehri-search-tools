@@ -35,6 +35,22 @@ import java.util.List;
  */
 public class Indexer<T> {
 
+    enum ErrCodes {
+        BAD_SOURCE_ERR(3),
+        BAD_SINK_ERR(4),
+        BAD_CONVERSION_ERR(5);
+
+        private int code;
+
+        private ErrCodes(int code) {
+            this.code = code;
+        }
+
+        public int getCode() {
+            return code;
+        }
+    }
+
     /**
      * Default service end points.
      * <p/>
@@ -117,9 +133,9 @@ public class Indexer<T> {
     /**
      * Perform the actual actions.
      */
-    public void iterate() {
+    public void iterate() throws Source.SourceException, Sink.SinkException {
         try {
-            for (T item : source) {
+            for (T item : source.getIterable()) {
                 for (T out : converter.convert(item)) {
                     writer.write(out);
                 }
@@ -190,7 +206,6 @@ public class Indexer<T> {
         final String VERBOSE = "verbose";
         final String STATS = "stats";
         final String HELP = "help";
-
 
         Options options = new Options();
         options.addOption("p", "print", false,
@@ -320,6 +335,14 @@ public class Indexer<T> {
             builder.addSource(new WebJsonSource(uri));
         }
 
-        builder.build().iterate();
+        try {
+            builder.build().iterate();
+        } catch (Source.SourceException e) {
+            System.err.println(e.getMessage());
+            System.exit(ErrCodes.BAD_SOURCE_ERR.code);
+        } catch (Sink.SinkException e) {
+            System.err.println(e.getMessage());
+            System.exit(ErrCodes.BAD_SINK_ERR.code);
+        }
     }
 }

@@ -171,9 +171,7 @@ public class JsonConverter implements Converter<JsonNode> {
         // HACK! Set restricted=true for items that have accessors.
         // NB: This should be done before setting field defaults, because
         // the default for items without accessibleTo is ["ALLUSERS"]
-        if (data.containsKey("accessibleTo")) {
-            data.put("restricted", true);
-        }
+        data.put("restricted", data.containsKey("accessibleTo"));
 
         // Add defaults
         // NB: Simple defaults can be set directly in the schema, so this is

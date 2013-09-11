@@ -18,13 +18,13 @@ public class MultiSink<T, W extends Sink<T>> implements Sink<T> {
         this.writers = Lists.newArrayList(writers);
     }
 
-    public void write(T t) {
+    public void write(T t) throws SinkException {
         for (W writer : writers) {
             writer.write(t);
         }
     }
 
-    public void finish() {
+    public void finish() throws SinkException {
         for (W writer : writers) {
             writer.finish();
         }
