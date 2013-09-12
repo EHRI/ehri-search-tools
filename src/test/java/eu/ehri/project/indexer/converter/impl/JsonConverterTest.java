@@ -27,7 +27,7 @@ public class JsonConverterTest {
         InputStream stream = getClass().getClassLoader().getResourceAsStream(testResource);
         Source<JsonNode> source = new InputStreamJsonSource(stream);
         try {
-            inputNode = Iterables.get(source, 0);
+            inputNode = Iterables.get(source.getIterable(), 0);
         } finally {
             source.finish();
             stream.close();

@@ -21,7 +21,7 @@ public class InputStreamJsonSourceTest {
         InputStream stream = getClass().getClassLoader().getResourceAsStream(testResource);
         Source<JsonNode> source = new InputStreamJsonSource(stream);
         try {
-            assertEquals(1, Iterables.size(source));
+            assertEquals(1, Iterables.size(source.getIterable()));
         } finally {
             source.finish();
             stream.close();
