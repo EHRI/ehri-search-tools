@@ -133,7 +133,7 @@ public class Indexer<T> {
     /**
      * Perform the actual actions.
      */
-    public void iterate() throws Source.SourceException, Sink.SinkException {
+    public void iterate() throws Source.SourceException, Sink.SinkException, Converter.ConverterException {
         try {
             for (T item : source.getIterable()) {
                 for (T out : converter.convert(item)) {
@@ -337,6 +337,9 @@ public class Indexer<T> {
 
         try {
             builder.build().iterate();
+        } catch (Converter.ConverterException e) {
+            System.err.println(e.getMessage());
+            System.exit(ErrCodes.BAD_CONVERSION_ERR.code);
         } catch (Source.SourceException e) {
             System.err.println(e.getMessage());
             System.exit(ErrCodes.BAD_SOURCE_ERR.code);

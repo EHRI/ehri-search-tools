@@ -18,7 +18,7 @@ public class MultiConverter<T> implements Converter<T> {
     }
 
     @Override
-    public Iterable<T> convert(T t) {
+    public Iterable<T> convert(T t) throws ConverterException {
         List<T> temp = Lists.newArrayList();
         for (Converter<T> converter : converters) {
             for (T out : converter.convert(t)) {
