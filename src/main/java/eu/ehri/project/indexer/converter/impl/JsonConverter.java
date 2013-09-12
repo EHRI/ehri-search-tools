@@ -53,7 +53,7 @@ public class JsonConverter implements Converter<JsonNode> {
      * @return The output nodes
      *         the converted data
      */
-    public Iterable<JsonNode> convert(JsonNode node) {
+    public Iterable<JsonNode> convert(JsonNode node) throws ConverterException {
         List<JsonNode> out = Lists.newArrayList();
         Iterator<JsonNode> elements = node.path("relationships").path("describes").getElements();
         List<JsonNode> descriptions = Lists.newArrayList(elements);

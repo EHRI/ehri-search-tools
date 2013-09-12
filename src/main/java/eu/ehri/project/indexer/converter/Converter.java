@@ -5,7 +5,15 @@ package eu.ehri.project.indexer.converter;
  */
 public interface Converter<T> {
 
+    public static class ConverterException extends Exception {
+        public ConverterException(String message) {
+            super(message);
+        }
 
+        public ConverterException(String message, Exception e) {
+            super(message, e);
+        }
+    }
 
-    public Iterable<T> convert(T t);
+    public Iterable<T> convert(T t) throws ConverterException;
 }

@@ -8,7 +8,7 @@ import eu.ehri.project.indexer.converter.Converter;
  */
 public class NoopConverter<T> implements Converter<T> {
     @Override
-    public Iterable<T> convert(T t) {
+    public Iterable<T> convert(T t) throws ConverterException {
         //noinspection unchecked
         return Lists.newArrayList(t);
     }
