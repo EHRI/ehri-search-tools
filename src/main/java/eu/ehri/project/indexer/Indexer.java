@@ -337,12 +337,12 @@ public class Indexer<T> {
 
         try {
             builder.build().iterate();
-        } catch (Converter.ConverterException e) {
-            System.err.println(e.getMessage());
-            System.exit(ErrCodes.BAD_CONVERSION_ERR.code);
         } catch (Source.SourceException e) {
             System.err.println(e.getMessage());
             System.exit(ErrCodes.BAD_SOURCE_ERR.code);
+        } catch (Converter.ConverterException e) {
+            System.err.println(e.getMessage());
+            System.exit(ErrCodes.BAD_CONVERSION_ERR.code);
         } catch (Sink.SinkException e) {
             System.err.println(e.getMessage());
             System.exit(ErrCodes.BAD_SINK_ERR.code);
