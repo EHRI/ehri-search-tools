@@ -1,5 +1,6 @@
 package eu.ehri.project.indexer.converter.impl;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.jayway.jsonpath.InvalidPathException;
@@ -10,6 +11,7 @@ import org.codehaus.jackson.JsonToken;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
+import java.util.Locale;
 
 import java.util.Iterator;
 import java.util.List;
@@ -39,6 +41,26 @@ public class JsonConverter implements Converter<JsonNode> {
 
     // JSON mapper
     private static final ObjectMapper mapper = new ObjectMapper();
+
+    /**
+     * Default locale for language/country conversions...
+     */
+    private static final Locale defaultLocale = Locale.ENGLISH;
+
+    /**
+     * Static lookup of country names.
+     */
+    private static final ImmutableMap<String,String> countryLookup;
+
+    static {
+        Map<String,String> countries = Maps.newHashMap();
+        for (String cc : Locale.getISOCountries()) {
+            countries.put(cc.toLowerCase(),
+                    new Locale(defaultLocale.getLanguage(), cc).getDisplayCountry());
+        }
+        countryLookup = ImmutableMap.copyOf(countries);
+    }
+
 
     /**
      * Default constructor.
@@ -185,6 +207,11 @@ public class JsonConverter implements Converter<JsonNode> {
 
         // HACK! Set isTopLevel attr for items where parentId is not defined
         data.put("isTopLevel", !data.containsKey("parentId"));
+
+        // HACK: if countryCode is set, translate it to a name in the default locale:
+        if (data.containsKey("countryCode")) {
+            data.put("countryName_t", countryLookup.get(data.get("countryCode")));
+        }
 
         return data;
     }
