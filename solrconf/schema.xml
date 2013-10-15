@@ -157,4 +157,6 @@ also applies synonyms. -->
 <defaultSearchField>text</defaultSearchField>
 <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
 <solrQueryParser defaultOperator="OR"/>
+
+<!-- JZ: change ranking model to BM25/Okapi. It works better than the default Vector Space Model! -->
 </schema>
