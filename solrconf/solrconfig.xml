@@ -127,7 +127,7 @@
     </arr>
   </requestHandler>
 
-  <!-- JZ: Terms Component. http://wiki.apache.org/solr/TermsComponent. A component to return terms and document frequency of those terms. Nice statistics! -->
+  <!-- Terms Component. http://wiki.apache.org/solr/TermsComponent. A component to return terms and document frequency of those terms. Nice statistics! -->
   <searchComponent name="terms" class="solr.TermsComponent"/>
 
   <!-- A request handler for demonstrating the terms component -->
@@ -141,10 +141,10 @@
     </arr>
   </requestHandler>
 
-  <!-- JZ: Term Vector Component. http://wiki.apache.org/solr/TermVectorComponent -->
+  <!-- Term Vector Component. http://wiki.apache.org/solr/TermVectorComponent -->
   <searchComponent name="tvComponent" class="solr.TermVectorComponent"/>
 
-  <!-- JZ: A request handler for the term vector component -->
+  <!-- A request handler for the term vector component -->
   <requestHandler name="tvrh" class="solr.SearchHandler" startup="lazy">
     <lst name="defaults">
       <str name="df">text</str>
@@ -155,7 +155,7 @@
     </arr>
   </requestHandler>  
 
-	<!-- JZ: a flexible "autocomplete" component. -->
+	<!-- a flexible "autocomplete" component. -->
   <searchComponent name="suggest" class="solr.SpellCheckComponent">
     <lst name="spellchecker">
       <str name="name">suggest</str>
@@ -189,7 +189,7 @@
     </arr>
   </requestHandler>  
   
-  <!-- JZ: MoreLikeThis handler for generating result suggestions based on a selected document -->
+  <!-- MoreLikeThis handler for generating result suggestions based on a selected document -->
    <requestHandler name="mlt" class="solr.MoreLikeThisHandler">
      <lst name="defaults">
        <str name="mlt.interestingTerms">list</str>

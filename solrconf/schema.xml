@@ -41,7 +41,7 @@ also applies synonyms. -->
     <analyzer type="query">
       <tokenizer class="solr.WhitespaceTokenizerFactory"/>
      
-      <!-- added by JZ: treat hyphens equal to whitespace during query time -->
+      <!-- treat hyphens equal to whitespace during query time -->
       <filter class="solr.PatternReplaceFilterFactory" pattern="(\-)" replacement=" " replace="all" />
             
       <filter class="solr.StopFilterFactory" ignoreCase="true" words="stopwords.txt" enablePositionIncrements="true"/>
@@ -158,5 +158,5 @@ also applies synonyms. -->
 <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
 <solrQueryParser defaultOperator="OR"/>
 
-<!-- JZ: change ranking model to BM25/Okapi. It works better than the default Vector Space Model! -->
+<!-- change ranking model to BM25/Okapi. It works better than the default Vector Space Model! -->
 </schema>
