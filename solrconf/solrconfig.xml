@@ -127,6 +127,73 @@
     </arr>
   </requestHandler>
 
+  <!-- Terms Component. http://wiki.apache.org/solr/TermsComponent. A component to return terms and document frequency of those terms. Nice statistics! -->
+  <searchComponent name="terms" class="solr.TermsComponent"/>
 
+  <!-- A request handler for demonstrating the terms component -->
+  <requestHandler name="/terms" class="solr.SearchHandler">
+     <lst name="defaults">
+      <bool name="terms">true</bool>
+      <bool name="distrib">false</bool>
+    </lst>     
+    <arr name="components">
+      <str>terms</str>
+    </arr>
+  </requestHandler>
+
+  <!-- Term Vector Component. http://wiki.apache.org/solr/TermVectorComponent -->
+  <searchComponent name="tvComponent" class="solr.TermVectorComponent"/>
+
+  <!-- A request handler for the term vector component -->
+  <requestHandler name="tvrh" class="solr.SearchHandler" startup="lazy">
+    <lst name="defaults">
+      <str name="df">text</str>
+      <bool name="tv">true</bool>
+    </lst>
+    <arr name="last-components">
+      <str>tvComponent</str>
+    </arr>
+  </requestHandler>  
+
+	<!-- a flexible "autocomplete" component. -->
+  <searchComponent name="suggest" class="solr.SpellCheckComponent">
+    <lst name="spellchecker">
+      <str name="name">suggest</str>
+      <str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
+      <str name="lookupImpl">org.apache.solr.spelling.suggest.jaspell.JaspellLookup</str>
+      <!-- Alternatives to lookupImpl:
+           org.apache.solr.spelling.suggest.fst.FSTLookup   [finite state automaton]
+           org.apache.solr.spelling.suggest.fst.WFSTLookupFactory [weighted finite state automaton]
+           org.apache.solr.spelling.suggest.jaspell.JaspellLookup [default, jaspell-based]
+           org.apache.solr.spelling.suggest.tst.TSTLookup   [ternary trees]
+      -->
+      <str name="field">text</str>  <!-- the indexed field to derive suggestions from -->
+      <float name="threshold">0.0001</float>
+      <str name="buildOnCommit">true</str>
+<!--
+      <str name="sourceLocation">american-english</str>
+-->
+    </lst>
+	</searchComponent>
+  <requestHandler name="suggest" class="solr.SearchHandler">
+    <lst name="defaults">
+    	<str name="spellcheck">true</str>
+      <str name="spellcheck.onlyMorePopular">true</str>
+      <str name="spellcheck.extendedResults">true</str>
+      <str name="spellcheck.count">5</str>
+      <str name="spellcheck.collate">true</str>
+      <str name="spellcheck.dictionary">suggest</str>
+    </lst>
+    <arr name="last-components">
+      <str>suggest</str>
+    </arr>
+  </requestHandler>  
+  
+  <!-- MoreLikeThis handler for generating result suggestions based on a selected document -->
+   <requestHandler name="mlt" class="solr.MoreLikeThisHandler">
+     <lst name="defaults">
+       <str name="mlt.interestingTerms">list</str>
+     </lst>
+   </requestHandler>  
 </config>
 
