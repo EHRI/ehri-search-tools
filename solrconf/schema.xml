@@ -106,8 +106,8 @@ also applies synonyms. -->
   <field name="name" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="name_ngram" type="text_general_edge_ngram" indexed="true" stored="true" multiValued="true"/>
   <field name="name_sort" type="text_prefix" indexed="true" stored="false" multiValued="false"/>
-  <field name="title" type="text_general" indexed="true" stored="true" multiValued="false"/>
-  <field name="text" type="text_general" indexed="true" stored="false" multiValued="true"/>
+  <field name="title" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
+  <field name="text" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="true"/>
   <field name="otherFormsOfName" type="text_general" indexed="true" stored="true" multiValued="true"/>
   <field name="parallelFormsOfName" type="text_general" indexed="true" stored="true" multiValued="true"/>
   <field name="lastUpdated" type="date" indexed="true" stored="true" multiValued="false"/>
