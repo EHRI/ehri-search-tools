@@ -38,7 +38,8 @@ public class Indexer<T> {
     enum ErrCodes {
         BAD_SOURCE_ERR(3),
         BAD_SINK_ERR(4),
-        BAD_CONVERSION_ERR(5);
+        BAD_CONVERSION_ERR(5),
+        BAD_STATE_ERR(6);
 
         private int code;
 
@@ -118,7 +119,7 @@ public class Indexer<T> {
 
         public Indexer<T> build() {
             if (sources.isEmpty()) {
-                throw new IllegalStateException("Source has not been given");
+                throw new IllegalStateException("Error: no data source provided.");
             }
             return new Indexer<T>(this);
         }
@@ -181,11 +182,13 @@ public class Indexer<T> {
         }
 
         // Unlike types or children, multiple ids are done in one request.
-        UriBuilder idBuilder = UriBuilder.fromPath(serviceUrl).segment("entities");
-        for (String id : ids) {
-            idBuilder = idBuilder.queryParam("id", id);
+        if (!ids.isEmpty()) {
+            UriBuilder idBuilder = UriBuilder.fromPath(serviceUrl).segment("entities");
+            for (String id : ids) {
+                idBuilder = idBuilder.queryParam("id", id);
+            }
+            urls.add(idBuilder.queryParam("limit", -1).build());
         }
-        urls.add(idBuilder.queryParam("limit", -1).build());
         return urls;
     }
 
@@ -346,6 +349,9 @@ public class Indexer<T> {
         } catch (Sink.SinkException e) {
             System.err.println(e.getMessage());
             System.exit(ErrCodes.BAD_SINK_ERR.code);
+        } catch (IllegalStateException e) {
+            System.err.println(e.getMessage());
+            System.exit(ErrCodes.BAD_STATE_ERR.code);
         }
     }
 }

@@ -2,11 +2,13 @@ package eu.ehri.project.indexer.source.impl;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.UniformInterfaceException;
 import eu.ehri.project.indexer.source.Source;
 import org.codehaus.jackson.JsonNode;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.net.ConnectException;
 import java.net.URI;
 
 /**
@@ -47,10 +49,15 @@ public class WebJsonSource implements Source<JsonNode> {
         return ios.getIterable();
     }
 
-    private ClientResponse getResponse() {
-        return client.resource(url)
-                .accept(MediaType.APPLICATION_JSON)
-                .type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+    private ClientResponse getResponse() throws SourceException {
+        try {
+            return client.resource(url)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+        } catch (Exception e) {
+            throw new SourceException(
+                    "Error accessing web resource: '" + url + "': \n" + e.getMessage(), e);
+        }
     }
 
     /**
