@@ -118,9 +118,6 @@ public class Indexer<T> {
         }
 
         public Indexer<T> build() {
-            if (sources.isEmpty()) {
-                throw new IllegalStateException("Error: no data source provided.");
-            }
             return new Indexer<T>(this);
         }
     }
