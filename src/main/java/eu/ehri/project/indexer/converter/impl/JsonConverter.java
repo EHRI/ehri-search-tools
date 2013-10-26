@@ -213,6 +213,11 @@ public class JsonConverter implements Converter<JsonNode> {
             data.put("countryName_t", countryLookup.get(data.get("countryCode")));
         }
 
+        // HACK: Set country name to name field on country type
+        if (data.containsKey("type") && data.get("type").equals("country")) {
+            data.put("name", countryLookup.get(data.get("id")));
+        }
+
         return data;
     }
 
