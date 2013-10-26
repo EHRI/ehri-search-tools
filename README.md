@@ -27,17 +27,18 @@ usage: indexer  [OPTIONS] <spec> ... <specN>
  -f,--file <arg>         Read input from a file instead of the REST
                          service. Use '-' for stdin.
  -h,--help               Print this message.
- -i,--index              Index the data. This is NOT the default for safety
-                         reasons.
+ -i,--index              Index the data. This is NOT the default for
+                         safety reasons.
  -n,--noconvert          Don't convert data to index format.
- -P,--pretty             Pretty print out JSON given by --print.
- -p,--print              Print converted JSON to stdout. Also implied by
-                         --noindex.
+ -P,--pretty             Pretty print out JSON given by --print (implies
+                         --print).
+ -p,--print              Print converted JSON to stdout. The default
+                         action in the omission of --index.
  -r,--rest <arg>         Base URL for EHRI REST service.
  -s,--solr <arg>         Base URL for Solr service (minus the action
-                         segment).
- -v,--verbose            Print index stats.
- -V,--veryverbose        Print individual item ids
+                         segment.)
+ -S,--stats              Print indexing stats.
+ -v,--verbose            Print individual item ids to show progress.
 
 Each <spec> should consist of:
 * an item type (all items of that type)

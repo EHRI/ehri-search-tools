@@ -209,7 +209,7 @@ public class Indexer<T> {
 
         Options options = new Options();
         options.addOption("p", "print", false,
-                "Print converted JSON to stdout. Also implied by --noindex.");
+                "Print converted JSON to stdout. The default action in the omission of --index.");
         options.addOption("D", CLEAR_ALL, false,
                 "Clear entire index first (use with caution.)");
         options.addOption("c", CLEAR_ID, true,
@@ -217,9 +217,9 @@ public class Indexer<T> {
         options.addOption("C", CLEAR_TYPE, true,
                 "Clear an item type. Can be used multiple times.");
         options.addOption("P", PRETTY, false,
-                "Pretty print out JSON given by --print.");
+                "Pretty print out JSON given by --print (implies --print).");
         options.addOption("s", SOLR_URL, true,
-                "Base URL for Solr service (minus the action segment).");
+                "Base URL for Solr service (minus the action segment.)");
         options.addOption("f", FILE, true,
                 "Read input from a file instead of the REST service. Use '-' for stdin.");
         options.addOption("r", REST_URL, true,
@@ -227,13 +227,11 @@ public class Indexer<T> {
         options.addOption("i", INDEX, false,
                 "Index the data. This is NOT the default for safety reasons.");
         options.addOption("n", NO_CONVERT, false,
-                "Don't convert data to index format. Implies --noindex.");
+                "Don't convert data to index format.");
         options.addOption("v", VERBOSE, false,
                 "Print individual item ids to show progress.");
-        options.addOption("S", STATS, false,
-                "Print indexing stats");
-        options.addOption("h", HELP, false,
-                "Print this message.");
+        options.addOption("S", STATS, false, "Print indexing stats.");
+        options.addOption("h", HELP, false, "Print this message.");
 
         CommandLineParser parser = new PosixParser();
         CommandLine cmd = parser.parse(options, args);
