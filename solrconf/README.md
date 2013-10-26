@@ -12,3 +12,5 @@ a) For Unicode normalization
 
 b) For Polish text analyisis
    tbd
+
+   Together with the libraries, the list of stopwords stopwords_pl.txt must be included in portal/conf/lang folder
