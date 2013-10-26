@@ -1,8 +1,11 @@
 # Indexer
 
-This is a convenience tool for indexing the EHRI database. The basic idea is to read some JSON from a web service 
-(EHRI REST), convert it to another format (Solr Doc), and POST it to another web service (Solr). The traditional
-way to do this would be something like:
+This is a convenience tool for indexing the EHRI database. It is used by the EHRI frontend to synchronise the search
+engine with the EHRI backend (and for doing the same easily from the command-line.) The basic idea is to read some
+JSON from a web service (EHRI REST), convert it to another format (Solr Doc), and POST it to another web service
+(Solr).
+
+The traditional way to do this would be something like:
 
 ```
 curl <WS-URL> | convert-json | curl -X POST "Content-type: application/json" <SOLR-UPDATE-URL> --data @-
