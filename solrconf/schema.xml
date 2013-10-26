@@ -150,6 +150,7 @@ also applies synonyms. -->
 <copyField source="otherFormsOfName" dest="name_ngram"/>
 <copyField source="parallelFormsOfName" dest="name_ngram"/>
 <copyField source="name" dest="title"/>
+<copyField source="itemId" dest="text"/>
 <copyField source="name" dest="text"/>
 <copyField source="title" dest="text"/>
 <copyField source="holderName" dest="text"/>
