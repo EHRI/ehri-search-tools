@@ -21,6 +21,8 @@
  It is *not* a good example to work from. 
 -->
 <config>
+
+
   <luceneMatchVersion>LUCENE_41</luceneMatchVersion>
   <!--  The DirectoryFactory to use for indexes.
         solr.StandardDirectoryFactory, the default, is filesystem based.
@@ -47,7 +49,7 @@
   <requestHandler name="/replication" class="solr.ReplicationHandler" startup="lazy" /> 
 
   <requestDispatcher handleSelect="true" >
-    <requestParsers enableRemoteStreaming="false" multipartUploadLimitInKB="2048" formdataUploadLimitInKB="2048" />
+    <requestParsers enableRemoteStreaming="true" multipartUploadLimitInKB="2048" formdataUploadLimitInKB="2048" />
   </requestDispatcher>
   
   <requestHandler name="standard" class="solr.StandardRequestHandler" default="true">
@@ -61,7 +63,16 @@
   </requestHandler>
 
   <requestHandler name="/analysis/field" startup="lazy" class="solr.FieldAnalysisRequestHandler" />
-  <requestHandler name="/update" class="solr.UpdateRequestHandler"  />
+
+
+  <requestHandler name="/update" class="solr.UpdateRequestHandler"  > <!-- changed to include language detection-->
+    <lst name="defaults">
+      <!-- default chain including language detection -->
+      <str name="update.chain">langid</str>     
+    </lst>
+  </requestHandler>
+
+
   <requestHandler name="/admin/" class="org.apache.solr.handler.admin.AdminHandlers" />
      
   <requestHandler name="/admin/ping" class="solr.PingRequestHandler">
@@ -195,5 +206,38 @@
        <str name="mlt.interestingTerms">list</str>
      </lst>
    </requestHandler>  
+
+
+<!-- Request handler to search simultaneously in fields in different languages -->
+
+  <requestHandler name="/multilingsearch" class="solr.SearchHandler">
+     <lst name="defaults">
+       <str name="defType">edismax</str>
+       <str name="qf">
+          text txt_en txt_hu txt_ru txt_pl txt_de txt_nl txt_cs txt_it txt_fr txt_uk txt_hr txt_da txt_el txt_lv txt_no txt_ro txt_generic
+
+       </str>
+     </lst>
+ </requestHandler>
+
+<!-- Configuration of LangDetect language detection tool -->
+<updateRequestProcessorChain name="langid">
+  <processor class="org.apache.solr.update.processor.LangDetectLanguageIdentifierUpdateProcessorFactory">
+    <lst name="defaults">
+      <bool name="langid">true</bool>
+<!--      <str name="langid.fl">name</str> --> 
+        <str name="langid.fl">scopeAndContent,biographicalHistory,abstract,name,archivistNote,archivalHistory,accessPoints</str> 
+      <bool name="langid.map">true</bool>
+ <!--       <bool name="langid.map.individual">true</bool>-->
+
+   <str name="langid.whitelist">en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro</str>
+<!--      <str name="langid.langField">language</str> -->
+      <str name="langid.fallback">generic</str>
+    </lst>
+  </processor>
+  <processor class="solr.LogUpdateProcessorFactory" />
+  <processor class="solr.RunUpdateProcessorFactory" />
+</updateRequestProcessorChain>
+
 </config>
 
