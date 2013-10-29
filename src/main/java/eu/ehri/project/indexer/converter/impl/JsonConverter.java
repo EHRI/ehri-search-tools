@@ -155,7 +155,7 @@ public class JsonConverter implements Converter<JsonNode> {
                 JsonToken value = field.getValue().asToken();
                 switch (value) {
                     case VALUE_STRING:
-                        data.put(key + "_t", field.getValue().asText());
+                        data.put(key, field.getValue().asText());
                         break;
                     case VALUE_NUMBER_INT:
                         data.put(key + "_i", value.asString());
@@ -210,7 +210,7 @@ public class JsonConverter implements Converter<JsonNode> {
 
         // HACK: if countryCode is set, translate it to a name in the default locale:
         if (data.containsKey("countryCode")) {
-            data.put("countryName_t", countryLookup.get(data.get("countryCode")));
+            data.put("countryName", countryLookup.get(data.get("countryCode")));
         }
 
         return data;
