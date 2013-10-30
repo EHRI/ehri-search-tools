@@ -125,7 +125,7 @@ also applies synonyms. -->
   <field name="depthOfDescription" type="int" indexed="true" stored="true" multiValued="false"/>
   <field name="levelOfDescription" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="typeOfEntity" type="string" indexed="true" stored="true" multiValued="false"/>
-  <field name="accessPoints" type="text_general" indexed="true" stored="true" multiValued="true"/>
+  <field name="accessPoints" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="addresses" type="text_general" indexed="true" stored="false" multiValued="true" />
   <field name="priority" type="int" indexed="true" stored="true" multiValued="false"/>
   <field name="_version_" type="long" indexed="true" stored="true"/>
