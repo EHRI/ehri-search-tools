@@ -77,6 +77,7 @@ also applies synonyms. -->
       <filter class="solr.PatternReplaceFilterFactory" pattern="^the\s" replacement="" replace="all"/>
       <filter class="solr.TrimFilterFactory"/>
       <filter class="solr.EdgeNGramFilterFactory" minGramSize="1" maxGramSize="6"/>
+      <filter class="solr.ICUFoldingFilterFactory"/> 
     </analyzer>
     <analyzer type="query">
       <tokenizer class="solr.KeywordTokenizerFactory"/>
@@ -88,6 +89,7 @@ also applies synonyms. -->
       <!-- Remove leading "the "-->
       <filter class="solr.PatternReplaceFilterFactory" pattern="^the\s" replacement="" replace="all"/>
       <filter class="solr.TrimFilterFactory"/>
+      <filter class="solr.ICUFoldingFilterFactory"/> 
     </analyzer>
   </fieldType>
 
@@ -95,26 +97,14 @@ also applies synonyms. -->
    <!-- Polish, no present in the distribution, has been added. Read README.md file to install -->
    <!-- the necessary libraries and stopwords list -->
 
-    <!-- Arabic -->
-    <fieldType name="text_ar" class="solr.TextField" positionIncrementGap="100">
-      <analyzer> 
-        <tokenizer class="solr.StandardTokenizerFactory"/>
-        <!-- for any non-arabic -->
-        <filter class="solr.LowerCaseFilterFactory"/>
-        <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_ar.txt" />
-        <!-- normalizes ﻯ to ﻱ, etc -->
-        <filter class="solr.ArabicNormalizationFilterFactory"/>
-        <filter class="solr.ArabicStemFilterFactory"/>
-      </analyzer>
-    </fieldType>
-
     <!-- Bulgarian -->
     <fieldType name="text_bg" class="solr.TextField" positionIncrementGap="100">
       <analyzer> 
         <tokenizer class="solr.StandardTokenizerFactory"/> 
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_bg.txt" /> 
-        <filter class="solr.BulgarianStemFilterFactory"/>       
+        <filter class="solr.BulgarianStemFilterFactory"/>   
+	<filter class="solr.ICUFoldingFilterFactory"/>     
       </analyzer>
     </fieldType>
     
@@ -126,7 +116,8 @@ also applies synonyms. -->
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_cz.txt" />
-        <filter class="solr.CzechStemFilterFactory"/>       
+        <filter class="solr.CzechStemFilterFactory"/>    
+	<filter class="solr.ICUFoldingFilterFactory"/>    
       </analyzer>
     </fieldType>
     
@@ -136,7 +127,8 @@ also applies synonyms. -->
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_da.txt" format="snowball" />
-        <filter class="solr.SnowballPorterFilterFactory" language="Danish"/>       
+        <filter class="solr.SnowballPorterFilterFactory" language="Danish"/>    
+	<filter class="solr.ICUFoldingFilterFactory"/>    
       </analyzer>
     </fieldType>
 
@@ -150,6 +142,7 @@ also applies synonyms. -->
                 words="lang/stopwords_en.txt"
                 />
         <filter class="solr.LowerCaseFilterFactory"/>
+	<filter class="solr.ICUFoldingFilterFactory"/> 
 	<filter class="solr.EnglishPossessiveFilterFactory"/>
         <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
 	<!-- Optionally you may want to use this less aggressive stemmer instead of PorterStemFilterFactory:
@@ -167,6 +160,7 @@ also applies synonyms. -->
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_de.txt" format="snowball" />
         <filter class="solr.GermanNormalizationFilterFactory"/>
         <filter class="solr.GermanLightStemFilterFactory"/>
+	<filter class="solr.ICUFoldingFilterFactory"/> 
         <!-- less aggressive: <filter class="solr.GermanMinimalStemFilterFactory"/> -->
         <!-- more aggressive: <filter class="solr.SnowballPorterFilterFactory" language="German2"/> -->
       </analyzer>
@@ -180,6 +174,7 @@ also applies synonyms. -->
         <filter class="solr.GreekLowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="false" words="lang/stopwords_el.txt" />
         <filter class="solr.GreekStemFilterFactory"/>
+	<filter class="solr.ICUFoldingFilterFactory"/> 
       </analyzer>
     </fieldType>
     
@@ -190,6 +185,7 @@ also applies synonyms. -->
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_fi.txt" format="snowball" />
         <filter class="solr.SnowballPorterFilterFactory" language="Finnish"/>
+	<filter class="solr.ICUFoldingFilterFactory"/> 
         <!-- less aggressive: <filter class="solr.FinnishLightStemFilterFactory"/> -->
       </analyzer>
     </fieldType>
@@ -203,6 +199,7 @@ also applies synonyms. -->
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_fr.txt" format="snowball" />
         <filter class="solr.FrenchLightStemFilterFactory"/>
+	<filter class="solr.ICUFoldingFilterFactory"/> 
         <!-- less aggressive: <filter class="solr.FrenchMinimalStemFilterFactory"/> -->
         <!-- more aggressive: <filter class="solr.SnowballPorterFilterFactory" language="French"/> -->
       </analyzer>
@@ -216,6 +213,7 @@ also applies synonyms. -->
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_hu.txt" format="snowball" />
         <filter class="solr.SnowballPorterFilterFactory" language="Hungarian"/>
+	<filter class="solr.ICUFoldingFilterFactory"/> 
         <!-- less aggressive: <filter class="solr.HungarianLightStemFilterFactory"/> -->   
       </analyzer>
     </fieldType>
@@ -229,6 +227,7 @@ also applies synonyms. -->
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_it.txt" format="snowball" />
         <filter class="solr.ItalianLightStemFilterFactory"/>
+	<filter class="solr.ICUFoldingFilterFactory"/> 
         <!-- more aggressive: <filter class="solr.SnowballPorterFilterFactory" language="Italian"/> -->
       </analyzer>
     </fieldType>
@@ -240,6 +239,7 @@ also applies synonyms. -->
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_lv.txt" />
         <filter class="solr.LatvianStemFilterFactory"/>
+	<filter class="solr.ICUFoldingFilterFactory"/> 
       </analyzer>
     </fieldType>
     
@@ -251,6 +251,7 @@ also applies synonyms. -->
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_nl.txt" format="snowball" />
         <filter class="solr.StemmerOverrideFilterFactory" dictionary="lang/stemdict_nl.txt" ignoreCase="false"/>
         <filter class="solr.SnowballPorterFilterFactory" language="Dutch"/>
+	<filter class="solr.ICUFoldingFilterFactory"/> 
       </analyzer>
     </fieldType>
     
@@ -261,6 +262,7 @@ also applies synonyms. -->
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_no.txt" format="snowball" />
         <filter class="solr.SnowballPorterFilterFactory" language="Norwegian"/>
+	<filter class="solr.ICUFoldingFilterFactory"/> 
         <!-- less aggressive: <filter class="solr.NorwegianLightStemFilterFactory" variant="nb"/> -->
         <!-- singular/plural: <filter class="solr.NorwegianMinimalStemFilterFactory" variant="nb"/> -->
         <!-- The "light" and "minimal" stemmers support variants: nb=Bokmål, nn=Nynorsk, no=Both -->
@@ -273,7 +275,8 @@ also applies synonyms. -->
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_pl.txt" enablePositionIncrements="true"/>
-    <filter class="solr.MorfologikFilterFactory" dictionary="MORFOLOGIK" />
+	<filter class="solr.MorfologikFilterFactory" dictionary="MORFOLOGIK" />
+	<filter class="solr.ICUFoldingFilterFactory"/> 
       </analyzer>
     </fieldType>
 
@@ -285,6 +288,7 @@ also applies synonyms. -->
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_ro.txt" />
         <filter class="solr.SnowballPorterFilterFactory" language="Romanian"/>
+	<filter class="solr.ICUFoldingFilterFactory"/> 
       </analyzer>
     </fieldType>
     
@@ -295,6 +299,7 @@ also applies synonyms. -->
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_ru.txt" format="snowball" />
         <filter class="solr.SnowballPorterFilterFactory" language="Russian"/>
+	<filter class="solr.ICUFoldingFilterFactory"/> 
         <!-- less aggressive: <filter class="solr.RussianLightStemFilterFactory"/> -->
       </analyzer>
     </fieldType>
@@ -579,7 +584,26 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="*_ss" dest="text"/>
 <copyField source="accessPoints" dest="text"/>
 
+<copyField source="unitDates" dest="text"/>
+<copyField source="conditionsOfReproduction" dest="text"/>
+<copyField source="acquisition" dest="text"/>
+<copyField source="conditionsOfAccessRestrict" dest="text"/>
+<copyField source="extentAndMedium" dest="text"/>
+<copyField source="findingAids" dest="text"/>
+<copyField source="languageOfMaterial" dest="text"/>
+<copyField source="scriptOfMaterial" dest="text"/>
+<copyField source="creators" dest="text"/>
+<copyField source="scriptCode" dest="text"/>
+<copyField source="rulesAndConventions" dest="text"/>
+<copyField source="locationOfCopies" dest="text"/>
+<copyField source="locationOfOriginals" dest="text"/>
+<copyField source="datesOfDescriptions" dest="text"/>
+<copyField source="notes" dest="text"/>
+<copyField source="systemOfArrangement" dest="text"/>
+<copyField source="publicationNote" dest="text"/>
+<copyField source="appraisal" dest="text"/>
 
+<!-- Copy of fields after language detection into txt_lang fields -->
 <copyField source="title_en" dest="txt_en"/>
 <copyField source="name_en" dest="txt_en"/>
 <copyField source="scopeAndContent_en" dest="txt_en"/>
