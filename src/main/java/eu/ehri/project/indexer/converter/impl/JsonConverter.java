@@ -155,7 +155,7 @@ public class JsonConverter implements Converter<JsonNode> {
                 JsonToken value = field.getValue().asToken();
                 switch (value) {
                     case VALUE_STRING:
-                        data.put(key, field.getValue().asText());
+                        data.put(key + "_t", field.getValue().asText());
                         break;
                     case VALUE_NUMBER_INT:
                         data.put(key + "_i", value.asString());
