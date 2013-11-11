@@ -21,6 +21,7 @@ import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)
@@ -200,6 +201,7 @@ public class Indexer<T> {
         final String CLEAR_TYPE = "clear-type";
         final String FILE = "file";
         final String REST_URL = "rest";
+        final String HEADERS = "H";
         final String SOLR_URL = "solr";
         final String INDEX = "index";
         final String NO_CONVERT = "noconvert";
@@ -224,12 +226,17 @@ public class Indexer<T> {
                 "Read input from a file instead of the REST service. Use '-' for stdin.");
         options.addOption("r", REST_URL, true,
                 "Base URL for EHRI REST service.");
+        options.addOption(OptionBuilder.withArgName("header=value")
+                .hasArgs(2).withValueSeparator()
+                .withDescription("Set a header for the REST service.")
+                .create(HEADERS));
         options.addOption("i", INDEX, false,
                 "Index the data. This is NOT the default for safety reasons.");
         options.addOption("n", NO_CONVERT, false,
                 "Don't convert data to index format.");
         options.addOption("v", VERBOSE, false,
                 "Print individual item ids to show progress.");
+
         options.addOption("S", STATS, false, "Print indexing stats.");
         options.addOption("h", HELP, false, "Print this message.");
 
@@ -254,6 +261,7 @@ public class Indexer<T> {
 
         String ehriUrl = cmd.getOptionValue(REST_URL, DEFAULT_EHRI_URL);
         String solrUrl = cmd.getOptionValue(SOLR_URL, DEFAULT_SOLR_URL);
+        Properties restHeaders = cmd.getOptionProperties(HEADERS);
 
         Indexer.Builder<JsonNode> builder = new Indexer.Builder<JsonNode>();
 
@@ -330,7 +338,7 @@ public class Indexer<T> {
 
         // Parse the command line specs...
         for (URI uri : urlsFromSpecs(ehriUrl, cmd.getArgs())) {
-            builder.addSource(new WebJsonSource(uri));
+            builder.addSource(new WebJsonSource(uri, restHeaders));
         }
 
         try {
