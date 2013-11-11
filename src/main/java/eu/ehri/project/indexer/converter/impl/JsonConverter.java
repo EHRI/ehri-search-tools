@@ -210,7 +210,7 @@ public class JsonConverter implements Converter<JsonNode> {
 
         // HACK: if countryCode is set, translate it to a name in the default locale:
         if (data.containsKey("countryCode")) {
-            data.put("countryName_t", countryLookup.get(data.get("countryCode")));
+            data.put("countryName", countryLookup.get(data.get("countryCode")));
         }
 
         // HACK: Set country name to name field on country type
