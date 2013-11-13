@@ -565,6 +565,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <!-- Copy of fields after language detection into txt_lang fields -->
 <copyField source="title_en" dest="txt_en"/>
 <copyField source="name_en" dest="txt_en"/>
+<copyField source="name_en" dest="name_sort"/>
 <copyField source="scopeAndContent_en" dest="txt_en"/>
 <copyField source="archivalHistory_en" dest="txt_en"/>
 <copyField source="archivistNote_en" dest="txt_en"/>
@@ -574,6 +575,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_hu" dest="txt_hu"/>
 <copyField source="name_hu" dest="txt_hu"/>
+<copyField source="name_hu" dest="name_sort"/>
 <copyField source="scopeAndContent_hu" dest="txt_hu"/>
 <copyField source="archivalHistory_hu" dest="txt_hu"/>
 <copyField source="archivistNote_hu" dest="txt_hu"/>
@@ -583,6 +585,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_ru" dest="txt_ru"/>
 <copyField source="name_ru" dest="txt_ru"/>
+<copyField source="name_ru" dest="name_sort"/>
 <copyField source="scopeAndContent_ru" dest="txt_ru"/>
 <copyField source="archivalHistory_ru" dest="txt_ru"/>
 <copyField source="archivistNote_ru" dest="txt_ru"/>
@@ -592,6 +595,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_pl" dest="txt_pl"/>
 <copyField source="name_pl" dest="txt_pl"/>
+<copyField source="name_pl" dest="name_sort"/>
 <copyField source="scopeAndContent_pl" dest="txt_pl"/>
 <copyField source="archivalHistory_pl" dest="txt_pl"/>
 <copyField source="archivistNote_pl" dest="txt_pl"/>
@@ -601,6 +605,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_de" dest="txt_de"/>
 <copyField source="name_de" dest="txt_de"/>
+<copyField source="name_de" dest="name_sort"/>
 <copyField source="scopeAndContent_de" dest="txt_de"/>
 <copyField source="archivalHistory_de" dest="txt_de"/>
 <copyField source="archivistNote_de" dest="txt_de"/>
@@ -619,6 +624,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_cs" dest="text"/>
 <copyField source="name_cs" dest="text"/>
+<copyField source="name_cs" dest="name_sort"/>
 <copyField source="scopeAndContent_cs" dest="text"/>
 <copyField source="archivalHistory_cs" dest="text"/>
 <copyField source="archivistNote_cs" dest="text"/>
@@ -628,6 +634,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_it" dest="txt_it"/>
 <copyField source="name_it" dest="txt_it"/>
+<copyField source="name_it" dest="name_sort"/>
 <copyField source="scopeAndContent_it" dest="txt_it"/>
 <copyField source="archivalHistory_it" dest="txt_it"/>
 <copyField source="archivistNote_it" dest="txt_it"/>
@@ -637,6 +644,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_fr" dest="txt_fr"/>
 <copyField source="name_fr" dest="txt_fr"/>
+<copyField source="name_fr" dest="name_sort"/>
 <copyField source="scopeAndContent_fr" dest="txt_fr"/>
 <copyField source="archivalHistory_fr" dest="txt_fr"/>
 <copyField source="archivistNote_fr" dest="txt_fr"/>
@@ -646,6 +654,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_uk" dest="text"/>
 <copyField source="name_uk" dest="text"/>
+<copyField source="name_uk" dest="name_sort"/>
 <copyField source="scopeAndContent_uk" dest="text"/>
 <copyField source="archivalHistory_uk" dest="text"/>
 <copyField source="archivistNote_uk" dest="text"/>
@@ -655,6 +664,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_hr" dest="text"/>
 <copyField source="name_hr" dest="text"/>
+<copyField source="name_hr" dest="name_sort"/>
 <copyField source="scopeAndContent_hr" dest="text"/>
 <copyField source="archivalHistory_hr" dest="text"/>
 <copyField source="archivistNote_hr" dest="text"/>
@@ -664,6 +674,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_da" dest="txt_da"/>
 <copyField source="name_da" dest="txt_da"/>
+<copyField source="name_da" dest="name_sort"/>
 <copyField source="scopeAndContent_da" dest="txt_da"/>
 <copyField source="archivalHistory_da" dest="txt_da"/>
 <copyField source="archivistNote_da" dest="txt_da"/>
@@ -673,6 +684,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_el" dest="txt_el"/>
 <copyField source="name_el" dest="txt_el"/>
+<copyField source="name_el" dest="name_sort"/>
 <copyField source="scopeAndContent_el" dest="txt_el"/>
 <copyField source="archivalHistory_el" dest="txt_el"/>
 <copyField source="archivistNote_el" dest="txt_el"/>
@@ -682,6 +694,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_lv" dest="txt_lv"/>
 <copyField source="name_lv" dest="txt_lv"/>
+<copyField source="name_lv" dest="name_sort"/>
 <copyField source="scopeAndContent_lv" dest="txt_lv"/>
 <copyField source="archivalHistory_lv" dest="txt_lv"/>
 <copyField source="archivistNote_lv" dest="txt_lv"/>
@@ -691,6 +704,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_no" dest="txt_no"/>
 <copyField source="name_no" dest="txt_no"/>
+<copyField source="name_no" dest="name_sort"/>
 <copyField source="scopeAndContent_no" dest="txt_no"/>
 <copyField source="archivalHistory_no" dest="txt_no"/>
 <copyField source="archivistNote_no" dest="txt_no"/>
@@ -700,6 +714,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_ro" dest="txt_ro"/>
 <copyField source="name_ro" dest="txt_ro"/>
+<copyField source="name_ro" dest="name_sort"/>
 <copyField source="scopeAndContent_ro" dest="txt_ro"/>
 <copyField source="archivalHistory_ro" dest="txt_ro"/>
 <copyField source="archivistNote_ro" dest="txt_ro"/>
@@ -709,6 +724,7 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 
 <copyField source="title_generic" dest="text"/>
 <copyField source="name_generic" dest="text"/>
+<copyField source="name_generic" dest="name_sort"/>
 <copyField source="scopeAndContent_generic" dest="text"/>
 <copyField source="archivalHistory_generic" dest="text"/>
 <copyField source="archivistNote_generic" dest="text"/>
