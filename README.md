@@ -1,4 +1,4 @@
-# Indexer
+# EHRI Index Helper
 
 This is a convenience tool for indexing the EHRI database. It is used by the EHRI frontend to synchronise the search
 engine with the EHRI backend (and for doing the same easily from the command-line.) The basic idea is to read some
