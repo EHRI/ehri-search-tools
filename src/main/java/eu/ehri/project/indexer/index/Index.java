@@ -38,6 +38,16 @@ public interface Index {
     public void deleteItem(String id, boolean commit) throws IndexException;
 
     /**
+     * Delete all items with a given field value.
+     *
+     * @param field    The field name
+     * @param value  The field value
+     * @param commit Whether or not to commit the action.
+     * @throws IndexException
+     */
+    public void deleteByFieldValue(String field, String value, boolean commit) throws IndexException;
+
+    /**
      * Delete items identified by a set of ids or itemIds.
      *
      * @param ids    A set of ids matching items to delete.

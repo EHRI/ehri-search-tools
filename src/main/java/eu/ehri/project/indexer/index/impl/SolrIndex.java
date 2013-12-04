@@ -86,6 +86,19 @@ public class SolrIndex implements Index {
     }
 
     /**
+     * Delete all items with a given field value.
+     *
+     * @param field    The field name
+     * @param value  The field value
+     * @param commit Whether or not to commit the action.
+     * @throws IndexException
+     */
+    @Override
+    public void deleteByFieldValue(String field, String value, boolean commit) throws IndexException {
+        deleteByQuery(keyValueQuery(field, value), commit);
+    }
+
+    /**
      * Delete items identified by a set of ids or itemIds.
      *
      * @param ids    A set of ids matching items to delete.
@@ -150,6 +163,17 @@ public class SolrIndex implements Index {
         } finally {
             response.close();
         }
+    }
+
+    /**
+     * Generate a Solr query matching all items with the given field value,
+     * i.e. "heldBy:us-005248"
+     * @param field
+     * @param value
+     * @return
+     */
+    private String keyValueQuery(String field, String value) {
+        return String.format("%s:\"%s\"", field, value);
     }
 
     /**

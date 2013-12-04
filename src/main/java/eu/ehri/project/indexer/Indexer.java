@@ -1,5 +1,6 @@
 package eu.ehri.project.indexer;
 
+import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -21,6 +22,7 @@ import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -197,6 +199,7 @@ public class Indexer<T> {
         final String PRINT = "print";
         final String PRETTY = "pretty";
         final String CLEAR_ALL = "clear-all";
+        final String CLEAR_KEY_VALUE = "clear-key-value";
         final String CLEAR_ID = "clear-id";
         final String CLEAR_TYPE = "clear-type";
         final String FILE = "file";
@@ -214,6 +217,8 @@ public class Indexer<T> {
                 "Print converted JSON to stdout. The default action in the omission of --index.");
         options.addOption("D", CLEAR_ALL, false,
                 "Clear entire index first (use with caution.)");
+        options.addOption("k", CLEAR_KEY_VALUE, true,
+                "Clear items with a given key=value pair. Can be used multiple times.");
         options.addOption("c", CLEAR_ID, true,
                 "Clear an individual id. Can be used multiple times.");
         options.addOption("C", CLEAR_TYPE, true,
@@ -280,6 +285,18 @@ public class Indexer<T> {
             if (cmd.hasOption(CLEAR_TYPE)) {
                 String[] types = cmd.getOptionValues(CLEAR_TYPE);
                 index.deleteTypes(Lists.newArrayList(types), commitOnDelete);
+            }
+            if (cmd.hasOption(CLEAR_KEY_VALUE)) {
+                String[] kvs = cmd.getOptionValues(CLEAR_KEY_VALUE);
+                // join the individual args before map splitting them... this
+                // is slightly safer than regular splitting since we're protected
+                // from out-of-bounds problems.
+                String allKvs = Joiner.on(";").join(kvs);
+                Map<String,String> map = Splitter.on(";").trimResults()
+                        .withKeyValueSeparator("=").split(allKvs);
+                for (Map.Entry<String,String> entry : map.entrySet()) {
+                    index.deleteByFieldValue(entry.getKey(), entry.getValue(), commitOnDelete);
+                }
             }
         }
 

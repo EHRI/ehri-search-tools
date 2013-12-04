@@ -23,25 +23,29 @@ Current options:
 
 ```
 usage: indexer  [OPTIONS] <spec> ... <specN>
- -c,--clear-id <arg>     Clear an individual id. Can be used multiple
-                         times.
- -C,--clear-type <arg>   Clear an item type. Can be used multiple times.
- -D,--clear-all          Clear entire index first (use with caution.)
- -f,--file <arg>         Read input from a file instead of the REST
-                         service. Use '-' for stdin.
- -h,--help               Print this message.
- -i,--index              Index the data. This is NOT the default for
-                         safety reasons.
- -n,--noconvert          Don't convert data to index format.
- -P,--pretty             Pretty print out JSON given by --print (implies
-                         --print).
- -p,--print              Print converted JSON to stdout. The default
-                         action in the omission of --index.
- -r,--rest <arg>         Base URL for EHRI REST service.
- -s,--solr <arg>         Base URL for Solr service (minus the action
-                         segment.)
- -S,--stats              Print indexing stats.
- -v,--verbose            Print individual item ids to show progress.
+ -c,--clear-id <arg>          Clear an individual id. Can be used multiple
+                              times.
+ -C,--clear-type <arg>        Clear an item type. Can be used multiple
+                              times.
+ -D,--clear-all               Clear entire index first (use with caution.)
+ -f,--file <arg>              Read input from a file instead of the REST
+                              service. Use '-' for stdin.
+ -H <header=value>            Set a header for the REST service.
+ -h,--help                    Print this message.
+ -i,--index                   Index the data. This is NOT the default for
+                              safety reasons.
+ -k,--clear-key-value <arg>   Clear items with a given key=value pair. Can
+                              be used multiple times.
+ -n,--noconvert               Don't convert data to index format.
+ -P,--pretty                  Pretty print out JSON given by --print
+                              (implies --print).
+ -p,--print                   Print converted JSON to stdout. The default
+                              action in the omission of --index.
+ -r,--rest <arg>              Base URL for EHRI REST service.
+ -s,--solr <arg>              Base URL for Solr service (minus the action
+                              segment.)
+ -S,--stats                   Print indexing stats.
+ -v,--verbose                 Print individual item ids to show progress.
 
 Each <spec> should consist of:
 * an item type (all items of that type)
@@ -82,6 +86,12 @@ Clear the entire index:
 
 ```
 java -jar indexer.jar --clear-all
+```
+
+Clear items with holderId 'us-005248':
+
+```
+java -jar indexer.jar --clear-key-value holderId=us-005248
 ```
 
 Index data read from a JSON file instead of the REST service, outputting some stats:
