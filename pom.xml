@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ehri-indexer</groupId>
-    <artifactId>ehri-indexer</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>ehri-project</groupId>
+    <artifactId>index-helper</artifactId>
+    <version>1.0.1</version>
 
     <!-- Assembly plugin used to generate a jar with all dependencies -->
     <build>
@@ -16,7 +16,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>eu.ehri.project.indexer.Indexer</mainClass>
+                            <mainClass>eu.ehri.project.search.IndexHelper</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

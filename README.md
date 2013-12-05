@@ -1,9 +1,8 @@
 # EHRI Index Helper
 
-This is a convenience tool for indexing the EHRI database. It is used by the EHRI frontend to synchronise the search
-engine with the EHRI backend (and for doing the same easily from the command-line.) The basic idea is to read some
-JSON from a web service (EHRI REST), convert it to another format (Solr Doc), and POST it to another web service
-(Solr).
+This is a convenience tool used by the EHRI frontend to synchronise the search engine with the EHRI backend
+(and for doing the same easily from the command-line.) The basic idea is to read some JSON from a web service
+(EHRI REST), convert it to another format (Solr Doc), and POST it to another web service (Solr).
 
 The traditional way to do this would be something like:
 
@@ -11,18 +10,18 @@ The traditional way to do this would be something like:
 curl <WS-URL> | convert-json | curl -X POST "Content-type: application/json" <SOLR-UPDATE-URL> --data @-
 ```
 
-Here, we just bundle the downloading and uploading bits as well, with some shortcut syntax. There are ways to
+Here, we just bundle the downloading and uploading bits with some shortcut syntax. There are ways to
 accomplish the shell pipeline approach using certain options detailed below.
 
-Notes: To build a jar, use `mvn clean compile assembly:single`. The `compile` phase must be present. See:
-http://stackoverflow.com/a/574650/285374. There should then be a Jar called `ehri-indexer-1
-.0-SNAPSHOT-jar-with-dependencies.jar` inside the `target` folder, which you can execute with the usual `java -jar
+Notes: To build a jar, use `mvn clean compile assembly:single`. (The `compile` phase must be present. See:
+http://stackoverflow.com/a/574650/285374.) There should then be a Jar called `index-helper-1
+.0-1-jar-with-dependencies.jar` inside the `target` folder, which you can execute with the usual `java -jar
 <file.jar> [OPTIONS] ... [ARGS]`.
 
 Current options:
 
 ```
-usage: indexer  [OPTIONS] <spec> ... <specN>
+usage: index-helper [OPTIONS] <spec> ... <specN>
  -c,--clear-id <arg>          Clear an individual id. Can be used multiple
                               times.
  -C,--clear-type <arg>        Clear an item type. Can be used multiple
@@ -46,6 +45,7 @@ usage: indexer  [OPTIONS] <spec> ... <specN>
                               segment.)
  -S,--stats                   Print indexing stats.
  -v,--verbose                 Print individual item ids to show progress.
+ -version                     Print the version number and exit.
 
 Each <spec> should consist of:
 * an item type (all items of that type)
@@ -61,55 +61,55 @@ The default URIs for Solr and the REST service are:
 Index documentary unit and repository types from default service endpoints:
 
 ```
-java -jar indexer.jar --index documentaryUnit repository
+java -jar index-helper.jar --index documentaryUnit repository
 ```
 
 Index individual item `us-005578`:
 
 ```
-java -jar indexer.jar --index @us-005578
+java -jar index-helper.jar --index @us-005578
 ```
 
 Pretty print (to stdout) the converted JSON output for all documentary units, but don't index:
 
 ```
-java -jar indexer.jar --pretty documentaryUnit
+java -jar index-helper.jar --pretty documentaryUnit
 ```
 
 Pretty print (to stdout) the raw REST service output:
 
 ```
-java -jar indexer.jar --pretty --noconvert documentaryUnit
+java -jar index-helper.jar --pretty --noconvert documentaryUnit
 ```
 
 Clear the entire index:
 
 ```
-java -jar indexer.jar --clear-all
+java -jar index-helper.jar --clear-all
 ```
 
 Clear items with holderId 'us-005248':
 
 ```
-java -jar indexer.jar --clear-key-value holderId=us-005248
+java -jar index-helper.jar --clear-key-value holderId=us-005248
 ```
 
 Index data read from a JSON file instead of the REST service, outputting some stats:
 
 ```
-java -jar indexer.jar --index -f data.json -v
+java -jar index-helper.jar --index -f data.json -v
 ```
 
 Same as above, but piping the data through stdin (use '-' as the file name):
 
 ```
-cat data.json | java -jar indexer.jar --index -f - -v
+cat data.json | java -jar index-helper.jar --index -f - -v
 ```
 
 Read data from stdin, convert it, and pipe it to a Curl upload for indexing:
 
 ```
-cat orig.json | java -jar indexer.jar -f - | curl -X POST -H "Content-type: application/json"
+cat orig.json | java -jar index-helper.jar -f - | curl -X POST -H "Content-type: application/json"
 "http://localhost:8983/solr/ehri/update?commit=true" --data @-
 ```
 
