@@ -561,20 +561,28 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="accessPoints" dest="text"/>
 
 
-
-<!-- Copy of fields after language detection into txt_lang fields -->
+<!-- Copy of fields after language detection into txt_lang fields for multilingual indexing-->
+<!-- Copy of fields after language detection into text field for term expansion-->
 <copyField source="title_en" dest="txt_en"/>
 <copyField source="name_en" dest="txt_en"/>
 <copyField source="name_en" dest="name"/>
 <copyField source="name_en" dest="title"/>
+<copyField source="name_en" dest="text"/>
 <copyField source="name_en" dest="name_sort"/>
 <copyField source="name_en" dest="name_ngram"/>
 <copyField source="scopeAndContent_en" dest="txt_en"/>
+<copyField source="scopeAndContent_en" dest="text"/>
 <copyField source="archivalHistory_en" dest="txt_en"/>
+<copyField source="archivalHistory_en" dest="text"/>
 <copyField source="archivistNote_en" dest="txt_en"/>
+<copyField source="archivistNote_en" dest="text"/>
 <copyField source="abstract_en" dest="txt_en"/>
+<copyField source="abstract_en" dest="text"/>
 <copyField source="biographicalHistory_en" dest="txt_en"/>
+<copyField source="biographicalHistory_en" dest="text"/>
 <copyField source="accessPoints_en" dest="txt_en"/>
+<copyField source="accessPoints_en" dest="text"/>
+
 
 <copyField source="title_hu" dest="txt_hu"/>
 <copyField source="name_hu" dest="txt_hu"/>
@@ -588,6 +596,14 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="abstract_hu" dest="txt_hu"/>
 <copyField source="biographicalHistory_hu" dest="txt_hu"/>
 <copyField source="accessPoints_hu" dest="txt_hu"/>
+<copyField source="title_hu" dest="text"/>
+<copyField source="name_hu" dest="text"/>
+<copyField source="scopeAndContent_hu" dest="text"/>
+<copyField source="archivalHistory_hu" dest="text"/>
+<copyField source="archivistNote_hu" dest="text"/>
+<copyField source="abstract_hu" dest="text"/>
+<copyField source="biographicalHistory_hu" dest="text"/>
+<copyField source="accessPoints_hu" dest="text"/>
 
 <copyField source="title_ru" dest="txt_ru"/>
 <copyField source="name_ru" dest="txt_ru"/>
@@ -601,6 +617,14 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="abstract_ru" dest="txt_ru"/>
 <copyField source="biographicalHistory_ru" dest="txt_ru"/>
 <copyField source="accessPoints_ru" dest="txt_ru"/>
+<copyField source="title_ru" dest="text"/>
+<copyField source="name_ru" dest="text"/>
+<copyField source="scopeAndContent_ru" dest="text"/>
+<copyField source="archivalHistory_ru" dest="text"/>
+<copyField source="archivistNote_ru" dest="text"/>
+<copyField source="abstract_ru" dest="text"/>
+<copyField source="biographicalHistory_ru" dest="text"/>
+<copyField source="accessPoints_ru" dest="text"/>
 
 <copyField source="title_pl" dest="txt_pl"/>
 <copyField source="name_pl" dest="txt_pl"/>
@@ -614,6 +638,14 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="abstract_pl" dest="txt_pl"/>
 <copyField source="biographicalHistory_pl" dest="txt_pl"/>
 <copyField source="accessPoints_pl" dest="txt_pl"/>
+<copyField source="title_pl" dest="text"/>
+<copyField source="name_pl" dest="text"/>
+<copyField source="scopeAndContent_pl" dest="text"/>
+<copyField source="archivalHistory_pl" dest="text"/>
+<copyField source="archivistNote_pl" dest="text"/>
+<copyField source="abstract_pl" dest="text"/>
+<copyField source="biographicalHistory_pl" dest="text"/>
+<copyField source="accessPoints_pl" dest="text"/>
 
 <copyField source="title_de" dest="txt_de"/>
 <copyField source="name_de" dest="txt_de"/>
@@ -627,6 +659,14 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="abstract_de" dest="txt_de"/>
 <copyField source="biographicalHistory_de" dest="txt_de"/>
 <copyField source="accessPoints_de" dest="txt_de"/>
+<copyField source="title_de" dest="text"/>
+<copyField source="name_de" dest="text"/>
+<copyField source="scopeAndContent_de" dest="text"/>
+<copyField source="archivalHistory_de" dest="text"/>
+<copyField source="archivistNote_de" dest="text"/>
+<copyField source="abstract_de" dest="text"/>
+<copyField source="biographicalHistory_de" dest="text"/>
+<copyField source="accessPoints_de" dest="text"/>
 
 <copyField source="title_nl" dest="txt_nl"/>
 <copyField source="name_nl" dest="txt_nl"/>
@@ -640,6 +680,14 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="abstract_nl" dest="txt_nl"/>
 <copyField source="biographicalHistory_nl" dest="txt_nl"/>
 <copyField source="accessPoints_nl" dest="txt_nl"/>
+<copyField source="title_nl" dest="text"/>
+<copyField source="name_nl" dest="text"/>
+<copyField source="scopeAndContent_nl" dest="text"/>
+<copyField source="archivalHistory_nl" dest="text"/>
+<copyField source="archivistNote_nl" dest="text"/>
+<copyField source="abstract_nl" dest="text"/>
+<copyField source="biographicalHistory_nl" dest="text"/>
+<copyField source="accessPoints_nl" dest="text"/>
 
 <copyField source="title_cs" dest="text"/>
 <copyField source="name_cs" dest="text"/>
@@ -666,6 +714,14 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="abstract_it" dest="txt_it"/>
 <copyField source="biographicalHistory_it" dest="txt_it"/>
 <copyField source="accessPoints_it" dest="txt_it"/>
+<copyField source="title_it" dest="text"/>
+<copyField source="name_it" dest="text"/>
+<copyField source="scopeAndContent_it" dest="text"/>
+<copyField source="archivalHistory_it" dest="text"/>
+<copyField source="archivistNote_it" dest="text"/>
+<copyField source="abstract_it" dest="text"/>
+<copyField source="biographicalHistory_it" dest="text"/>
+<copyField source="accessPoints_it" dest="text"/>
 
 <copyField source="title_fr" dest="txt_fr"/>
 <copyField source="name_fr" dest="txt_fr"/>
@@ -679,6 +735,14 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="abstract_fr" dest="txt_fr"/>
 <copyField source="biographicalHistory_fr" dest="txt_fr"/>
 <copyField source="accessPoints_fr" dest="txt_fr"/>
+<copyField source="title_fr" dest="text"/>
+<copyField source="name_fr" dest="text"/>
+<copyField source="scopeAndContent_fr" dest="text"/>
+<copyField source="archivalHistory_fr" dest="text"/>
+<copyField source="archivistNote_fr" dest="text"/>
+<copyField source="abstract_fr" dest="text"/>
+<copyField source="biographicalHistory_fr" dest="text"/>
+<copyField source="accessPoints_fr" dest="text"/>
 
 <copyField source="title_uk" dest="text"/>
 <copyField source="name_uk" dest="text"/>
@@ -718,6 +782,14 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="abstract_da" dest="txt_da"/>
 <copyField source="biographicalHistory_da" dest="txt_da"/>
 <copyField source="accessPoints_da" dest="txt_da"/>
+<copyField source="title_da" dest="text"/>
+<copyField source="name_da" dest="text"/>
+<copyField source="scopeAndContent_da" dest="text"/>
+<copyField source="archivalHistory_da" dest="text"/>
+<copyField source="archivistNote_da" dest="text"/>
+<copyField source="abstract_da" dest="text"/>
+<copyField source="biographicalHistory_da" dest="text"/>
+<copyField source="accessPoints_da" dest="text"/>
 
 <copyField source="title_el" dest="txt_el"/>
 <copyField source="name_el" dest="txt_el"/>
@@ -731,6 +803,14 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="abstract_el" dest="txt_el"/>
 <copyField source="biographicalHistory_el" dest="txt_el"/>
 <copyField source="accessPoints_el" dest="txt_el"/>
+<copyField source="title_el" dest="text"/>
+<copyField source="name_el" dest="text"/>
+<copyField source="scopeAndContent_el" dest="text"/>
+<copyField source="archivalHistory_el" dest="text"/>
+<copyField source="archivistNote_el" dest="text"/>
+<copyField source="abstract_el" dest="text"/>
+<copyField source="biographicalHistory_el" dest="text"/>
+<copyField source="accessPoints_el" dest="text"/>
 
 <copyField source="title_lv" dest="txt_lv"/>
 <copyField source="name_lv" dest="txt_lv"/>
@@ -744,6 +824,14 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="abstract_lv" dest="txt_lv"/>
 <copyField source="biographicalHistory_lv" dest="txt_lv"/>
 <copyField source="accessPoints_lv" dest="txt_lv"/>
+<copyField source="title_lv" dest="text"/>
+<copyField source="name_lv" dest="text"/>
+<copyField source="scopeAndContent_lv" dest="text"/>
+<copyField source="archivalHistory_lv" dest="text"/>
+<copyField source="archivistNote_lv" dest="text"/>
+<copyField source="abstract_lv" dest="text"/>
+<copyField source="biographicalHistory_lv" dest="text"/>
+<copyField source="accessPoints_lv" dest="text"/>
 
 <copyField source="title_no" dest="txt_no"/>
 <copyField source="name_no" dest="txt_no"/>
@@ -757,6 +845,14 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="abstract_no" dest="txt_no"/>
 <copyField source="biographicalHistory_no" dest="txt_no"/>
 <copyField source="accessPoints_no" dest="txt_no"/>
+<copyField source="title_no" dest="text"/>
+<copyField source="name_no" dest="text"/>
+<copyField source="scopeAndContent_no" dest="text"/>
+<copyField source="archivalHistory_no" dest="text"/>
+<copyField source="archivistNote_no" dest="text"/>
+<copyField source="abstract_no" dest="text"/>
+<copyField source="biographicalHistory_no" dest="text"/>
+<copyField source="accessPoints_no" dest="text"/>
 
 <copyField source="title_ro" dest="txt_ro"/>
 <copyField source="name_ro" dest="txt_ro"/>
@@ -770,6 +866,14 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="abstract_ro" dest="txt_ro"/>
 <copyField source="biographicalHistory_ro" dest="txt_ro"/>
 <copyField source="accessPoints_ro" dest="txt_ro"/>
+<copyField source="title_ro" dest="text"/>
+<copyField source="name_ro" dest="text"/>
+<copyField source="scopeAndContent_ro" dest="text"/>
+<copyField source="archivalHistory_ro" dest="text"/>
+<copyField source="archivistNote_ro" dest="text"/>
+<copyField source="abstract_ro" dest="text"/>
+<copyField source="biographicalHistory_ro" dest="text"/>
+<copyField source="accessPoints_ro" dest="text"/>
 
 <copyField source="title_generic" dest="text"/>
 <copyField source="name_generic" dest="text"/>
@@ -785,10 +889,12 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="accessPoints_generic" dest="text"/>
 
 
+
 <!-- field for the QueryParser to use when an explicit fieldname is absent -->
 <defaultSearchField>text</defaultSearchField>
 <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
 <solrQueryParser defaultOperator="OR"/>
+
 
 <!-- change ranking model to BM25/Okapi. It works better than the default Vector Space Model! -->
 <similarity class="solr.BM25SimilarityFactory"/>
