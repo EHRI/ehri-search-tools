@@ -356,7 +356,11 @@ also applies synonyms. -->
   <dynamicField name="*_dt" type="date" indexed="true" stored="true"/>
   <dynamicField name="*_dts" type="date" indexed="true" stored="true" multiValued="true"/>
 
-en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
+<!-- Boolean field to mark up which documents should be retrieved -->
+  <field name="textDataPresent" type="boolean" indexed="true" stored="false"  multiValued="false" default="false" />
+
+
+
 <!-- New fields for language identification -->
 <field name="txt_en" type="text_en" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 <field name="txt_hu" type="text_hu" indexed="true" stored="false" termVectors="true" multiValued="true"/>
