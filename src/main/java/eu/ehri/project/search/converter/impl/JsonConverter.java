@@ -10,6 +10,7 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonToken;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
 import java.util.Locale;
 
@@ -46,6 +47,12 @@ public class JsonConverter implements Converter<JsonNode> {
      * Default locale for language/country conversions...
      */
     private static final Locale defaultLocale = Locale.ENGLISH;
+
+    /**
+     * Format dates and times for Solr.
+     */
+    private static final DateTimeFormatter dateTimeFormatter
+            = ISODateTimeFormat.dateTime().withZoneUTC();
 
     /**
      * Static lookup of country names.
@@ -185,7 +192,12 @@ public class JsonConverter implements Converter<JsonNode> {
         if (dateKeys != null) {
             for (String key : dateKeys) {
                 if (data.containsKey(key)) {
-                    data.put(key, fixDates((String) data.get(key)));
+                    try {
+                        data.put(key, fixDates((String) data.get(key)));
+                    } catch (IllegalArgumentException e) {
+                        data.remove(key);
+                        System.err.println("Invalid date: " + data.get(key));
+                    }
                 }
             }
         }
@@ -228,6 +240,6 @@ public class JsonConverter implements Converter<JsonNode> {
      * @return A Solr-compliant version of input string
      */
     private static String fixDates(String date) {
-        return ISODateTimeFormat.dateTime().withZoneUTC().print(new DateTime(date));
+        return dateTimeFormatter.print(new DateTime(date));
     }
 }
