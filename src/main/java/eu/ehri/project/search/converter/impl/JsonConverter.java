@@ -3,6 +3,7 @@ package eu.ehri.project.search.converter.impl;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.jayway.jsonpath.InvalidPathException;
 import com.jayway.jsonpath.JsonPath;
 import eu.ehri.project.search.converter.Converter;
@@ -12,11 +13,8 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
-import java.util.Locale;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)
@@ -200,6 +198,22 @@ public class JsonConverter implements Converter<JsonNode> {
                     }
                 }
             }
+        }
+
+        // HACK! Combine dateStart and dateEnd into dateRange,
+        // ensuring there are no duplicates.
+        // FIXME: Unsafe cast
+        Set<Object> dateRanges = (HashSet<Object>)data.get("dateRange");
+        if (dateRanges == null) {
+            dateRanges = Sets.newHashSet();
+        }
+        for (String d : new String[]{"dateStart", "dateEnd"}) {
+            if (data.containsKey(d)) {
+                dateRanges.add(data.get(d));
+            }
+        }
+        if (!dateRanges.isEmpty()) {
+            data.put("dateRange", dateRanges);
         }
 
         // HACK! Set restricted=true for items that have accessors.
