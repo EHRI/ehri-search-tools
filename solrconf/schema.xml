@@ -322,6 +322,8 @@ also applies synonyms. -->
   <field name="repositoryName" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="holderId" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="holderName" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="groupId" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="groupName" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="restricted" type="boolean" indexed="true" stored="true" default="false" />
   <field name="accessibleTo" type="string" indexed="true" stored="true" multiValued="true" default="ALLUSERS" />
   <field name="identifier" type="string" indexed="true" stored="true" multiValued="false"/>
