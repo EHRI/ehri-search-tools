@@ -4,6 +4,7 @@ nbactions.xml
 *.java.orig
 *.xml.orig
 *.~lock.*#
+*.pyc
 
 # Package Files #
 *.jar
@@ -38,6 +39,7 @@ local.properties
 .buildpath
 
 # Ignore target
+target
 **/target/*
 
 Intellij
