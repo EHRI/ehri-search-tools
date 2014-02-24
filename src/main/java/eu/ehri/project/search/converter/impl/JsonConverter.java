@@ -87,10 +87,10 @@ public class JsonConverter implements Converter<JsonNode> {
 
         if (descriptions.size() > 0) {
             for (JsonNode description : descriptions) {
-                out.add(mapper.valueToTree(getDescribedData(description, node)));
+                out.add(mapper.valueToTree(postProcess(getDescribedData(description, node))));
             }
         } else {
-            out.add(mapper.valueToTree(getData(node)));
+            out.add(mapper.valueToTree(postProcess(getData(node))));
         }
         return out;
     }
@@ -185,6 +185,15 @@ public class JsonConverter implements Converter<JsonNode> {
             }
         }
 
+        return data;
+    }
+
+    /**
+     * Do various post-processing steps on index data.
+     * @param data The original data.
+     * @return The enhanced data.
+     */
+    public static Map<String,Object> postProcess(Map<String,Object> data) {
         // Fix date format
         List<String> dateKeys = types.get("date");
         if (dateKeys != null) {
@@ -243,6 +252,15 @@ public class JsonConverter implements Converter<JsonNode> {
         if (data.containsKey("type") && data.get("type").equals("country")) {
             data.put("name", countryLookup.get(data.get("id")));
         }
+
+        // HACK: Set charCount field as sum of string field data...
+        int charCount = 0;
+        for (Map.Entry<String,Object> entry : data.entrySet()) {
+            if (entry.getValue() instanceof String) {
+                charCount += ((String) entry.getValue()).length();
+            }
+        }
+        data.put("charCount", charCount);
 
         return data;
     }
