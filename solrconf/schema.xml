@@ -560,6 +560,8 @@ en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <copyField source="itemId" dest="text"/>
 <copyField source="name" dest="text"/>
 <copyField source="title" dest="text"/>
+<copyField source="otherFormsOfName" dest="text"/>
+<copyField source="parallelFormsOfName" dest="text"/>
 <copyField source="holderName" dest="text"/>
 <copyField source="addresses" dest="text"/>
 <copyField source="*_s" dest="text"/>
