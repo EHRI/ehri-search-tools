@@ -324,6 +324,7 @@ also applies synonyms. -->
   <field name="holderName" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="groupId" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="groupName" type="string" indexed="true" stored="true" multiValued="true"/>
+  <field name="active" type="boolean" indexed="true" stored="true" default="true" />
   <field name="restricted" type="boolean" indexed="true" stored="true" default="false" />
   <field name="accessibleTo" type="string" indexed="true" stored="true" multiValued="true" default="ALLUSERS" />
   <field name="identifier" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -563,6 +564,8 @@ also applies synonyms. -->
 <copyField source="itemId" dest="text"/>
 <copyField source="name" dest="text"/>
 <copyField source="title" dest="text"/>
+<copyField source="otherFormsOfName" dest="text"/>
+<copyField source="parallelFormsOfName" dest="text"/>
 <copyField source="holderName" dest="text"/>
 <copyField source="addresses" dest="text"/>
 <copyField source="*_s" dest="text"/>
