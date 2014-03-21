@@ -1,5 +1,4 @@
 
-
 # Multilingual indexing 
 We identify the language of several fields in the metadata and we index them in the language in which the text is written. 
 Query is searched simultaneously in the different languages and the results merged in a single response.
@@ -34,6 +33,14 @@ c) For language identification
 * jsonic-1.2.7.jar --> Delivered with the Solr distribution in solr-4.X.X/contrib/langid/lib  
 * solr-langid-4.5.0.jar--> Delivered with the Solr distribution in solr-4.X.X/contrib/distr
 
+An alternative might be to add the following lines to `/solr-4.X.X/example/solr/collection1/conf/solrconfig.xml`
+
+```
+<lib dir="../../../contrib/analysis-extras/lib/" />
+<lib dir="../../../contrib/analysis-extras/lucene-libs/" />
+<lib dir="../../../contrib/langid/lib/" />
+<lib dir="../../../dist/" /> 
+```
 
 ## Chronology of changes
 
@@ -44,7 +51,10 @@ c) For language identification
 - schema.xml and solarconf.xml have been modified to allow multilingual indexing and multilingual simultaneous querying.
 - polish list of stopwords have been added
 - modification in code of the indexer in file JSONConversion.java to change the output and allow language identification in the desired fields
+<<<<<<< HEAD
 
 19.11.2014
 - schema.xml modified for SKOS based term expansion
 - three SKOS vocabularies added
+=======
+>>>>>>> 969032c87232b3080d4901d426a34c86ef36141e

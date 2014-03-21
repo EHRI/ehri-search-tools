@@ -3,6 +3,7 @@ package eu.ehri.project.search.converter.impl;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import com.jayway.jsonpath.InvalidPathException;
 import com.jayway.jsonpath.JsonPath;
 import eu.ehri.project.search.converter.Converter;
@@ -10,12 +11,10 @@ import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonToken;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
-import java.util.Locale;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)
@@ -46,6 +45,12 @@ public class JsonConverter implements Converter<JsonNode> {
      * Default locale for language/country conversions...
      */
     private static final Locale defaultLocale = Locale.ENGLISH;
+
+    /**
+     * Format dates and times for Solr.
+     */
+    private static final DateTimeFormatter dateTimeFormatter
+            = ISODateTimeFormat.dateTime().withZoneUTC();
 
     /**
      * Static lookup of country names.
@@ -82,10 +87,10 @@ public class JsonConverter implements Converter<JsonNode> {
 
         if (descriptions.size() > 0) {
             for (JsonNode description : descriptions) {
-                out.add(mapper.valueToTree(getDescribedData(description, node)));
+                out.add(mapper.valueToTree(postProcess(getDescribedData(description, node))));
             }
         } else {
-            out.add(mapper.valueToTree(getData(node)));
+            out.add(mapper.valueToTree(postProcess(getData(node))));
         }
         return out;
     }
@@ -180,14 +185,44 @@ public class JsonConverter implements Converter<JsonNode> {
             }
         }
 
+        return data;
+    }
+
+    /**
+     * Do various post-processing steps on index data.
+     * @param data The original data.
+     * @return The enhanced data.
+     */
+    public static Map<String,Object> postProcess(Map<String,Object> data) {
         // Fix date format
         List<String> dateKeys = types.get("date");
         if (dateKeys != null) {
             for (String key : dateKeys) {
                 if (data.containsKey(key)) {
-                    data.put(key, fixDates((String) data.get(key)));
+                    try {
+                        data.put(key, fixDates((String) data.get(key)));
+                    } catch (IllegalArgumentException e) {
+                        data.remove(key);
+                        System.err.println("Invalid date: " + data.get(key));
+                    }
                 }
             }
+        }
+
+        // HACK! Combine dateStart and dateEnd into dateRange,
+        // ensuring there are no duplicates.
+        // FIXME: Unsafe cast
+        Set<Object> dateRanges = (HashSet<Object>)data.get("dateRange");
+        if (dateRanges == null) {
+            dateRanges = Sets.newHashSet();
+        }
+        for (String d : new String[]{"dateStart", "dateEnd"}) {
+            if (data.containsKey(d)) {
+                dateRanges.add(data.get(d));
+            }
+        }
+        if (!dateRanges.isEmpty()) {
+            data.put("dateRange", dateRanges);
         }
 
         // HACK! Set restricted=true for items that have accessors.
@@ -218,6 +253,15 @@ public class JsonConverter implements Converter<JsonNode> {
             data.put("name", countryLookup.get(data.get("id")));
         }
 
+        // HACK: Set charCount field as sum of string field data...
+        int charCount = 0;
+        for (Map.Entry<String,Object> entry : data.entrySet()) {
+            if (entry.getValue() instanceof String) {
+                charCount += ((String) entry.getValue()).length();
+            }
+        }
+        data.put("charCount", charCount);
+
         return data;
     }
 
@@ -228,6 +272,6 @@ public class JsonConverter implements Converter<JsonNode> {
      * @return A Solr-compliant version of input string
      */
     private static String fixDates(String date) {
-        return ISODateTimeFormat.dateTime().withZoneUTC().print(new DateTime(date));
+        return dateTimeFormatter.print(new DateTime(date));
     }
 }
