@@ -203,7 +203,7 @@ public class JsonConverter implements Converter<JsonNode> {
                         data.put(key, fixDates((String) data.get(key)));
                     } catch (IllegalArgumentException e) {
                         data.remove(key);
-                        System.err.println("Invalid date: " + data.get(key));
+                        System.err.println("Invalid date: " + data.get(key) + " (in: " + data.get("id") + ")");
                     }
                 }
             }
