@@ -328,6 +328,7 @@ also applies synonyms. -->
   <field name="restricted" type="boolean" indexed="true" stored="true" default="false" />
   <field name="accessibleTo" type="string" indexed="true" stored="true" multiValued="true" default="ALLUSERS" />
   <field name="identifier" type="string" indexed="true" stored="true" multiValued="false"/>
+  <field name="otherIdentifiers" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="name" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="name_ngram" type="text_general_edge_ngram" indexed="true" stored="true" multiValued="true"/>
   <field name="name_sort" type="text_prefix" indexed="true" stored="false" multiValued="false"/>
