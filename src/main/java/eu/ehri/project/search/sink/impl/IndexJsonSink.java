@@ -39,7 +39,7 @@ public class IndexJsonSink implements Sink<JsonNode> {
             throw new SinkException("Error updating Solr: "+ e.getMessage());
         }
         try {
-            out.close();
+            out.reset();
         } catch (IOException e) {
             throw new RuntimeException("Error closing temp stream for index: ", e);
         }
