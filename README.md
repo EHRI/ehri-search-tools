@@ -13,12 +13,13 @@ curl <WS-URL> | convert-json | curl -X POST "Content-type: application/json" <SO
 Here, we just bundle the downloading and uploading bits with some shortcut syntax. There are ways to
 accomplish the shell pipeline approach using certain options detailed below.
 
-Notes: To build a jar, use `mvn clean compile assembly:single`. (The `compile` phase must be present. See:
+###Notes: 
+To build a jar, use `mvn clean compile assembly:single`. (The `compile` phase must be present. See:
 http://stackoverflow.com/a/574650/285374.) There should then be a Jar called `index-helper-1
 .0-1-jar-with-dependencies.jar` inside the `target` folder, which you can execute with the usual `java -jar
 <file.jar> [OPTIONS] ... [ARGS]`.
 
-Current options:
+###Current options:
 
 ```
 usage: index-helper [OPTIONS] <spec> ... <specN>
