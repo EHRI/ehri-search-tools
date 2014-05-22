@@ -303,6 +303,8 @@ also applies synonyms. -->
         <!-- less aggressive: <filter class="solr.RussianLightStemFilterFactory"/> -->
       </analyzer>
     </fieldType>
+
+    <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
     
 
 </types>
@@ -350,6 +352,9 @@ also applies synonyms. -->
   <field name="addresses" type="text_general" indexed="true" stored="false" multiValued="true" />
   <field name="priority" type="int" indexed="true" stored="true" multiValued="false"/>
   <field name="charCount" type="int" indexed="true" stored="true" multiValued="false"/>
+  <field name="latitude" type="double" indexed="true" stored="true" multiValued="false" />
+  <field name="longitude" type="double" indexed="true" stored="true" multiValued="false" />
+  <field name="location" type="location" indexed="true" stored="true" multiValued="false" />
   <field name="_version_" type="long" indexed="true" stored="true"/>
   <dynamicField name="*_i" type="int" indexed="true" stored="true"/>
   <dynamicField name="*_is" type="int" indexed="true" stored="true" multiValued="true"/>
@@ -363,6 +368,7 @@ also applies synonyms. -->
   <dynamicField name="*_ds" type="double" indexed="true" stored="true" multiValued="true"/>
   <dynamicField name="*_dt" type="date" indexed="true" stored="true"/>
   <dynamicField name="*_dts" type="date" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*_coordinate"  type="double" indexed="true"  stored="false"/>
 
 en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <!-- New fields for language identification -->

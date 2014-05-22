@@ -240,6 +240,13 @@ public class JsonConverter implements Converter<JsonNode> {
             }
         }
 
+        // HACK! Create a composite 'location' field from latitude and longitude
+        Object latitude = data.get("latitude");
+        Object longitude = data.get("longitude");
+        if (latitude != null && longitude != null) {
+            data.put("location", latitude + "," + longitude);
+        }
+
         // HACK! Set isTopLevel attr for items where parentId is not defined
         data.put("isTopLevel", !data.containsKey("parentId"));
 
