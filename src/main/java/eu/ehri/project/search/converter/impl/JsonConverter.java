@@ -203,7 +203,7 @@ public class JsonConverter implements Converter<JsonNode> {
                         data.put(key, fixDates((String) data.get(key)));
                     } catch (IllegalArgumentException e) {
                         data.remove(key);
-                        System.err.println("Invalid date: " + data.get(key));
+                        System.err.println("Invalid date: " + data.get(key) + " (in: " + data.get("id") + ")");
                     }
                 }
             }
@@ -238,6 +238,13 @@ public class JsonConverter implements Converter<JsonNode> {
             if (!data.containsKey(entry.getKey())) {
                 data.put(entry.getKey(), entry.getValue());
             }
+        }
+
+        // HACK! Create a composite 'location' field from latitude and longitude
+        Object latitude = data.get("latitude");
+        Object longitude = data.get("longitude");
+        if (latitude != null && longitude != null) {
+            data.put("location", latitude + "," + longitude);
         }
 
         // HACK! Set isTopLevel attr for items where parentId is not defined

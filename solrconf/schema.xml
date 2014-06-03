@@ -303,6 +303,8 @@ also applies synonyms. -->
         <!-- less aggressive: <filter class="solr.RussianLightStemFilterFactory"/> -->
       </analyzer>
     </fieldType>
+
+    <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
     
 
 </types>
@@ -317,7 +319,7 @@ also applies synonyms. -->
   <field name="dateStart" type="date" indexed="true" stored="true" multiValued="false"/>
   <field name="dateEnd" type="date" indexed="true" stored="true" multiValued="false"/>
   <field name="dateRange" type="date" indexed="true" stored="true" multiValued="true"/>
-  <field name="isTopLevel" type="boolean" indexed="true" stored="false" multiValued="false"/>
+  <field name="isTopLevel" type="boolean" indexed="true" stored="true" multiValued="false"/>
   <field name="repositoryId" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="repositoryName" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="holderId" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -328,6 +330,7 @@ also applies synonyms. -->
   <field name="restricted" type="boolean" indexed="true" stored="true" default="false" />
   <field name="accessibleTo" type="string" indexed="true" stored="true" multiValued="true" default="ALLUSERS" />
   <field name="identifier" type="string" indexed="true" stored="true" multiValued="false"/>
+  <field name="otherIdentifiers" type="string" indexed="true" stored="true" multiValued="true"/>
   <field name="name" type="string" indexed="true" stored="true" multiValued="false"/>
   <field name="name_ngram" type="text_general_edge_ngram" indexed="true" stored="true" multiValued="true"/>
   <field name="name_sort" type="text_prefix" indexed="true" stored="false" multiValued="false"/>
@@ -349,6 +352,9 @@ also applies synonyms. -->
   <field name="addresses" type="text_general" indexed="true" stored="false" multiValued="true" />
   <field name="priority" type="int" indexed="true" stored="true" multiValued="false"/>
   <field name="charCount" type="int" indexed="true" stored="true" multiValued="false"/>
+  <field name="latitude" type="double" indexed="true" stored="true" multiValued="false" />
+  <field name="longitude" type="double" indexed="true" stored="true" multiValued="false" />
+  <field name="location" type="location" indexed="true" stored="true" multiValued="false" />
   <field name="_version_" type="long" indexed="true" stored="true"/>
   <dynamicField name="*_i" type="int" indexed="true" stored="true"/>
   <dynamicField name="*_is" type="int" indexed="true" stored="true" multiValued="true"/>
@@ -362,6 +368,7 @@ also applies synonyms. -->
   <dynamicField name="*_ds" type="double" indexed="true" stored="true" multiValued="true"/>
   <dynamicField name="*_dt" type="date" indexed="true" stored="true"/>
   <dynamicField name="*_dts" type="date" indexed="true" stored="true" multiValued="true"/>
+  <dynamicField name="*_coordinate"  type="double" indexed="true"  stored="false"/>
 
 <!-- Boolean field to mark up which documents should be retrieved -->
   <field name="textDataPresent" type="boolean" indexed="true" stored="false"  multiValued="false" default="false" />
