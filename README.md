@@ -1,4 +1,24 @@
-# EHRI Index Helper
+# EHRI Solr Configuration & Tools
+
+This project contains:
+
+* A test harness for EHRI's Solr search engine configuration
+* A tool for converting data from the EHRI rest backend to Solr format
+
+## Test harness
+
+The test harness (under development) is based on the `SolrTestCaseJ4` class and uses the configuration in the
+`solr/conf` directory. This directory should be kept up-to-date with the production Solr configuration and the
+`fabfile.py` deployment script to be able to deploy it properly to the EHRI servers.
+
+Note: There should be no static Jar files in this project. All the library dependencies (such as those for
+the Solr language detection etc) should be properly set as versioned Maven deps with a **test scope** (this is
+important otherwise the indexer tool will be unnecessarily bloated with Jars.)
+
+**IMPORTANT**: At present the test data is not under SCM in this project (for various reasons.) For the tests to run
+the test data should be in Solr JSON format in `src/test/resources/searchdata.json`.
+
+## EHRI Index Tool
 
 This is a convenience tool used by the EHRI frontend to synchronise the search engine with the EHRI backend
 (and for doing the same easily from the command-line.) The basic idea is to read some JSON from a web service
@@ -13,13 +33,13 @@ curl <WS-URL> | convert-json | curl -X POST "Content-type: application/json" <SO
 Here, we just bundle the downloading and uploading bits with some shortcut syntax. There are ways to
 accomplish the shell pipeline approach using certain options detailed below.
 
-###Notes: 
+### Notes:
 To build a jar, use `mvn clean compile assembly:single`. (The `compile` phase must be present. See:
 http://stackoverflow.com/a/574650/285374.) There should then be a Jar called `index-helper-1
 .0-1-jar-with-dependencies.jar` inside the `target` folder, which you can execute with the usual `java -jar
 <file.jar> [OPTIONS] ... [ARGS]`.
 
-###Current options:
+### Current options:
 
 ```
 usage: index-helper [OPTIONS] <spec> ... <specN>
@@ -57,7 +77,7 @@ The default URIs for Solr and the REST service are:
 * http://localhost:8983/solr/portal
 ```
 
-## Examples:
+### Examples:
 
 Index documentary unit and repository types from default service endpoints:
 
@@ -115,7 +135,7 @@ cat orig.json | java -jar index-helper.jar -f - | curl -X POST -H "Content-type:
 ```
 
 
-## TODO:
+### TODO:
 
 * Add proper logging
 * Add proper error handling

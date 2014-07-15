@@ -275,7 +275,7 @@ also applies synonyms. -->
         <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.LowerCaseFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_pl.txt" enablePositionIncrements="true"/>
-	<filter class="solr.MorfologikFilterFactory" dictionary="MORFOLOGIK" />
+	<filter class="solr.MorfologikFilterFactory" />
 	<filter class="solr.ICUFoldingFilterFactory"/> 
       </analyzer>
     </fieldType>
@@ -370,7 +370,6 @@ also applies synonyms. -->
   <dynamicField name="*_dts" type="date" indexed="true" stored="true" multiValued="true"/>
   <dynamicField name="*_coordinate"  type="double" indexed="true"  stored="false"/>
 
-en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro
 <!-- New fields for language identification -->
 <field name="txt_en" type="text_en" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 <field name="txt_hu" type="text_hu" indexed="true" stored="false" termVectors="true" multiValued="true"/>
