@@ -1,6 +1,7 @@
 package eu.ehri.project.search;
 
 import com.google.common.base.Charsets;
+import com.google.common.base.Preconditions;
 import com.google.common.io.Resources;
 import org.apache.solr.SolrTestCaseJ4;
 import org.apache.solr.common.params.ModifiableSolrParams;
@@ -73,14 +74,20 @@ public abstract class AbstractSolrTest extends SolrTestCaseJ4 {
         );
     }
 
-    public static ModifiableSolrParams queryParams(String query) {
+    public static ModifiableSolrParams queryParams(String query, String... otherParams) {
+        Preconditions.checkArgument(otherParams.length % 2 == 0,
+                "Invalid number of parameters given. Should be a list of key/value pairs.");
         ModifiableSolrParams basic = templateQueryParams();
-        basic.add(params("q", query));
+        basic.set("q", query);
+        for (int i = 0; i < otherParams.length; i += 2) {
+            basic.set(otherParams[i], otherParams[i+1]);
+        }
+        System.out.println(basic.toString());
         return basic;
     }
 
-    public static String runSearch(String q) throws Exception {
-        return JQ(req(queryParams(q)));
+    public static String runSearch(String q, String... otherParams) throws Exception {
+        return JQ(req(queryParams(q, otherParams)));
     }
 
     @BeforeClass

@@ -14,7 +14,7 @@ public class SpellSuggestionTest extends AbstractSolrTest {
 
     @Test
     public void testSpellcheck() throws Exception {
-        String result = runSearch("arcchives");
+        String result = runSearch("arcchives", "rows", "0");
         //System.out.println(result);
         with(result)
                 .assertThat("$.grouped.itemId.matches", equalTo(0))
