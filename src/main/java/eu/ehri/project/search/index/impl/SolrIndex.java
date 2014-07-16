@@ -56,7 +56,6 @@ public class SolrIndex implements Index {
                 UriBuilder.fromPath(url).segment("update").build());
         ClientResponse response = commitResource
                 .queryParam("commit", "true")
-                .queryParam("optimize", "true")
                 .type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class);
         try {

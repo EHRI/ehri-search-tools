@@ -58,3 +58,7 @@ Icon?
 ehthumbs.db
 Thumbs.db
 
+# Ignore search data, which is likely
+# to be large
+src/test/resources/searchdata.json
+

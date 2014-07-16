@@ -69,7 +69,7 @@ def copy_to_server():
     put(local_file, env.tool_jar_path)
 
 def copy_config():
-    with lcd("solrconf"):
+    with lcd("solr/conf"):
         for f in env.config_files:
             put(f, os.path.join(env.config_path, f))
 
