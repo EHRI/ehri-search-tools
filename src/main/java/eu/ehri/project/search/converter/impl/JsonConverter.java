@@ -117,7 +117,7 @@ public class JsonConverter implements Converter<JsonNode> {
         // Merge the data, preventing overwriting of the id key - any other
         // keys should be overwritten.
         for (Map.Entry<String, Object> itemData : getData(item).entrySet()) {
-            if (!itemData.getKey().equals("id")) {
+            if (!itemData.getKey().equals("id") && itemData.getValue() != null) {
                 descriptionData.put(itemData.getKey(), itemData.getValue());
             }
         }
