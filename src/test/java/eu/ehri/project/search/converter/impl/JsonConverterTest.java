@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import java.io.InputStream;
 
+import static com.jayway.jsonassert.JsonAssert.with;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertFalse;
@@ -18,7 +20,7 @@ import static org.junit.Assert.assertFalse;
  */
 public class JsonConverterTest {
 
-    private static String testResource = "inputdoc.json";
+    private static final String testResource = "inputdoc.json";
 
     private JsonNode inputNode;
 
@@ -48,7 +50,10 @@ public class JsonConverterTest {
     @Test
     public void testOutputDocContainsRightValues() throws Exception {
         JsonNode out = Iterables.get(new JsonConverter().convert(inputNode), 0);
-        assertFalse(out.path("id").isMissingNode());
-        assertFalse(out.path("type").isMissingNode());
+        with(out.toString())
+                .assertThat("$.id", equalTo("eb747649-4f7b-4874-98cf-f236d2b5fa1d"))
+                .assertThat("$.itemId", equalTo("003348-wl1729"))
+                .assertThat("$.type", equalTo("documentaryUnit"))
+                .assertThat("$.name", equalTo("Herta Berg: family recipe note books"));
     }
 }
