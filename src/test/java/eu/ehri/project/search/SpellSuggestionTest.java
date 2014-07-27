@@ -14,13 +14,23 @@ public class SpellSuggestionTest extends AbstractSolrTest {
 
     @Test
     public void testSpellcheck() throws Exception {
-        String result = runSearch("arcchives", "rows", "0");
+//        String result = runSearch("arcchives", "rows", "0");
+//        //System.out.println(result);
+//        with(result)
+//                .assertThat("$.grouped.itemId.matches", equalTo(0))
+//                .assertThat("$.spellcheck.suggestions[0]", equalTo("arcchives"))
+//                .assertThat("$.spellcheck.suggestions[1].numFound", equalTo(3))
+//                .assertThat("$.spellcheck.suggestions[1].suggestion[0].word", equalTo("archives"));
+
+        String result = runSearch("warsav", "rows", "0");
         //System.out.println(result);
         with(result)
                 .assertThat("$.grouped.itemId.matches", equalTo(0))
-                .assertThat("$.spellcheck.suggestions[0]", equalTo("arcchives"))
+                .assertThat("$.spellcheck.suggestions[0]", equalTo("warsav"))
                 .assertThat("$.spellcheck.suggestions[1].numFound", equalTo(3))
-                .assertThat("$.spellcheck.suggestions[1].suggestion[0].word", equalTo("archives"));
-
+                .assertThat("$.spellcheck.suggestions[1].suggestion[0].word", equalTo("Warsaw"));
+        
+        
+        
     }
 }
