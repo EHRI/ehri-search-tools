@@ -142,8 +142,11 @@ public class JsonConverter implements Converter<JsonNode> {
             // First successfully matched path wins...
             for (JsonPath path : attrPath.getValue()) {
                 try {
-                    data.put(attr, path.read(nodeString));
-                    break;
+                    Object value = path.read(nodeString);
+                    if (value != null) {
+                        data.put(attr, value);
+                        break;
+                    }
                 } catch (InvalidPathException e) {
                     // Intentionally ignore invalid paths - we might
                     // want to take a smarter approach in future.
