@@ -29,8 +29,8 @@ public class SearchTest extends AbstractSolrTest {
     @Test
     public void testBasicSearch() throws Exception {
         String data = runSearch("warsaw");
-        //System.out.println(JsonPath.read(data, "$.grouped.itemId.matches"));
-        with(data).assertThat("$.grouped.itemId.matches", equalTo(130));
+        System.out.println(JsonPath.read(data, "$.grouped.itemId.matches"));
+        with(data).assertThat("$.grouped.itemId.matches", equalTo(132));
     }
 
     @Test
