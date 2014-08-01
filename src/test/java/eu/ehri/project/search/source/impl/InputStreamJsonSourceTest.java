@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class InputStreamJsonSourceTest {
 
-    private static String testResource = "inputdoc.json";
+    public static String testResource = "inputdoc.json";
 
     @Test
     public void testDocContainsOneNode() throws Exception {

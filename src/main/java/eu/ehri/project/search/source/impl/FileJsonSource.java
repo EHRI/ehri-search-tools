@@ -9,9 +9,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
+ * Use a file as a node source.
+ *
  * @author Mike Bryant (http://github.com/mikesname)
- *         <p/>
- *         Use a file as a node source.
  */
 public class FileJsonSource implements Source<JsonNode> {
     private final String fileName;
@@ -39,7 +39,7 @@ public class FileJsonSource implements Source<JsonNode> {
     public Iterable<JsonNode> getIterable() throws SourceException {
         try {
             File file = new File(fileName);
-            if (file  == null || !(file.exists() || file.isFile())) {
+            if (!(file.exists() && file.isFile())) {
                 throw new SourceException(
                         "File does not exists, or is not a plain file: " + fileName);
             }

@@ -1,6 +1,5 @@
 package eu.ehri.project.search;
 
-import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -22,7 +21,6 @@ import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -371,19 +369,19 @@ public class IndexHelper<T> {
             builder.build().iterate();
         } catch (Source.SourceException e) {
             System.err.println(e.getMessage());
-            System.exit(ErrCodes.BAD_SOURCE_ERR.code);
+            System.exit(ErrCodes.BAD_SOURCE_ERR.getCode());
         } catch (Converter.ConverterException e) {
             System.err.println(e.getMessage());
-            System.exit(ErrCodes.BAD_CONVERSION_ERR.code);
+            System.exit(ErrCodes.BAD_CONVERSION_ERR.getCode());
         } catch (Sink.SinkException e) {
             System.err.println(e.getMessage());
-            System.exit(ErrCodes.BAD_SINK_ERR.code);
+            System.exit(ErrCodes.BAD_SINK_ERR.getCode());
         } catch (Index.IndexException e) {
             System.err.println(e.getMessage());
-            System.exit(ErrCodes.INDEX_ERR.code);
+            System.exit(ErrCodes.INDEX_ERR.getCode());
         } catch (IllegalStateException e) {
             System.err.println(e.getMessage());
-            System.exit(ErrCodes.BAD_STATE_ERR.code);
+            System.exit(ErrCodes.BAD_STATE_ERR.getCode());
         }
     }
 }
