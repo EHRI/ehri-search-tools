@@ -36,7 +36,7 @@ public class IndexJsonSink implements Sink<JsonNode> {
                 writeCount = 0;
             }
         } catch (Exception e) {
-            throw new SinkException("Error updating Solr: "+ e.getMessage());
+            throw new SinkException("Error updating Solr", e);
         }
         try {
             out.reset();

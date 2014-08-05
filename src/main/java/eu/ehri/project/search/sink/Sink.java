@@ -6,10 +6,6 @@ package eu.ehri.project.search.sink;
 public interface Sink<T> {
 
     public class SinkException extends Exception {
-        public SinkException(String message) {
-            super(message);
-        }
-
         public SinkException(String message, Exception e) {
             super(message, e);
         }

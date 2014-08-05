@@ -34,7 +34,7 @@ public class OutputStreamJsonSink implements Sink<JsonNode> {
         this.pretty = pretty;
     }
 
-    public void write(JsonNode node) {
+    public void write(JsonNode node) throws SinkException {
         try {
             if (generator == null) {
                 pw = new PrintWriter(out);
@@ -46,19 +46,19 @@ public class OutputStreamJsonSink implements Sink<JsonNode> {
             }
             writer.writeValue(generator, node);
         } catch (IOException e) {
-            throw new RuntimeException("Error writing json data: ", e);
+            throw new SinkException("Error writing json data: ", e);
         }
 
     }
 
-    public void finish() {
+    public void finish() throws SinkException {
         if (generator != null) {
             try {
                 generator.writeEndArray();
                 generator.flush();
                 pw.flush();
             } catch (IOException e) {
-                throw new RuntimeException("Error closing JSON writer: ", e);
+                throw new SinkException("Error closing JSON writer: ", e);
             }
         }
     }
