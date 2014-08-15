@@ -7,14 +7,10 @@ The actual request handler is /multilingsearch
 e.g. for "Auschwitz" the query is
 http://localhost:8983/solr/portal/multilingsearch?q=Auschwitz&wt=json&indent=true
 
-
-## TODOs
-- Complete the schema.xml: copy the rest of the fields in the text field.
-- Improve the resolution of German diacritics (partially improved already).
-- Discuss how to use that together with suggest, facetting, etc. integrating the request handler
-- In the future: implement expansion of access points (multilingual and semantic). 
-
-
+# Term expansion with SKOS
+Copy the *rdf files into the solr/portal/conf directory.
+Follow the instructions of 
+https://github.com/KepaJRodriguez/lucene-skos-ehri/blob/master/README.md
 
 
 ## Libraries
@@ -55,3 +51,10 @@ An alternative might be to add the following lines to `/solr-4.X.X/example/solr/
 - schema.xml and solarconf.xml have been modified to allow multilingual indexing and multilingual simultaneous querying.
 - polish list of stopwords have been added
 - modification in code of the indexer in file JSONConversion.java to change the output and allow language identification in the desired fields
+<<<<<<< HEAD
+
+19.11.2014
+- schema.xml modified for SKOS based term expansion
+- three SKOS vocabularies added
+=======
+>>>>>>> 969032c87232b3080d4901d426a34c86ef36141e
