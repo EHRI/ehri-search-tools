@@ -189,14 +189,12 @@
             -->
             <str name="field">text</str>
             <!-- the indexed field to derive suggestions from -->
-            <float name="threshold">0.0001</float>
+            <float name="threshold">0.01</float>
             <str name="buildOnCommit">true</str>
-            <!--
-                  <str name="sourceLocation">american-english</str>
-            -->
+
         </lst>
     </searchComponent>
-    <requestHandler name="suggest" class="solr.SearchHandler">
+    <requestHandler name="/suggest" class="solr.SearchHandler">
         <lst name="defaults">
             <str name="spellcheck">true</str>
             <str name="spellcheck.onlyMorePopular">true</str>
@@ -226,7 +224,6 @@
             <str name="qf">
                 text txt_en txt_hu txt_ru txt_pl txt_de txt_nl txt_cs txt_it txt_fr txt_uk txt_hr txt_da txt_el txt_lv
                 txt_no txt_ro txt_generic
-
             </str>
         </lst>
     </requestHandler>
