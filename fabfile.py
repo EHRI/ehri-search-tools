@@ -22,7 +22,7 @@ env.service_name = 'tomcat6'
 env.tool_jar_path = '/opt/webapps/docview/bin/indexer.jar'
 env.config_path = '/opt/webapps/solr4/ehri/portal/conf'
 env.user = os.getenv("USER")
-env.config_files = ["schema.xml", "solrconfig.xml"]
+env.config_files = ["schema.xml", "solrconfig.xml", "*.txt", "lang/*"]
 
 TIMESTAMP_FORMAT = "%Y%m%d%H%M%S"
 
@@ -71,7 +71,7 @@ def copy_to_server():
 def copy_config():
     with lcd("solr/conf"):
         for f in env.config_files:
-            put(f, os.path.join(env.config_path, f))
+            put(f, os.path.join(env.config_path, os.path.dirname(f)))
 
 def get_artifact_version():
     return local(
