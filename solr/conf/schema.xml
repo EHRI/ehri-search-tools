@@ -39,6 +39,17 @@
       </analyzer>
       <analyzer type="query">
         <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+        <!-- Use skos for query time expansion -->
+        <filter class="at.ac.univie.mminf.luceneSKOS.solr.SKOSFilterFactory"
+          skosFile="ehri-terms-skos.rdf" expansionType="LABEL" type="PREF ALT PREFMALE PREFFEMALE" bufferSize="150" />
+        <filter class="at.ac.univie.mminf.luceneSKOS.solr.SKOSFilterFactory"
+          skosFile="ghettos-multiling-skos.rdf" expansionType="LABEL" type="PREF ALT" bufferSize="150" /> 
+        <filter class="at.ac.univie.mminf.luceneSKOS.solr.SKOSFilterFactory"
+          skosFile="camps-multiling-skos.rdf" expansionType="LABEL" type="PREF ALT" bufferSize="150" /> 
+        <filter class="at.ac.univie.mminf.luceneSKOS.solr.SKOSFilterFactory"
+          skosFile="tm_skos_places.rdf" expansionType="LABEL" type="PREF ALT" bufferSize="150" /> 
+        <filter class="at.ac.univie.mminf.luceneSKOS.solr.SKOSFilterFactory"
+          skosFile="tm_skos_keywords.rdf" expansionType="LABEL" type="PREF ALT" bufferSize="150" /> 
         <filter class="solr.ICUFoldingFilterFactory"/>  <!-- Remove diacritics and white space tokenizer -->
         <!-- treat hyphens equal to whitespace during query time -->
         <filter class="solr.PatternReplaceFilterFactory" pattern="(\-)" replacement=" " replace="all" />
