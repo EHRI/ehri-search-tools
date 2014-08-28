@@ -22,7 +22,7 @@ env.service_name = 'tomcat6'
 env.tool_jar_path = '/opt/webapps/docview/bin/indexer.jar'
 env.config_path = '/opt/webapps/solr4/ehri/portal/conf'
 env.user = os.getenv("USER")
-env.config_files = ["schema.xml", "solrconfig.xml", "*.txt", "lang/*"]
+env.config_files = ["schema.xml", "solrconfig.xml", "*.txt", "*.rdf", "lang/*"]
 
 TIMESTAMP_FORMAT = "%Y%m%d%H%M%S"
 
