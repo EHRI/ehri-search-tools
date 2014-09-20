@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.jayway.jsonpath.InvalidPathException;
 import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.ReadContext;
 import eu.ehri.project.search.converter.Converter;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonToken;
@@ -133,8 +134,7 @@ public class JsonConverter implements Converter<JsonNode> {
      */
     private static Map<String, Object> getData(JsonNode node) {
         Map<String, Object> data = Maps.newHashMap();
-
-        final String nodeString = node.toString();
+        ReadContext ctx = JsonPath.parse(node.toString());
 
         // Extract specific properties
         for (Map.Entry<String, List<JsonPath>> attrPath : jsonPaths.entrySet()) {
@@ -142,7 +142,7 @@ public class JsonConverter implements Converter<JsonNode> {
             // First successfully matched path wins...
             for (JsonPath path : attrPath.getValue()) {
                 try {
-                    Object value = path.read(nodeString);
+                    Object value = ctx.read(path);
                     if (value != null) {
                         data.put(attr, value);
                         break;
