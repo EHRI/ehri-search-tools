@@ -42,8 +42,11 @@ public class InputStreamJsonSource implements Source<JsonNode> {
             jsonParser = jsonFactory.createJsonParser(ios);
             JsonToken firstToken = jsonParser.nextValue();
             if (firstToken != JsonToken.START_ARRAY) {
-                throw new IllegalStateException("Excepted a JSON array, instead first token was: " + firstToken);
+                throw new SourceException("Excepted a JSON array, instead first token was: " + firstToken);
             }
+            // NB: Since the iterator is run lazily, a parse error here will
+            // not be caught and instead throw a RuntimeException "Unexpected character..."
+            // I'm not sure how we can fix that.
             final Iterator<JsonNode> iterator = jsonParser.readValuesAs(JsonNode.class);
             return new Iterable<JsonNode>() {
                 @Override
@@ -52,7 +55,7 @@ public class InputStreamJsonSource implements Source<JsonNode> {
                 }
             };
         } catch (IOException e) {
-            throw new RuntimeException("Error reading JSON stream: ", e);
+            throw new SourceException("Error reading JSON stream: ", e);
         }
     }
 
