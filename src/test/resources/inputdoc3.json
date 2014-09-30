@@ -1,0 +1,108 @@
+[
+  {
+    "relationships": {
+      "lifecycleEvent": [
+        {
+          "relationships": {
+            "hasActioner": [
+              {
+                "relationships": {
+                  "belongsTo": [
+                    {
+                      "relationships": {
+                      },
+                      "data": {
+                        "identifier": "portal",
+                        "name": "Portal"
+                      },
+                      "meta": {
+                        "childCount": 80
+                      },
+                      "id": "portal",
+                      "type": "group"
+                    },
+                    {
+                      "relationships": {
+                      },
+                      "data": {
+                        "identifier": "admin",
+                        "name": "Administrators"
+                      },
+                      "meta": {
+                        "childCount": 6
+                      },
+                      "id": "admin",
+                      "type": "group"
+                    }
+                  ]
+                },
+                "data": {
+                  "identifier": "mike",
+                  "name": "Mike Bryant"
+                },
+                "meta": {
+                  "followers": 1,
+                  "watching": 4,
+                  "following": 14
+                },
+                "id": "mike",
+                "type": "userProfile"
+              }
+            ]
+          },
+          "data": {
+            "eventType": "addGroup",
+            "timestamp": "2014-08-15T15:33:38.568+02:00"
+          },
+          "meta": {
+            "childCount": 2
+          },
+          "id": "c3b350b0-2480-11e4-b815-c7f30284d1a0",
+          "type": "systemEvent"
+        }
+      ],
+      "belongsTo": [
+        {
+          "relationships": {
+          },
+          "data": {
+            "identifier": "portal",
+            "name": "Portal"
+          },
+          "meta": {
+            "childCount": 80
+          },
+          "id": "portal",
+          "type": "group"
+        },
+        {
+          "relationships": {
+          },
+          "data": {
+            "identifier": "admin",
+            "name": "Administrators"
+          },
+          "meta": {
+            "childCount": 6
+          },
+          "id": "admin",
+          "type": "group"
+        }
+      ]
+    },
+    "data": {
+      "identifier": "mike",
+      "languages": [ "en" ],
+      "name": "Mike",
+      "location": "London"
+    },
+    "meta": {
+      "followers": 1,
+      "gid": 22,
+      "watching": 4,
+      "following": 14
+    },
+    "id": "mike",
+    "type": "userProfile"
+  }
+]
