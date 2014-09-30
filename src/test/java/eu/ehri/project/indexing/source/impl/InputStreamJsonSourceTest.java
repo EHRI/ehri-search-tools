@@ -22,7 +22,7 @@ public class InputStreamJsonSourceTest {
     @Test
     public void testDocContainsOneNode() throws Exception {
         InputStream stream = getClass().getClassLoader()
-                .getResourceAsStream("inputdoc.json");
+                .getResourceAsStream("inputdoc1.json");
         assertEquals(1, listFromStream(stream).size());
     }
 

@@ -1,6 +1,10 @@
 package eu.ehri.project.indexing.converter.impl;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.jayway.jsonassert.JsonAsserter;
 import eu.ehri.project.indexing.source.Source;
 import eu.ehri.project.indexing.source.impl.InputStreamJsonSource;
 import org.codehaus.jackson.JsonNode;
@@ -8,6 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 
 import static com.jayway.jsonassert.JsonAssert.with;
 import static org.hamcrest.Matchers.equalTo;
@@ -20,40 +26,73 @@ import static org.junit.Assert.assertFalse;
  */
 public class JsonConverterTest {
 
-    private static final String testResource = "inputdoc.json";
+    private static final List<String> inputResources = ImmutableList.of(
+            "inputdoc1.json", "inputdoc2.json", "inputdoc3.json"
+    );
 
-    private JsonNode inputNode;
+    private static final List<Integer> expectedNodeCount = ImmutableList.of(1, 2, 1);
+
+    private static final ImmutableList<ImmutableMap<String,String>> expected = ImmutableList.of(
+            ImmutableMap.of(
+                    "id", "eb747649-4f7b-4874-98cf-f236d2b5fa1d",
+                    "itemId", "003348-wl1729",
+                    "type", "documentaryUnit",
+                    "name", "Herta Berg: family recipe note books"
+            ),
+            ImmutableMap.of(
+                    "id", "be-002112-ca-eng",
+                    "itemId", "be-002112-ca",
+                    "type", "documentaryUnit",
+                    "name", "Photographic archives"
+            ),
+            ImmutableMap.of(
+                    "id", "mike",
+                    "itemId", "mike",
+                    "type", "userProfile",
+                    "name", "Mike"
+            )
+    );
+
+    private List<JsonNode> inputs = Lists.newArrayList();
 
     @Before
     public void setUp() throws Exception {
-        InputStream stream = getClass().getClassLoader().getResourceAsStream(testResource);
-        Source<JsonNode> source = new InputStreamJsonSource(stream);
-        try {
-            inputNode = Iterables.get(source.getIterable(), 0);
-        } finally {
-            source.finish();
-            stream.close();
+        for (String testResource : inputResources) {
+            InputStream stream = getClass().getClassLoader().getResourceAsStream(testResource);
+            Source<JsonNode> source = new InputStreamJsonSource(stream);
+            try {
+                inputs.add(Iterables.get(source.getIterable(), 0));
+            } finally {
+                source.finish();
+                stream.close();
+            }
         }
     }
 
     @Test
     public void testCorrectNumberOfOutputNodes() throws Exception {
-        assertEquals(1, Iterables.size(new JsonConverter().convert(inputNode)));
+        for (int i = 0; i < expectedNodeCount.size(); i++) {
+            assertEquals(expectedNodeCount.get(i),
+                    Integer.valueOf(Iterables.size(new JsonConverter().convert(inputs.get(i)))));
+        }
     }
 
     @Test
     public void testOutputDocIsDifferent() throws Exception {
-        JsonNode out = Iterables.get(new JsonConverter().convert(inputNode), 0);
-        assertNotSame(out, inputNode);
+        for (int i = 0; i < expectedNodeCount.size(); i++) {
+            JsonNode out = Iterables.get(new JsonConverter().convert(inputs.get(i)), 0);
+            assertNotSame(out, inputs.get(i));
+        }
     }
 
     @Test
-    public void testOutputDocContainsRightValues() throws Exception {
-        JsonNode out = Iterables.get(new JsonConverter().convert(inputNode), 0);
-        with(out.toString())
-                .assertThat("$.id", equalTo("eb747649-4f7b-4874-98cf-f236d2b5fa1d"))
-                .assertThat("$.itemId", equalTo("003348-wl1729"))
-                .assertThat("$.type", equalTo("documentaryUnit"))
-                .assertThat("$.name", equalTo("Herta Berg: family recipe note books"));
+    public void testOutputDoc1ContainsRightValues() throws Exception {
+        for (int i = 0; i < expected.size(); i++) {
+            JsonNode out = Iterables.get(new JsonConverter().convert(inputs.get(i)), 0);
+            JsonAsserter asserter = with(out.toString());
+            for (Map.Entry<String,String> entry : expected.get(i).entrySet()) {
+                asserter.assertThat("$." + entry.getKey(), equalTo(entry.getValue()));
+            }
+        }
     }
 }

@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
  */
 public class FileJsonSourceTest {
 
-    public static String testResource = "inputdoc.json";
+    public static String testResource = "inputdoc1.json";
 
     private String getResourcePath() throws Exception {
         URL resource = getClass().getClassLoader().getResource(testResource);
