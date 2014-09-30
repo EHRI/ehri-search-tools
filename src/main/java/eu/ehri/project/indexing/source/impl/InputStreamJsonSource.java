@@ -44,11 +44,6 @@ public class InputStreamJsonSource implements Source<JsonNode> {
             if (firstToken != JsonToken.START_ARRAY) {
                 throw new IllegalStateException("Excepted a JSON array, instead first token was: " + firstToken);
             }
-            JsonToken nextToken = jsonParser.nextValue();
-            if (nextToken != JsonToken.START_OBJECT) {
-                throw new IllegalStateException("Excepted a JSON object after inital array, " +
-                        "instead next token was: " + nextToken);
-            }
             final Iterator<JsonNode> iterator = jsonParser.readValuesAs(JsonNode.class);
             return new Iterable<JsonNode>() {
                 @Override
