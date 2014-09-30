@@ -90,8 +90,8 @@ public class JsonConverter implements Converter<JsonNode> {
      */
     public Iterable<JsonNode> convert(JsonNode node) throws ConverterException {
         List<JsonNode> out = Lists.newArrayList();
-        Iterator<JsonNode> descriptions = node.findPath("relationships")
-                .findPath("describes").iterator();
+        Iterator<JsonNode> descriptions = node.path("relationships")
+                .path("describes").iterator();
 
         if (descriptions.hasNext()) {
             while (descriptions.hasNext()) {
