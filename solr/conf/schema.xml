@@ -314,6 +314,7 @@
         <field name="dateEnd" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="dateRange" type="date" indexed="true" stored="true" multiValued="true"/>
         <field name="isTopLevel" type="boolean" indexed="true" stored="true" multiValued="false"/>
+        <field name="isParent" type="boolean" indexed="true" stored="true" multiValued="false" default="false" />
         <field name="repositoryId" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="repositoryName" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="holderId" type="string" indexed="true" stored="true" multiValued="true"/>

@@ -267,6 +267,10 @@ public class JsonConverter implements Converter<JsonNode> {
         // HACK! Set isTopLevel attr for items where parentId is not defined
         data.put("isTopLevel", !data.containsKey("parentId"));
 
+        // HACK! Set isParent when childCount > 0
+        data.put("isParent", data.containsKey("childCount")
+            && (Integer)data.get("childCount") > 0);
+
         // HACK: if countryCode is set, translate it to a name in the default locale:
         if (data.containsKey("countryCode")) {
             data.put("countryName", countryLookup.get(data.get("countryCode")));
