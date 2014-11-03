@@ -53,7 +53,7 @@ public class IndexJsonSink implements Sink<JsonNode> {
         try {
             try {
                 if (writeCount > 0) {
-                    index.update(out.getSupplier().getInput(), true);
+                    index.update(out.asByteSource().openStream(), true);
                     writeCount = 0;
                 }
             } catch (Exception e) {
