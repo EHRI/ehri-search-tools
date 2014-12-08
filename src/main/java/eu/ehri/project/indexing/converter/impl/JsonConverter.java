@@ -162,7 +162,7 @@ public class JsonConverter implements Converter<JsonNode> {
         }
 
         // Any keys in the 'data' section are indexed in dynamic fields
-        Iterator<Map.Entry<String, JsonNode>> dataFields = node.findPath("data").getFields();
+        Iterator<Map.Entry<String, JsonNode>> dataFields = node.path("data").getFields();
         while (dataFields.hasNext()) {
             Map.Entry<String, JsonNode> field = dataFields.next();
             String key = field.getKey();
