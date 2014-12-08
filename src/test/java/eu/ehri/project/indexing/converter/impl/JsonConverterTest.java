@@ -19,7 +19,6 @@ import static com.jayway.jsonassert.JsonAssert.with;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
-import static org.junit.Assert.assertFalse;
 
 /**
  * @author Mike Bryant (http://github.com/mikesname)
@@ -32,24 +31,27 @@ public class JsonConverterTest {
 
     private static final List<Integer> expectedNodeCount = ImmutableList.of(1, 2, 1);
 
-    private static final ImmutableList<ImmutableMap<String,String>> expected = ImmutableList.of(
-            ImmutableMap.of(
+    private static final ImmutableList<ImmutableMap<String,Object>> expected = ImmutableList.of(
+            ImmutableMap.<String,Object>of(
                     "id", "eb747649-4f7b-4874-98cf-f236d2b5fa1d",
                     "itemId", "003348-wl1729",
                     "type", "documentaryUnit",
-                    "name", "Herta Berg: family recipe note books"
+                    "name", "Herta Berg: family recipe note books",
+                    "isParent", false
             ),
-            ImmutableMap.of(
+            ImmutableMap.<String,Object>of(
                     "id", "be-002112-ca-eng",
                     "itemId", "be-002112-ca",
                     "type", "documentaryUnit",
-                    "name", "Photographic archives"
+                    "name", "Photographic archives",
+                    "isParent", true
             ),
-            ImmutableMap.of(
+            ImmutableMap.<String,Object>of(
                     "id", "mike",
                     "itemId", "mike",
                     "type", "userProfile",
-                    "name", "Mike"
+                    "name", "Mike",
+                    "isParent", false
             )
     );
 
@@ -90,8 +92,8 @@ public class JsonConverterTest {
         for (int i = 0; i < expected.size(); i++) {
             JsonNode out = Iterables.get(new JsonConverter().convert(inputs.get(i)), 0);
             JsonAsserter asserter = with(out.toString());
-            for (Map.Entry<String,String> entry : expected.get(i).entrySet()) {
-                asserter.assertThat("$." + entry.getKey(), equalTo(entry.getValue()));
+            for (Map.Entry<String,Object> entry : expected.get(i).entrySet()) {
+                asserter.assertThat("$." + entry.getKey(), equalTo(entry.getValue()), "Doc " + i + " incorrect");
             }
         }
     }

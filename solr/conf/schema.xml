@@ -315,6 +315,7 @@
         <field name="dateEnd" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="dateRange" type="date" indexed="true" stored="true" multiValued="true"/>
         <field name="isTopLevel" type="boolean" indexed="true" stored="true" multiValued="false"/>
+        <field name="isParent" type="boolean" indexed="true" stored="true" multiValued="false" default="false" />
         <field name="repositoryId" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="repositoryName" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="holderId" type="string" indexed="true" stored="true" multiValued="true"/>
@@ -345,7 +346,7 @@
         <field name="levelOfDescription" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="typeOfEntity" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="accessPoints" type="string" indexed="true" stored="true" multiValued="true"/>
-        <field name="addresses" type="text_general" indexed="true" stored="false" multiValued="true"/>
+        <field name="addresses" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="priority" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="creationProcess" type="string" indexed="true" stored="true" multiValued="false" default="MANUAL"/>
         <field name="charCount" type="int" indexed="true" stored="true" multiValued="false"/>
