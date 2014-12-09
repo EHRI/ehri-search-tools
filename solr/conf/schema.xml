@@ -352,6 +352,8 @@
         <field name="latitude" type="double" indexed="true" stored="true" multiValued="false"/>
         <field name="longitude" type="double" indexed="true" stored="true" multiValued="false"/>
         <field name="location" type="location" indexed="true" stored="true" multiValued="false"/>
+        <field name="isPromotable" type="boolean" indexed="true" stored="true" multiValued="false" default="false"/>
+        <field name="promotionScore" type="int" indexed="true" stored="true" multiValued="false" default="0"/>
         <field name="_version_" type="long" indexed="true" stored="true"/>
 
         <dynamicField name="*_i" type="int" indexed="true" stored="true"/>
