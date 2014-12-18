@@ -24,6 +24,14 @@
         <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
         <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
 
+        <!-- Case-insensitive exact-match field -->
+        <fieldType name="string_ci" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+            <analyzer>
+                <filter class="solr.LowerCaseFilterFactory" />
+                <tokenizer class="solr.StandardTokenizerFactory"/>
+            </analyzer>
+        </fieldType>
+
         <!-- A general text field that has reasonable, generic
           cross-language defaults: it tokenizes with StandardTokenizer,
           removes stop words from case-insensitive "stopwords.txt"
@@ -333,6 +341,9 @@
         <field name="text" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="true"/>
         <field name="otherFormsOfName" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="parallelFormsOfName" type="text_general" indexed="true" stored="true" multiValued="true"/>
+        <!-- altName has a string case-insensitive type more suited for acronyms
+             that may also - and this has happened! - be multi-lingual stop words. -->
+        <field name="altName" type="string_ci" indexed="true" stored="true" multiValued="true"/>
         <field name="lastUpdated" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="publicationStatus" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="copyrightStatus" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -589,6 +600,8 @@
     <copyField source="name" dest="name_sort"/>
     <copyField source="otherFormsOfName" dest="name_ngram"/>
     <copyField source="parallelFormsOfName" dest="name_ngram"/>
+    <copyField source="otherFormsOfName" dest="altName"/>
+    <copyField source="parallelFormsOfName" dest="altName"/>
     <copyField source="name" dest="title"/>
     <copyField source="itemId" dest="text"/>
     <copyField source="name" dest="text"/>

@@ -62,7 +62,8 @@ public abstract class AbstractSolrTest extends SolrTestCaseJ4 {
             "facet", "true",
             "facet.minCount", "1",
             // query fields
-            "qf", "itemId^2.0 name^4.0 title^4.0 otherFormsOfName^1.0 parallelFormsOfName^1.0 name_sort text",
+            "qf", "itemId^2.0 name^4.0 title^4.0 otherFormsOfName^1.0 parallelFormsOfName^1.0 altName^1.0 name_sort " +
+                "text",
             // spellcheck
             "spellcheck", "true",
             "spellcheck.count", "10",

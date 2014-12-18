@@ -56,4 +56,19 @@ public class SearchTest extends AbstractSolrTest {
                 .assertThat("$.spellcheck.suggestions[1].suggestion[0].word", equalTo("warsaw"));
 
     }
+
+    @Test
+    public void testFindingExactMatchAltNameInStopwords() throws Exception {
+        // This is a test for a specific problem: we have a generic stop word
+        // list, one of whose words in "dans". This is also the acronym of a
+        // repository. Because of this a case-insensitive altName field was
+        // introduced to match alternative names such as acronyms exactly,
+        // without stop word filtering.
+        String result = runSearch("dans", "fq", "type:repository");
+        //System.out.println(result);
+        with(result)
+                .assertThat("$.grouped.itemId.matches", equalTo(2));
+        assertTrue(result.contains("Dansk-jødisk museum"));
+        assertTrue(result.contains("Data Archiving and Networked Services")); // DANS
+    }
 }
