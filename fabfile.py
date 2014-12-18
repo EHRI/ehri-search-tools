@@ -21,8 +21,11 @@ env.tool_name = 'index-helper'
 env.service_name = 'tomcat6'
 env.tool_jar_path = '/opt/webapps/docview/bin/indexer.jar'
 env.config_path = '/opt/webapps/solr4/ehri/portal/conf'
+env.data_path = '/opt/webapps/solr4/ehri/portal/data'
 env.user = os.getenv("USER")
 env.config_files = ["schema.xml", "solrconfig.xml", "*.txt", "lang/*"]
+env.solr_admin_url = "http://localhost:8080/ehri/admin"
+env.solr_core_name = "portal"
 
 TIMESTAMP_FORMAT = "%Y%m%d%H%M%S"
 
@@ -48,7 +51,14 @@ def deploy():
     copy_to_server()
     copy_config()
     set_permissions()
-    restart()
+    restart_core()
+
+def restart_core():
+    """
+    Reload Solr config files by restarting the portal core.
+    """
+    run("curl \"%(solr_admin_url)s/cores?action=RELOAD&core=%(solr_core_name)s\"" % env)
+
 
 def clean_deploy():
     """Build a clean version and deploy."""
@@ -82,7 +92,7 @@ def get_artifact_version():
 def set_permissions():
     """todo"""
     for f in env.config_files:
-        run("chgrp webadm " + os.path.join(env.config_path, f))    
+        run("chgrp webadm " + os.path.join(env.config_path, f))
 
 def start():
     "Start Tomcat"
