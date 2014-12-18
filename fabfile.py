@@ -51,9 +51,9 @@ def deploy():
     copy_to_server()
     copy_config()
     set_permissions()
-    restart_core()
+    reload()
 
-def restart_core():
+def reload():
     """
     Reload Solr config files by restarting the portal core.
     """
