@@ -13,3 +13,6 @@ Solr war file to work with our Solr config.
 **IMPORTANT**: At present the test data is not under SCM in this project (for various reasons.) For the tests to run
 the test data should be in Solr JSON format in `src/test/resources/searchdata.json`.
 
+**ALSO IMPORTANT**: This SKOS expansion branch relies on an unmanaged copy of lucene-skos-0.4.5.jar to be placed
+in the `lib/` directory of this module.
+
