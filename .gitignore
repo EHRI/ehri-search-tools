@@ -60,5 +60,5 @@ Thumbs.db
 
 # Ignore search data, which is likely
 # to be large
-src/test/resources/searchdata.json
+solr-config/src/test/resources/searchdata.json
 
