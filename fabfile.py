@@ -17,10 +17,11 @@ from contextlib import contextmanager as _contextmanager
 # globals
 env.prod = False
 env.use_ssh_config = True
-env.tool_name = 'index-helper'
+env.tool_name = 'index-data-converter'
 env.service_name = 'tomcat6'
 env.tool_jar_path = '/opt/webapps/docview/bin/indexer.jar'
 env.config_path = '/opt/webapps/solr4/ehri/portal/conf'
+env.lib_path = '/opt/webapps/solr4/ehri/lib'
 env.data_path = '/opt/webapps/solr4/ehri/portal/data'
 env.user = os.getenv("USER")
 env.config_files = ["schema.xml", "solrconfig.xml", "*.txt", "lang/*"]
@@ -45,12 +46,12 @@ def prod():
 
 def deploy():
     """
-    Deploy the latest version of the site to the servers, install any
-    required third party modules, and then restart the webserver
+    Deploy the indexer tool, copy the Solr config, set the permissions
+    correctly, and reload the Solr core.
     """
     copy_to_server()
     copy_config()
-    set_permissions()
+    _set_permissions()
     reload()
 
 def reload():
@@ -61,54 +62,57 @@ def reload():
 
 
 def clean_deploy():
-    """Build a clean version and deploy."""
-    local('mvn clean compile assembly:single')
+    """Do a clean build, deploy the indexer tool, copy the Solr config, set the permissions
+    correctly, and reload the Solr core."""
+    local('mvn clean compile assembly:single -pl ' + env.tool_name)
     deploy()
 
-def get_tool_jar_file():
-    version = get_artifact_version()
-    tool_file = "%s-%s-jar-with-dependencies.jar" % (env.tool_name, version)
-    return os.path.join("target", tool_file)
-
 def copy_to_server():
-    "Upload the app to a versioned path."
+    "Upload the indexer tool to its target directory"
     # Ensure the deployment directory is there...
-    local_file = get_tool_jar_file()
+    local_file = _get_tool_jar_file()
     if not os.path.exists(local_file):
         abort("Jar not found: " + local_file)
     put(local_file, env.tool_jar_path)
 
 def copy_config():
-    with lcd("solr/conf"):
+    """Copy the Solr config files to the server"""
+    with lcd("solr-config/solr/conf"):
         for f in env.config_files:
             put(f, os.path.join(env.config_path, os.path.dirname(f)))
 
-def get_artifact_version():
+def start():
+    "Start Tomcat"
+    _run_service_cmd("start")
+
+def stop():
+    "Stop Tomcat"
+    _run_service_cmd("stop")
+
+def restart():
+    "Restart Tomcat"
+    _run_service_cmd("restart")
+
+def _set_permissions():
+    """Set the currect permissions on the config files."""
+    for f in env.config_files:
+        run("chgrp webadm " + os.path.join(env.config_path, f))
+
+def _get_tool_jar_file():
+    version = _get_artifact_version()
+    tool_file = "%s-%s-jar-with-dependencies.jar" % (env.tool_name, version)
+    return os.path.join(env.tool_name, "target", tool_file)
+
+def _run_service_cmd(name):
+    # NB: This doesn't use sudo() directly because it insists on asking
+    # for a password, even though we should have NOPASSWD in visudo.
+    with settings(service_task=name):
+        run('sudo service %(service_name)s %(service_task)s' % env, pty=False, shell=False)
+
+def _get_artifact_version():
+    """Get the current artifact version from Maven"""
     return local(
             "mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate" +
             " -Dexpression=project.version|grep -Ev '(^\[|Download\w+:)'",
             capture=True).strip()
-
-def set_permissions():
-    """todo"""
-    for f in env.config_files:
-        run("chgrp webadm " + os.path.join(env.config_path, f))
-
-def start():
-    "Start Tomcat"
-    # NB: This doesn't use sudo() directly because it insists on asking
-    # for a password, even though we should have NOPASSWD in visudo.
-    run('sudo service %(service_name)s start' % env, pty=False, shell=False)
-
-def stop():
-    "Stop Tomcat"
-    # NB: This doesn't use sudo() directly because it insists on asking
-    # for a password, even though we should have NOPASSWD in visudo.
-    run('sudo service %(service_name)s stop' % env, pty=False, shell=False)
-
-def restart():
-    "Restart Tomcat"
-    # NB: This doesn't use sudo() directly because it insists on asking
-    # for a password, even though we should have NOPASSWD in visudo.
-    run('sudo service %(service_name)s restart' % env, pty=False, shell=False)
 

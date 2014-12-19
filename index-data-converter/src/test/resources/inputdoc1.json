@@ -1,0 +1,221 @@
+[ {
+  "id" : "003348-wl1729",
+  "data" : {
+    "identifier" : "WL1729"
+  },
+  "type" : "documentaryUnit",
+  "relationships" : {
+    "describes" : [ {
+      "id" : "eb747649-4f7b-4874-98cf-f236d2b5fa1d",
+      "data" : {
+        "acquisition" : "Donated by Paul Sinclair",
+        "languageCode" : "en",
+        "unitDates" : "c1939",
+        "languageOfMaterial" : "de",
+        "conditionsOfAccessRestrict" : "See Wiener Library access conditions at: http://www.wienerlibrary.co.uk/usinglibrary/usingthelibrary.aspx",
+        "name" : "Herta Berg: family recipe note books",
+        "extentAndMedium" : "2 booklets",
+        "scopeAndContent" : "This collection consists of two note books containing family recipes by Herta Berg, an Austrian Jew who sought refuge in the UK with her family in 1938. One of the books contains recipes from her sister Teta.",
+        "biographicalHistory" : "Herta Berg (n???e Bass) emigrated to the UK from Vienna in 1938 with her husband Gustav Berg and daughter Susanne to flee anti-Jewish persecutions under the Nazi regime."
+      },
+      "type" : "documentDescription",
+      "relationships" : {
+        "relatesTo" : [ {
+          "id" : "37c28588-6a22-42ea-ad40-70c3dcd7528b",
+          "data" : {
+            "name" : "London",
+            "type" : "placeAccess"
+          },
+          "type" : "relationship",
+          "relationships" : { },
+          "meta" : { }
+        }, {
+          "id" : "febc3d25-368f-4f8c-b169-a9a07fd28f3f",
+          "data" : {
+            "name" : "Vienna - Austria",
+            "type" : "placeAccess"
+          },
+          "type" : "relationship",
+          "relationships" : { },
+          "meta" : { }
+        }, {
+          "id" : "90b76fb1-27e6-4897-afde-eed596263a4f",
+          "data" : {
+            "name" : "Refugees",
+            "type" : "subjectAccess"
+          },
+          "type" : "relationship",
+          "relationships" : { },
+          "meta" : { }
+        }, {
+          "id" : "add1b7bb-a348-44bc-874a-351404181edd",
+          "data" : {
+            "name" : "Emigration",
+            "type" : "subjectAccess"
+          },
+          "type" : "relationship",
+          "relationships" : { },
+          "meta" : { }
+        }, {
+          "id" : "6a756d49-7b0f-4d25-8831-119783e598c2",
+          "data" : {
+            "name" : "Persecution",
+            "type" : "subjectAccess"
+          },
+          "type" : "relationship",
+          "relationships" : { },
+          "meta" : { }
+        }, {
+          "id" : "e20bf641-e5e8-4053-910d-5840bb0610d6",
+          "data" : {
+            "name" : "Jewish",
+            "type" : "subjectAccess"
+          },
+          "type" : "relationship",
+          "relationships" : { },
+          "meta" : { }
+        }, {
+          "id" : "25bcd1bd-75b9-4ff3-9980-5e66d816da01",
+          "data" : {
+            "name" : "Holocaust",
+            "type" : "subjectAccess"
+          },
+          "type" : "relationship",
+          "relationships" : { },
+          "meta" : { }
+        }, {
+          "id" : "c8503301-a53c-448e-9009-c6c5b4d1f1c2",
+          "data" : {
+            "name" : "Migration",
+            "type" : "subjectAccess"
+          },
+          "type" : "relationship",
+          "relationships" : { },
+          "meta" : { }
+        }, {
+          "id" : "eaccff56-326c-424b-a74b-dfa6d9c9188f",
+          "data" : {
+            "name" : "Nazism",
+            "type" : "subjectAccess"
+          },
+          "type" : "relationship",
+          "relationships" : { },
+          "meta" : { }
+        }, {
+          "id" : "f17ee35d-e834-4973-b611-f0a9ed2c3f41",
+          "data" : {
+            "name" : "Jews",
+            "type" : "subjectAccess"
+          },
+          "type" : "relationship",
+          "relationships" : { },
+          "meta" : { }
+        }, {
+          "id" : "6a0d73ff-a81b-450c-82a8-0cbdd42599bd",
+          "data" : {
+            "name" : "Berg, Susanne",
+            "type" : "personAccess"
+          },
+          "type" : "relationship",
+          "relationships" : { },
+          "meta" : { }
+        }, {
+          "id" : "381e6f05-b92a-4e41-a8c7-cb44e61208c7",
+          "data" : {
+            "name" : "Berg, Gustav",
+            "type" : "personAccess"
+          },
+          "type" : "relationship",
+          "relationships" : { },
+          "meta" : { }
+        }, {
+          "id" : "ed98225b-f2d7-4352-8e67-34412d1b36e7",
+          "data" : {
+            "name" : "Berg, Herta. n???e Bass",
+            "type" : "personAccess"
+          },
+          "type" : "relationship",
+          "relationships" : { },
+          "meta" : { }
+        } ],
+        "hasUnknownProperty" : [ {
+          "id" : "325a8c33-acfd-40a8-975c-01d07c3320c4",
+          "data" : {
+            "ead_archdesc_did_repository_" : "Wiener Library",
+            "ead_archdesc_did_langmaterial_language_" : "German",
+            "ead_archdesc_note_p_" : "2007/4",
+            "ead_archdesc_relatedmaterial_p_" : "See also personal papers of family friend Ida Schloss (WL1721)",
+            "ead_archdesc_did_origination_" : "Berg - Herta - n???e Bass",
+            "ead_archdesc_" : "fonds"
+          },
+          "type" : "property",
+          "relationships" : { },
+          "meta" : { }
+        } ]
+      },
+      "meta" : { }
+    } ],
+    "heldBy" : [ {
+      "id" : "gb-003348",
+      "data" : {
+        "identifier" : "003348"
+      },
+      "type" : "repository",
+      "relationships" : {
+        "describes" : [ {
+          "id" : "f001cb9b-0af0-4088-bab9-5180ec39658f",
+          "data" : {
+            "languageCode" : "en",
+            "name" : "The Wiener Library for the Study of the Holocaust&Genocide"
+          },
+          "type" : "repositoryDescription",
+          "relationships" : { },
+          "meta" : { }
+        } ],
+        "hasCountry" : [ {
+          "id" : "gb",
+          "data" : {
+            "identifier" : "gb"
+          },
+          "type" : "country",
+          "relationships" : { },
+          "meta" : { }
+        } ]
+      },
+      "meta" : { }
+    } ],
+    "lifecycleEvent" : [ {
+      "id" : "654b8ed6-a25f-4872-81c3-76e0e89382e0",
+      "data" : {
+        "timestamp" : "2013-08-22T22:29:30.644+01:00",
+        "eventType" : "ingest"
+      },
+      "type" : "systemEvent",
+      "relationships" : {
+        "hasActioner" : [ {
+          "id" : "mike",
+          "data" : {
+            "name" : "Mike Bryant",
+            "identifier" : "mike"
+          },
+          "type" : "userProfile",
+          "relationships" : {
+            "belongsTo" : [ {
+              "id" : "admin",
+              "data" : {
+                "name" : "Administrators",
+                "identifier" : "admin"
+              },
+              "type" : "group",
+              "relationships" : { },
+              "meta" : { }
+            } ]
+          },
+          "meta" : { }
+        } ]
+      },
+      "meta" : { }
+    } ]
+  },
+  "meta" : { }
+} ]
