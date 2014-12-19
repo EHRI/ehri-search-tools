@@ -2,142 +2,39 @@
 
 This project contains:
 
-* A test harness for EHRI's Solr search engine configuration
-* A tool for converting data from the EHRI rest backend to Solr format
+* [A test harness for EHRI's Solr search engine configuration](solr-config/README.md)
+* [A tool for converting data from the EHRI rest backend to Solr format](index-data-converter/README.md)
 
-## Test harness
+The test harness also provides for building a tar file containing the additional libraries Solr requires
+given our configuration (language detection, Polish stemming, etc). Currently these can not be automatically
+deployed.
 
-The test harness (under development) is based on the `SolrTestCaseJ4` class and uses the configuration in the
-`solr/conf` directory. This directory should be kept up-to-date with the production Solr configuration and the
-`fabfile.py` deployment script to be able to deploy it properly to the EHRI servers.
+## Building:
 
-Note: There should be no static Jar files in this project. All the library dependencies (such as those for
-the Solr language detection etc) should be properly set as versioned Maven deps with a **test scope** (this is
-important otherwise the indexer tool will be unnecessarily bloated with Jars.)
-
-**IMPORTANT**: At present the test data is not under SCM in this project (for various reasons.) For the tests to run
-the test data should be in Solr JSON format in `src/test/resources/searchdata.json`.
-
-## EHRI Index Tool
-
-This is a convenience tool used by the EHRI frontend to synchronise the search engine with the EHRI backend
-(and for doing the same easily from the command-line.) The basic idea is to read some JSON from a web service
-(EHRI REST), convert it to another format (Solr Doc), and POST it to another web service (Solr).
-
-The traditional way to do this would be something like:
+To build both a standalone jar for the indexer tool, and the set of auxiliary Solr libraries, run:
 
 ```
-curl <WS-URL> | convert-json | curl -X POST "Content-type: application/json" <SOLR-UPDATE-URL> --data @-
+mvn package
 ```
 
-Here, we just bundle the downloading and uploading bits with some shortcut syntax. There are ways to
-accomplish the shell pipeline approach using certain options detailed below.
-
-### Notes:
-To build a jar, use `mvn clean compile assembly:single`. (The `compile` phase must be present. See:
-http://stackoverflow.com/a/574650/285374.) There should then be a Jar called `index-helper-1
-.0-1-jar-with-dependencies.jar` inside the `target` folder, which you can execute with the usual `java -jar
-<file.jar> [OPTIONS] ... [ARGS]`.
-
-### Current options:
+To build one or other of the modules, use `-pl <module-name>`, i.e:
 
 ```
-usage: index-helper [OPTIONS] <spec> ... <specN>
- -c,--clear-id <arg>          Clear an individual id. Can be used multiple
-                              times.
- -C,--clear-type <arg>        Clear an item type. Can be used multiple
-                              times.
- -D,--clear-all               Clear entire index first (use with caution.)
- -f,--file <arg>              Read input from a file instead of the REST
-                              service. Use '-' for stdin.
- -H <header=value>            Set a header for the REST service.
- -h,--help                    Print this message.
- -i,--index                   Index the data. This is NOT the default for
-                              safety reasons.
- -k,--clear-key-value <arg>   Clear items with a given key=value pair. Can
-                              be used multiple times.
- -n,--noconvert               Don't convert data to index format.
- -P,--pretty                  Pretty print out JSON given by --print
-                              (implies --print).
- -p,--print                   Print converted JSON to stdout. The default
-                              action in the omission of --index.
- -r,--rest <arg>              Base URL for EHRI REST service.
- -s,--solr <arg>              Base URL for Solr service (minus the action
-                              segment.)
- -S,--stats                   Print indexing stats.
- -v,--verbose                 Print individual item ids to show progress.
- -version                     Print the version number and exit.
-
-Each <spec> should consist of:
-* an item type (all items of that type)
-* an item id prefixed with '@' (individual items)
-* a type|id (bar separated - all children of an item)
-The default URIs for Solr and the REST service are:
-* http://localhost:7474/ehri
-* http://localhost:8983/solr/portal
+mvn package -pl index-data-converter # will generate the jar indexer/target/index-data-converter-1.0.2-jar-with-dependencies.jar
 ```
 
-### Examples:
-
-Index documentary unit and repository types from default service endpoints:
+or
 
 ```
-java -jar index-helper.jar --index documentaryUnit repository
+mvn package -pl solr-config # will generate the tar solr-config/target/solr-config-1.0.2-libs.tar.gz
 ```
 
-Index individual item `us-005578`:
+The `fabfile.py` handles some deployment tasks, viewable by running `fab --list`. These include:
 
 ```
-java -jar index-helper.jar --index @us-005578
+    clean_deploy    Build a clean version and deploy.
+    copy_config     Copy the Solr config files to the server
+    copy_to_server  Upload the indexer tool to its target directory.
+    deploy          Deploy the indexer tool, copy the Solr config, set the permissions
+    reload          Reload Solr config files by restarting the portal core.
 ```
-
-Pretty print (to stdout) the converted JSON output for all documentary units, but don't index:
-
-```
-java -jar index-helper.jar --pretty documentaryUnit
-```
-
-Pretty print (to stdout) the raw REST service output:
-
-```
-java -jar index-helper.jar --pretty --noconvert documentaryUnit
-```
-
-Clear the entire index:
-
-```
-java -jar index-helper.jar --clear-all
-```
-
-Clear items with holderId 'us-005248':
-
-```
-java -jar index-helper.jar --clear-key-value holderId=us-005248
-```
-
-Index data read from a JSON file instead of the REST service, outputting some stats:
-
-```
-java -jar index-helper.jar --index -f data.json -v
-```
-
-Same as above, but piping the data through stdin (use '-' as the file name):
-
-```
-cat data.json | java -jar index-helper.jar --index -f - -v
-```
-
-Read data from stdin, convert it, and pipe it to a Curl upload for indexing:
-
-```
-cat orig.json | java -jar index-helper.jar -f - | curl -X POST -H "Content-type: application/json"
-"http://localhost:8983/solr/ehri/update?commit=true" --data @-
-```
-
-
-### TODO:
-
-* Add proper logging
-* Add proper error handling
-* Ensure all resources are properly cleaned up
-* Add more tests!
