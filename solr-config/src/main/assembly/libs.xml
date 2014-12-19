@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<component>
+    <moduleSets>
+        <moduleSet>
+            <binaries>
+                <unpack>false</unpack>
+                <directoryMode>0755</directoryMode>
+                <fileMode>0755</fileMode>
+                <includeDependencies>false</includeDependencies>
+            </binaries>
+        </moduleSet>
+    </moduleSets>
+    <dependencySets>
+        <dependencySet>
+            <outputDirectory>/</outputDirectory>
+            <directoryMode>0755</directoryMode>
+            <fileMode>0755</fileMode>
+            <unpack>false</unpack>
+            <useProjectArtifact>false</useProjectArtifact>
+            <useStrictFiltering>true</useStrictFiltering>
+            <includes>
+                <include>com.ibm.icu:icu4j</include>
+                <include>net.arnx:jsonic</include>
+                <include>xml-apis:xml-apis</include>
+                <include>xerces:xercesImpl</include>
+                <include>org.apache.solr:solr-analysis-extras</include>
+                <include>org.apache.lucene:lucene-analyzers-morfologik</include>
+                <include>org.apache.lucene:lucene-analyzers-smartcn</include>
+                <include>org.apache.lucene:lucene-analyzers-stempel</include>
+                <include>org.carrot2:morfologik-fsa</include>
+                <include>org.carrot2:morfologik-stemming</include>
+                <include>org.carrot2:morfologik-polish</include>
+                <include>org.apache.solr:solr-langid</include>
+                <include>org.slf4j:slf4j-log4j12</include>
+                <include>com.cybozu.labs:langdetect</include>
+                <include>org.apache.jena:jena-core</include>
+                <include>org.apache.jena:jena-arq</include>
+                <include>org.apache.jena:jena-iri</include>
+                <!--<include>at.ac.univie.mminf:lucene-skos</include>-->
+            </includes>
+        </dependencySet>
+    </dependencySets>
+</component>
+
