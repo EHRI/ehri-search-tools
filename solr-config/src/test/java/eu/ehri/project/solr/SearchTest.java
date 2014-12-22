@@ -71,4 +71,23 @@ public class SearchTest extends AbstractSolrTest {
         assertTrue(result.contains("Dansk-jødisk museum"));
         assertTrue(result.contains("Data Archiving and Networked Services")); // DANS
     }
+
+    @Test
+    public void testExactIdMatch() throws Exception {
+        // Test that we can find exact match ids and that the item we
+        // want is the first search result
+        with(runSearch("ua-003307-p-1265"))
+                .assertThat("$.grouped.itemId.doclist.docs[0].itemId",
+                        equalTo("ua-003307-p-1265"));
+    }
+
+    @Test
+    public void testCaseInsensitiveLocalIdentifierMatch() throws Exception {
+        // Test that:
+        //  - we can find things with case-insensitive local identifiers
+        //  - the boost pushes matches to the top
+        with(runSearch("p-1265"))
+                .assertThat("$.grouped.itemId.doclist.docs[0].itemId",
+                        equalTo("ua-003307-p-1265"));
+    }
 }

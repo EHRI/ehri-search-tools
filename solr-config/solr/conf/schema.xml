@@ -332,7 +332,7 @@
         <field name="active" type="boolean" indexed="true" stored="true" default="true"/>
         <field name="restricted" type="boolean" indexed="true" stored="true" default="false"/>
         <field name="accessibleTo" type="string" indexed="true" stored="true" multiValued="true" default="ALLUSERS"/>
-        <field name="identifier" type="string" indexed="true" stored="true" multiValued="false"/>
+        <field name="identifier" type="string_ci" indexed="true" stored="true" multiValued="false"/>
         <field name="otherIdentifiers" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="name" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="name_ngram" type="text_general_edge_ngram" indexed="true" stored="true" multiValued="true"/>
@@ -608,6 +608,7 @@
     <copyField source="name" dest="title"/>
     <copyField source="itemId" dest="text"/>
     <copyField source="name" dest="text"/>
+    <copyField source="identifier" dest="text"/>
     <copyField source="title" dest="text"/>
     <copyField source="otherFormsOfName" dest="text"/>
     <copyField source="parallelFormsOfName" dest="text"/>
