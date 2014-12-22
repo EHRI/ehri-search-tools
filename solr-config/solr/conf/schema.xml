@@ -355,7 +355,10 @@
         <field name="depthOfDescription" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="levelOfDescription" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="typeOfEntity" type="string" indexed="true" stored="true" multiValued="false"/>
-        <field name="accessPoints" type="string" indexed="true" stored="true" multiValued="true"/>
+        <field name="accessPoints" type="string_ci" indexed="true" stored="true" multiValued="true"/>
+        <field name="accessPointNames" type="text_general" indexed="true" stored="true" multiValued="true"/>
+        <field name="targets" type="string_ci" indexed="true" stored="true" multiValued="true"/>
+        <field name="targetNames" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="addresses" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="priority" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="creationProcess" type="string" indexed="true" stored="true" multiValued="false" default="MANUAL"/>
@@ -610,11 +613,14 @@
     <copyField source="parallelFormsOfName" dest="text"/>
     <copyField source="holderName" dest="text"/>
     <copyField source="addresses" dest="text"/>
+    <copyField source="accessPoints" dest="text"/>
+    <copyField source="accessPoints" dest="accessPointNames" />
+    <copyField source="targets" dest="targetNames"/>
+    <copyField source="targets" dest="text"/>
+    <copyField source="scopeAndContent" dest="text"/>
     <copyField source="*_s" dest="text"/>
     <copyField source="*_t" dest="text"/>
     <copyField source="*_ss" dest="text"/>
-    <copyField source="accessPoints" dest="text"/>
-    <copyField source="scopeAndContent" dest="text"/>
 
     <!-- Copy of fields after language detection into txt_lang fields for multilingual indexing-->
     <!-- Copy of fields after language detection into text field for term expansion-->
