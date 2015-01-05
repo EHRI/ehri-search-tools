@@ -13,7 +13,7 @@
         <module>index-data-converter</module>
     </modules>
     <properties>
-        <solr.version>4.4.0</solr.version>
+        <solr.version>4.6.1</solr.version>
     </properties>
 
     <dependencies>
