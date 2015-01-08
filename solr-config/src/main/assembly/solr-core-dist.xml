@@ -10,7 +10,7 @@
     </formats>
     <includeBaseDirectory>false</includeBaseDirectory>
 
-    <!-- Copy everything in solr/conf to ehri/portal/conf -->
+    <!-- Copy everything in solr/portal/conf to ehri/portal/conf -->
     <fileSets>
         <fileSet>
             <directory>${basedir}/solr</directory>

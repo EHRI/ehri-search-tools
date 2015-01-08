@@ -26,14 +26,14 @@ mvn package -pl index-data-converter # will generate the jar indexer/target/inde
 or
 
 ```
-mvn package -pl solr-config # will generate the tar solr-config/target/solr-config-1.0.2-libs.tar.gz
+mvn package -pl solr-config # will generate the tar solr-config/target/solr-config-1.0.2-solr-core.tar.gz
 ```
 
 The `fabfile.py` handles some deployment tasks, viewable by running `fab --list`. These include:
 
 ```
     clean_deploy    Build a clean version and deploy.
-    copy_config     Copy the Solr config files to the server
+    copy_solr_core  Copy the Solr lib, plus core config files to the server
     copy_to_server  Upload the indexer tool to its target directory.
     deploy          Deploy the indexer tool, copy the Solr config, set the permissions
     reload          Reload Solr config files by restarting the portal core.

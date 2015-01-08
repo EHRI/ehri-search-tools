@@ -89,7 +89,7 @@ def copy_solr_core():
     
 def copy_config():
     """Copy the Solr config files to the server"""
-    with lcd("solr-config/solr/conf"):
+    with lcd("solr-config/solr/portal/conf"):
         for f in env.config_files:
             put(f, os.path.join(env.config_path, os.path.dirname(f)))
 
