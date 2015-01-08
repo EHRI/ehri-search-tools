@@ -9,7 +9,16 @@
 
     <artifactId>solr-config</artifactId>
 
-    <!-- Build a tar containing the libs we need for the deployed Solr instance -->
+    <!-- Build a tar containing the libs and configuration we need for the deployed Solr instance.
+        This should produce a directory structure like so:
+        ehri/
+            portal/
+                conf/
+                    <conf files>
+            lib-4.6.1/
+                <lib jars>
+
+    -->
     <build>
         <plugins>
             <plugin>
@@ -17,7 +26,7 @@
                 <version>2.4</version>
                 <configuration>
                     <descriptors>
-                        <descriptor>src/main/assembly/libs-dist.xml</descriptor>
+                        <descriptor>src/main/assembly/solr-core-dist.xml</descriptor>
                     </descriptors>
                     <appendAssemblyId>true</appendAssemblyId>
                 </configuration>

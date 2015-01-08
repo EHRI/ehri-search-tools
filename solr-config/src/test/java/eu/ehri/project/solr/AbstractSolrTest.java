@@ -19,11 +19,16 @@ import java.net.URL;
  */
 public abstract class AbstractSolrTest extends SolrTestCaseJ4 {
 
-    public static final String CORENAME = "solr";
+    public static final String SOLRHOME = "solr";
+    public static final String CORENAME = "portal";
+
+    private static String getSolrHome() {
+        return new File(System.getProperty("basedir"), SOLRHOME).getPath();
+    }
 
     private static String getSolrConfigPath(String name) {
-        String base = new File(System.getProperty("basedir"), CORENAME).getPath();
-        String conf = new File(base, "conf").getPath();
+        String home = new File(getSolrHome(), CORENAME).getPath();
+        String conf = new File(home, "conf").getPath();
         return new File(conf, name).getPath();
     }
 
@@ -99,7 +104,7 @@ public abstract class AbstractSolrTest extends SolrTestCaseJ4 {
         initCore(
                 getSolrConfigPath("solrconfig.xml"),
                 getSolrConfigPath("schema.xml"),
-                System.getProperty("basedir"),
+                getSolrHome(),
                 CORENAME
         );
 
