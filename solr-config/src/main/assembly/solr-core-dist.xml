@@ -1,19 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<component>
-    <moduleSets>
-        <moduleSet>
-            <binaries>
-                <unpack>false</unpack>
-                <directoryMode>0755</directoryMode>
-                <fileMode>0755</fileMode>
-                <includeDependencies>false</includeDependencies>
-            </binaries>
-        </moduleSet>
-    </moduleSets>
+<assembly>
+    <!--
+        Create a tar.gz file containing
+    -->
+    <id>solr-core</id>
+    <formats>
+        <format>tar.gz</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+
+    <!-- Copy everything in solr/conf to ehri/portal/conf -->
+    <fileSets>
+        <fileSet>
+            <directory>${basedir}/solr</directory>
+            <outputDirectory>/ehri/</outputDirectory>
+            <fileMode>0644</fileMode>
+            <directoryMode>0755</directoryMode>
+            <includes>
+                <include>*</include>
+                <include>*/*</include>
+                <include>*/*/*</include>
+                <include>*/*/*/*</include>
+            </includes>
+        </fileSet>
+
+        <fileSet>
+            <directory>lib/</directory>
+            <outputDirectory>/ehri/lib-${solr.version}</outputDirectory>
+            <includes>
+                <include>lucene-skos-0.4.5.jar</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+
+    <!-- Copy select dependencies to ehri/lib -->
     <dependencySets>
         <dependencySet>
-            <outputDirectory>/</outputDirectory>
+            <outputDirectory>/ehri/lib-${solr.version}</outputDirectory>
             <directoryMode>0755</directoryMode>
             <fileMode>0755</fileMode>
             <unpack>false</unpack>
@@ -42,5 +66,5 @@
             </includes>
         </dependencySet>
     </dependencySets>
-</component>
+</assembly>
 

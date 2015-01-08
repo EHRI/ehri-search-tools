@@ -21,6 +21,7 @@ env.tool_name = 'index-data-converter'
 env.service_name = 'tomcat6'
 env.tool_jar_path = '/opt/webapps/docview/bin/indexer.jar'
 env.config_path = '/opt/webapps/solr4/ehri/portal/conf'
+env.remote_dir = '/opt/webapps/solr4'
 env.lib_path = '/opt/webapps/solr4/ehri/lib'
 env.data_path = '/opt/webapps/solr4/ehri/portal/data'
 env.user = os.getenv("USER")
@@ -50,7 +51,7 @@ def deploy():
     correctly, and reload the Solr core.
     """
     copy_to_server()
-    copy_config()
+    copy_solr_core()
     _set_permissions()
     reload()
 
@@ -64,7 +65,7 @@ def reload():
 def clean_deploy():
     """Do a clean build, deploy the indexer tool, copy the Solr config, set the permissions
     correctly, and reload the Solr core."""
-    local('mvn clean compile assembly:single -pl ' + env.tool_name)
+    local('mvn clean package -DskipTests')
     deploy()
 
 def copy_to_server():
@@ -75,6 +76,17 @@ def copy_to_server():
         abort("Jar not found: " + local_file)
     put(local_file, env.tool_jar_path)
 
+def copy_solr_core():
+    """Copy the Solr core (lib and conf) to the server"""
+    version = _get_artifact_version()
+    core_tgz = "solr-config/target/solr-config-%s-solr-core.tar.gz" % version
+
+    temp_name = _get_temp_name(suffix = ".tar.gz")
+    remote_name = os.path.join("/tmp", os.path.basename(temp_name))
+    put(core_tgz, remote_name)
+    run("tar zxvf %s -C %s" % (remote_name, env.remote_dir))
+    run("rm %s" % remote_name)
+    
 def copy_config():
     """Copy the Solr config files to the server"""
     with lcd("solr-config/solr/conf"):
@@ -95,8 +107,8 @@ def restart():
 
 def _set_permissions():
     """Set the currect permissions on the config files."""
-    for f in env.config_files:
-        run("chgrp webadm " + os.path.join(env.config_path, f))
+    run("chown -RH %s.webadm %s" % (env.user, env.config_path))
+    run("chmod -R g+w %s" % env.config_path)
 
 def _get_tool_jar_file():
     version = _get_artifact_version()
@@ -115,4 +127,12 @@ def _get_artifact_version():
             "mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate" +
             " -Dexpression=project.version|grep -Ev '(^\[|Download\w+:)'",
             capture=True).strip()
+
+def _get_temp_name(suffix):
+    """Get a temporary file name"""
+    import tempfile
+    tf = tempfile.NamedTemporaryFile(suffix=suffix)
+    name = tf.name
+    tf.close()
+    return name
 
