@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/EHRI/ehri-search-tools.svg?branch=master)](https://travis-ci.org/EHRI/ehri-search-tools)
+
 # EHRI Solr Configuration & Tools
 
 This project contains:
