@@ -90,4 +90,13 @@ public class SearchTest extends AbstractSolrTest {
                 .assertThat("$.grouped.itemId.doclist.docs[0].itemId",
                         equalTo("ua-003307-p-1265"));
     }
+
+    @Test
+    public void testSearchForHansFrank() throws Exception {
+
+        String json = runSearch("\"hans frank\"");
+        System.out.println(json);
+        with(json)
+                .assertThat("$.grouped.itemId.matches", greaterThan(2));
+    }
 }
