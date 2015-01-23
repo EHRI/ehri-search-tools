@@ -26,10 +26,10 @@ import static org.junit.Assert.assertNotSame;
 public class JsonConverterTest {
 
     private static final List<String> inputResources = ImmutableList.of(
-            "inputdoc1.json", "inputdoc2.json", "inputdoc3.json"
+            "inputdoc1.json", "inputdoc2.json", "inputdoc3.json", "inputdoc4.json"
     );
 
-    private static final List<Integer> expectedNodeCount = ImmutableList.of(1, 2, 1);
+    private static final List<Integer> expectedNodeCount = ImmutableList.of(1, 2, 1, 1);
 
     private static final ImmutableList<ImmutableMap<String,Object>> expected = ImmutableList.of(
             ImmutableMap.<String,Object>of(
@@ -52,6 +52,12 @@ public class JsonConverterTest {
                     "type", "userProfile",
                     "name", "Mike",
                     "isParent", false
+            ),
+            ImmutableMap.<String,Object>of(
+                    "id", "380f80b0-7490-11e4-813b-a3ef93d0d496",
+                    "annotatorId", "mike",
+                    "annotatorName", "Mike",
+                    "type", "annotation"
             )
     );
 
@@ -91,6 +97,7 @@ public class JsonConverterTest {
     public void testOutputDoc1ContainsRightValues() throws Exception {
         for (int i = 0; i < expected.size(); i++) {
             JsonNode out = Iterables.get(new JsonConverter().convert(inputs.get(i)), 0);
+            System.out.println(out.toString());
             JsonAsserter asserter = with(out.toString());
             for (Map.Entry<String,Object> entry : expected.get(i).entrySet()) {
                 asserter.assertThat("$." + entry.getKey(), equalTo(entry.getValue()), "Doc " + i + " incorrect");
