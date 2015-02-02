@@ -359,6 +359,7 @@
         <field name="accessPointNames" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="targets" type="string_ci" indexed="true" stored="true" multiValued="true"/>
         <field name="targetNames" type="text_general" indexed="true" stored="true" multiValued="true"/>
+        <field name="targetNames_ngram" type="text_general_edge_ngram" indexed="true" stored="true" multiValued="true"/>
         <field name="addresses" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="priority" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="creationProcess" type="string" indexed="true" stored="true" multiValued="false" default="MANUAL"/>
@@ -619,6 +620,7 @@
     <copyField source="accessPoints" dest="text"/>
     <copyField source="accessPoints" dest="accessPointNames" />
     <copyField source="targets" dest="targetNames"/>
+    <copyField source="targets" dest="targetNames_ngram"/>
     <copyField source="targets" dest="text"/>
     <copyField source="scopeAndContent" dest="text"/>
     <copyField source="*_s" dest="text"/>
