@@ -623,6 +623,7 @@
     <copyField source="targets" dest="targetNames_ngram"/>
     <copyField source="targets" dest="text"/>
     <copyField source="scopeAndContent" dest="text"/>
+    <copyField source="countryName" dest="text"/>
     <copyField source="*_s" dest="text"/>
     <copyField source="*_t" dest="text"/>
     <copyField source="*_ss" dest="text"/>
