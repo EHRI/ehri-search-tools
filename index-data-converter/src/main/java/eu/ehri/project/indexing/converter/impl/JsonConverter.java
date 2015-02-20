@@ -1,15 +1,15 @@
 package eu.ehri.project.indexing.converter.impl;
 
+import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.jayway.jsonpath.*;
-import com.jayway.jsonpath.spi.impl.JacksonProvider;
+import com.jayway.jsonpath.internal.spi.json.JacksonJsonProvider;
 import eu.ehri.project.indexing.converter.Converter;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonToken;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
@@ -35,7 +35,7 @@ public class JsonConverter implements Converter<JsonNode> {
     /**
      * Json Parser
      */
-    public static final ParseContext parseContext = JsonPath.using(new JacksonProvider());
+    public static final ParseContext parseContext = JsonPath.using(new JacksonJsonProvider());
 
     /**
      * Keys which have types that require special handling.
@@ -133,6 +133,14 @@ public class JsonConverter implements Converter<JsonNode> {
         return descriptionData;
     }
 
+    private static boolean successfulMatch(Object value) {
+        if (value == null) {
+            return false;
+        } else if (value instanceof List) {
+            return !((List)value).isEmpty();
+        }
+        return true;
+    }
 
     /**
      * Get data for non-described items.
@@ -151,7 +159,7 @@ public class JsonConverter implements Converter<JsonNode> {
             for (JsonPath path : attrPath.getValue()) {
                 try {
                     Object value = ctx.read(path);
-                    if (value != null) {
+                    if (successfulMatch(value)) {
                         data.put(attr, value);
                         break;
                     }
@@ -162,7 +170,7 @@ public class JsonConverter implements Converter<JsonNode> {
         }
 
         // Any keys in the 'data' section are indexed in dynamic fields
-        Iterator<Map.Entry<String, JsonNode>> dataFields = node.path("data").getFields();
+        Iterator<Map.Entry<String, JsonNode>> dataFields = node.path("data").fields();
         while (dataFields.hasNext()) {
             Map.Entry<String, JsonNode> field = dataFields.next();
             String key = field.getKey();

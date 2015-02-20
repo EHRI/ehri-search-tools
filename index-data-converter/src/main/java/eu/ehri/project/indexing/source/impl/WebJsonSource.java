@@ -1,10 +1,10 @@
 package eu.ehri.project.indexing.source.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import eu.ehri.project.indexing.source.Source;
-import org.codehaus.jackson.JsonNode;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;

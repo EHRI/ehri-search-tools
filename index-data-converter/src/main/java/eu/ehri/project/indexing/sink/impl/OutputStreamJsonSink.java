@@ -1,11 +1,11 @@
 package eu.ehri.project.indexing.sink.impl;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import eu.ehri.project.indexing.sink.Sink;
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -18,12 +18,12 @@ public class OutputStreamJsonSink implements Sink<JsonNode> {
 
     private static final JsonFactory factory = new JsonFactory();
     private static final ObjectMapper mapper = new ObjectMapper();
-    private final static ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
 
     private final OutputStream out;
     private JsonGenerator generator;
     private PrintWriter pw;
     private final boolean pretty;
+    private final ObjectWriter writer;
 
     public OutputStreamJsonSink(OutputStream out) {
         this(out, false);
@@ -32,16 +32,16 @@ public class OutputStreamJsonSink implements Sink<JsonNode> {
     public OutputStreamJsonSink(OutputStream out, boolean pretty) {
         this.out = out;
         this.pretty = pretty;
+        this.writer = pretty
+                ? mapper.writerWithDefaultPrettyPrinter()
+                : mapper.writer();
     }
 
     public void write(JsonNode node) throws SinkException {
         try {
             if (generator == null) {
                 pw = new PrintWriter(out);
-                generator = factory.createJsonGenerator(pw);
-                if (pretty) {
-                    generator.useDefaultPrettyPrinter();
-                }
+                generator = factory.createGenerator(pw);
                 generator.writeStartArray();
             }
             writer.writeValue(generator, node);

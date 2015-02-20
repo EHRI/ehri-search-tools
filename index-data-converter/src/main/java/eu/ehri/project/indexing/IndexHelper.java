@@ -1,5 +1,6 @@
 package eu.ehri.project.indexing;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -15,7 +16,6 @@ import eu.ehri.project.indexing.source.Source;
 import eu.ehri.project.indexing.source.impl.*;
 import eu.ehri.project.indexing.utils.Stats;
 import org.apache.commons.cli.*;
-import org.codehaus.jackson.JsonNode;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;

@@ -1,11 +1,12 @@
 package eu.ehri.project.indexing.source.impl;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonToken;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.Lists;
 import eu.ehri.project.indexing.source.Source;
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.JsonToken;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,21 +40,25 @@ public class InputStreamJsonSource implements Source<JsonNode> {
     @Override
     public Iterable<JsonNode> getIterable() throws SourceException {
         try {
-            jsonParser = jsonFactory.createJsonParser(ios);
+            jsonParser = jsonFactory.createParser(ios);
             JsonToken firstToken = jsonParser.nextValue();
-            if (firstToken != JsonToken.START_ARRAY) {
+            if (!jsonParser.isExpectedStartArrayToken()) {
                 throw new SourceException("Excepted a JSON array, instead first token was: " + firstToken);
             }
             // NB: Since the iterator is run lazily, a parse error here will
             // not be caught and instead throw a RuntimeException "Unexpected character..."
             // I'm not sure how we can fix that.
-            final Iterator<JsonNode> iterator = jsonParser.readValuesAs(JsonNode.class);
-            return new Iterable<JsonNode>() {
-                @Override
-                public Iterator<JsonNode> iterator() {
-                    return iterator;
-                }
-            };
+            if (jsonParser.nextValue() == JsonToken.END_ARRAY) {
+                return Lists.newArrayListWithExpectedSize(0);
+            } else {
+                final Iterator<JsonNode> iterator = jsonParser.readValuesAs(JsonNode.class);
+                return new Iterable<JsonNode>() {
+                    @Override
+                    public Iterator<JsonNode> iterator() {
+                        return iterator;
+                    }
+                };
+            }
         } catch (IOException e) {
             throw new SourceException("Error reading JSON stream: ", e);
         }

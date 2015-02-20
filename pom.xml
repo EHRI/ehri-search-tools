@@ -7,12 +7,13 @@
     <groupId>ehri-project</groupId>
     <artifactId>search-tools</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.2</version>
+    <version>1.1.0</version>
     <modules>
         <module>solr-config</module>
         <module>index-data-converter</module>
     </modules>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <solr.version>4.6.1</solr.version>
     </properties>
 
@@ -28,7 +29,7 @@
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path-assert</artifactId>
-            <version>0.9.1</version>
+            <version>1.2.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -38,4 +39,5 @@
             <version>1.7.7</version>
         </dependency>
     </dependencies>
+
 </project>

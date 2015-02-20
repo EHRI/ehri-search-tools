@@ -318,6 +318,7 @@
         <field name="gid" type="long" indexed="true" stored="true" multiValued="false" required="false"/>
         <field name="childCount" type="int" indexed="true" stored="true" default="0" multiValued="false" required="false"/>
         <field name="parentId" type="string" indexed="true" stored="true" multiValued="true"/>
+        <field name="ancestorIds" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="dateStart" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="dateEnd" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="dateRange" type="date" indexed="true" stored="true" multiValued="true"/>
