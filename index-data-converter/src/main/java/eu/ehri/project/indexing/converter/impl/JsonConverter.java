@@ -137,7 +137,7 @@ public class JsonConverter implements Converter<JsonNode> {
         if (value == null) {
             return false;
         } else if (value instanceof List) {
-            return ((List)value).size() > 0;
+            return !((List)value).isEmpty();
         }
         return true;
     }
