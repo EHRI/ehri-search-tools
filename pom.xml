@@ -13,6 +13,7 @@
         <module>index-data-converter</module>
     </modules>
     <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <solr.version>4.6.1</solr.version>
     </properties>
 
@@ -38,4 +39,5 @@
             <version>1.7.7</version>
         </dependency>
     </dependencies>
+
 </project>
