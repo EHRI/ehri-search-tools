@@ -1,5 +1,6 @@
 package eu.ehri.project.indexing.converter.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
@@ -7,7 +8,6 @@ import com.google.common.collect.Lists;
 import com.jayway.jsonassert.JsonAsserter;
 import eu.ehri.project.indexing.source.Source;
 import eu.ehri.project.indexing.source.impl.InputStreamJsonSource;
-import org.codehaus.jackson.JsonNode;
 import org.junit.Before;
 import org.junit.Test;
 
