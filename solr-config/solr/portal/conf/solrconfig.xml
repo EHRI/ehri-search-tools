@@ -64,16 +64,9 @@
 
     <requestHandler name="/analysis/field" startup="lazy" class="solr.FieldAnalysisRequestHandler"/>
 
-
     <requestHandler name="/update" class="solr.UpdateRequestHandler"> <!-- changed to include language detection-->
         <lst name="defaults">
             <!-- default chain including language detection -->
-            <str name="update.chain">langid</str>
-        </lst>
-    </requestHandler>
-
-    <requestHandler name="/update/json" class="solr.JsonUpdateRequestHandler" >
-        <lst name="defaults">
             <str name="update.chain">langid</str>
         </lst>
     </requestHandler>
