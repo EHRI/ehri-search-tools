@@ -26,10 +26,10 @@ import static org.junit.Assert.assertNotSame;
 public class JsonConverterTest {
 
     private static final List<String> inputResources = ImmutableList.of(
-            "inputdoc1.json", "inputdoc2.json", "inputdoc3.json", "inputdoc4.json"
+            "inputdoc1.json", "inputdoc2.json", "inputdoc3.json", "inputdoc4.json", "inputdoc5.json"
     );
 
-    private static final List<Integer> expectedNodeCount = ImmutableList.of(1, 2, 1, 1);
+    private static final List<Integer> expectedNodeCount = ImmutableList.of(1, 2, 1, 1, 1);
 
     private static final ImmutableList<ImmutableMap<String,Object>> expected = ImmutableList.of(
             ImmutableMap.<String,Object>of(
@@ -58,6 +58,12 @@ public class JsonConverterTest {
                     "annotatorId", "mike",
                     "annotatorName", "Mike",
                     "type", "annotation"
+            ),
+            ImmutableMap.<String,Object>of(
+                    "id", "hierarchy-test",
+                    "parentId", "hierarchy-test-p1",
+                    "isTopLevel", false,
+                    "ancestorIds", Lists.newArrayList("hierarchy-test-p1", "hierarchy-test-p2", "hierarchy-test-p3")
             )
     );
 
