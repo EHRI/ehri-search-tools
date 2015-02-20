@@ -1,11 +1,11 @@
 package eu.ehri.project.indexing.sink.impl;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import eu.ehri.project.indexing.sink.Sink;
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonGenerator;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.map.ObjectWriter;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -38,7 +38,7 @@ public class OutputStreamJsonSink implements Sink<JsonNode> {
         try {
             if (generator == null) {
                 pw = new PrintWriter(out);
-                generator = factory.createJsonGenerator(pw);
+                generator = factory.createGenerator(pw);
                 if (pretty) {
                     generator.useDefaultPrettyPrinter();
                 }
