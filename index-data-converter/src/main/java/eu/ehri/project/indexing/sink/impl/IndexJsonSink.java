@@ -1,9 +1,9 @@
 package eu.ehri.project.indexing.sink.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.io.FileBackedOutputStream;
 import eu.ehri.project.indexing.index.Index;
 import eu.ehri.project.indexing.sink.Sink;
-import org.codehaus.jackson.JsonNode;
 
 import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
