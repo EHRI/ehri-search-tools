@@ -18,12 +18,12 @@ public class OutputStreamJsonSink implements Sink<JsonNode> {
 
     private static final JsonFactory factory = new JsonFactory();
     private static final ObjectMapper mapper = new ObjectMapper();
-    private final static ObjectWriter writer = mapper.writerWithDefaultPrettyPrinter();
 
     private final OutputStream out;
     private JsonGenerator generator;
     private PrintWriter pw;
     private final boolean pretty;
+    private final ObjectWriter writer;
 
     public OutputStreamJsonSink(OutputStream out) {
         this(out, false);
@@ -32,6 +32,9 @@ public class OutputStreamJsonSink implements Sink<JsonNode> {
     public OutputStreamJsonSink(OutputStream out, boolean pretty) {
         this.out = out;
         this.pretty = pretty;
+        this.writer = pretty
+                ? mapper.writerWithDefaultPrettyPrinter()
+                : mapper.writer();
     }
 
     public void write(JsonNode node) throws SinkException {
@@ -39,9 +42,6 @@ public class OutputStreamJsonSink implements Sink<JsonNode> {
             if (generator == null) {
                 pw = new PrintWriter(out);
                 generator = factory.createGenerator(pw);
-                if (pretty) {
-                    generator.useDefaultPrettyPrinter();
-                }
                 generator.writeStartArray();
             }
             writer.writeValue(generator, node);
