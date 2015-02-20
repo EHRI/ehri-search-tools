@@ -133,6 +133,14 @@ public class JsonConverter implements Converter<JsonNode> {
         return descriptionData;
     }
 
+    private static boolean successfulMatch(Object value) {
+        if (value == null) {
+            return false;
+        } else if (value instanceof List) {
+            return ((List)value).size() > 0;
+        }
+        return true;
+    }
 
     /**
      * Get data for non-described items.
@@ -151,7 +159,7 @@ public class JsonConverter implements Converter<JsonNode> {
             for (JsonPath path : attrPath.getValue()) {
                 try {
                     Object value = ctx.read(path);
-                    if (value != null) {
+                    if (successfulMatch(value)) {
                         data.put(attr, value);
                         break;
                     }

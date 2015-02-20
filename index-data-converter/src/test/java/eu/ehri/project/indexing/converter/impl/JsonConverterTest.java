@@ -43,7 +43,7 @@ public class JsonConverterTest {
                     "id", "be-002112-ca-eng",
                     "itemId", "be-002112-ca",
                     "type", "documentaryUnit",
-                    "name", "Photographic archives",
+                    "otherFormsOfName", Lists.newArrayList("CEGESOMA Photographic Archives"),
                     "isParent", true
             ),
             ImmutableMap.<String,Object>of(
@@ -100,7 +100,7 @@ public class JsonConverterTest {
             System.out.println(out.toString());
             JsonAsserter asserter = with(out.toString());
             for (Map.Entry<String,Object> entry : expected.get(i).entrySet()) {
-                asserter.assertThat("$." + entry.getKey(), equalTo(entry.getValue()), "Doc " + i + " incorrect");
+                asserter.assertThat("$." + entry.getKey(), equalTo(entry.getValue()), "Doc " + (i + 1) + " incorrect");
             }
         }
     }
