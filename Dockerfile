@@ -1,5 +1,5 @@
 # Ubuntu-based Solr container
-FROM dockerfile/java:oracle-java6
+FROM dockerfile/java:oracle-java8
 
 ENV SOLR_VERSION 4.6.1
 ENV SOLR solr-$SOLR_VERSION
@@ -15,9 +15,9 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   ln -s /opt/$SOLR /opt/solr
 
 # NB: Solr config should be mounted at /opt/solr-config/ehri
-COPY solr-config/target/solr-config-1.0.2-solr-core.tar.gz /tmp/
+COPY solr-config/target/solr-config-1.1.0-solr-core.tar.gz /tmp/
 RUN mkdir /opt/solr-config && \
-  tar -C /opt/solr-config --extract --file /tmp/solr-config-1.0.2-solr-core.tar.gz && \
+  tar -C /opt/solr-config --extract --file /tmp/solr-config-1.1.0-solr-core.tar.gz && \
   ln -s /opt/solr-config/ehri/lib-$SOLR_VERSION /opt/solr-config/ehri/lib
 
 EXPOSE 8983
