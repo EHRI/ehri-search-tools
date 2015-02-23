@@ -28,7 +28,7 @@
         <fieldType name="string_ci" class="solr.TextField" sortMissingLast="true" omitNorms="true">
             <analyzer>
                 <filter class="solr.LowerCaseFilterFactory" />
-                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <tokenizer class="solr.KeywordTokenizerFactory"/>
             </analyzer>
         </fieldType>
 

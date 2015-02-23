@@ -93,7 +93,7 @@ public class SearchTest extends AbstractSolrTest {
 
     @Test
     public void testSearchForHansFrank() throws Exception {
-
+        // NB: Hans is a stop-word
         String json = runSearch("\"hans frank\"");
         System.out.println(json);
         with(json)
