@@ -30,7 +30,7 @@ public class SearchTest extends AbstractSolrTest {
     public void testBasicSearch() throws Exception {
         String data = runSearch("warsaw");
         System.out.println(JsonPath.read(data, "$.grouped.itemId.matches"));
-        with(data).assertThat("$.grouped.itemId.matches", equalTo(132));
+        with(data).assertThat("$.grouped.itemId.matches", equalTo(139));
     }
 
     @Test

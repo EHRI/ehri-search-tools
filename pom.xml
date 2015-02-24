@@ -40,4 +40,10 @@
         </dependency>
     </dependencies>
 
+    <repositories>
+        <repository>
+            <id>ehridev</id>
+            <url>http://ehridev.dans.knaw.nl/artifactory</url>
+        </repository>
+    </repositories>
 </project>
