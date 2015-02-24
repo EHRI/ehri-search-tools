@@ -42,8 +42,9 @@
 
     <repositories>
         <repository>
-            <id>ehridev</id>
-            <url>http://ehridev.dans.knaw.nl/artifactory</url>
+            <id>ehridev-snapshots</id>
+            <name>EHRI Snapshots</name>
+            <url>http://ehridev.dans.knaw.nl/artifactory/libs-snapshot</url>
         </repository>
     </repositories>
 </project>
