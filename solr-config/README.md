@@ -1,7 +1,7 @@
 # Solr Test harness
 
 The test harness (under development) is based on the `SolrTestCaseJ4` class and uses the configuration in the
-`solr/conf` directory. This directory should be kept up-to-date with the production Solr configuration and the
+`solr/portal/conf` directory. This directory should be kept up-to-date with the production Solr configuration and the
 `fabfile.py` deployment script to be able to deploy it properly to the EHRI servers.
 
 Note: There should be no static Jar files in this project. All the library dependencies (such as those for

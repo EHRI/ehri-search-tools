@@ -1,5 +1,7 @@
 package eu.ehri.project.indexing.index.impl;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.google.common.collect.Lists;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -9,10 +11,6 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.client.apache.ApacheHttpClient;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 import eu.ehri.project.indexing.index.Index;
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonGenerator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -236,7 +234,7 @@ public class SolrIndex implements Index {
         // See Solr update syntax with duplicate object keys:
         StringWriter stringWriter = new StringWriter();
         try {
-            JsonGenerator g = jsonFactory.createJsonGenerator(stringWriter);
+            JsonGenerator g = jsonFactory.createGenerator(stringWriter);
             try {
                 g.writeStartObject();
                 for (String query : queries) {

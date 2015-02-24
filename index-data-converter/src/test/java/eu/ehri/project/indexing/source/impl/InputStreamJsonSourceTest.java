@@ -1,8 +1,8 @@
 package eu.ehri.project.indexing.source.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Lists;
 import eu.ehri.project.indexing.source.Source;
-import org.codehaus.jackson.JsonNode;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -52,7 +52,7 @@ public class InputStreamJsonSourceTest {
 
     @Test(expected = RuntimeException.class)
     public void testBadJsonStreamItem() throws Exception {
-        InputStream stream = new ByteArrayInputStream("[bad".getBytes());
+        InputStream stream = new ByteArrayInputStream("[{bad".getBytes());
         assertEquals(0, listFromStream(stream).size());
     }
 

@@ -28,7 +28,7 @@
         <fieldType name="string_ci" class="solr.TextField" sortMissingLast="true" omitNorms="true">
             <analyzer>
                 <filter class="solr.LowerCaseFilterFactory" />
-                <tokenizer class="solr.StandardTokenizerFactory"/>
+                <tokenizer class="solr.KeywordTokenizerFactory"/>
             </analyzer>
         </fieldType>
 
@@ -320,6 +320,7 @@
         <field name="gid" type="long" indexed="true" stored="true" multiValued="false" required="false"/>
         <field name="childCount" type="int" indexed="true" stored="true" default="0" multiValued="false" required="false"/>
         <field name="parentId" type="string" indexed="true" stored="true" multiValued="true"/>
+        <field name="ancestorIds" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="dateStart" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="dateEnd" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="dateRange" type="date" indexed="true" stored="true" multiValued="true"/>
@@ -361,6 +362,7 @@
         <field name="accessPointNames" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="targets" type="string_ci" indexed="true" stored="true" multiValued="true"/>
         <field name="targetNames" type="text_general" indexed="true" stored="true" multiValued="true"/>
+        <field name="targetNames_ngram" type="text_general_edge_ngram" indexed="true" stored="true" multiValued="true"/>
         <field name="addresses" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="priority" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="creationProcess" type="string" indexed="true" stored="true" multiValued="false" default="MANUAL"/>
@@ -369,6 +371,8 @@
         <field name="longitude" type="double" indexed="true" stored="true" multiValued="false"/>
         <field name="location" type="location" indexed="true" stored="true" multiValued="false"/>
         <field name="isPromotable" type="boolean" indexed="true" stored="true" multiValued="false" default="false"/>
+        <field name="annotatorId" type="string" indexed="true" stored="true" multiValued="false"/>
+        <field name="annotatorName" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="promotionScore" type="int" indexed="true" stored="true" multiValued="false" default="0"/>
         <field name="_version_" type="long" indexed="true" stored="true"/>
         <dynamicField name="*_i" type="int" indexed="true" stored="true"/>
@@ -615,8 +619,10 @@
     <copyField source="accessPoints" dest="text"/>
     <copyField source="accessPoints" dest="accessPointNames" />
     <copyField source="targets" dest="targetNames"/>
+    <copyField source="targets" dest="targetNames_ngram"/>
     <copyField source="targets" dest="text"/>
     <copyField source="scopeAndContent" dest="text"/>
+    <copyField source="countryName" dest="text"/>
     <copyField source="*_s" dest="text"/>
     <copyField source="*_t" dest="text"/>
     <copyField source="*_ss" dest="text"/>

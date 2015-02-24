@@ -1,0 +1,49 @@
+[
+  {
+    "id": "380f80b0-7490-11e4-813b-a3ef93d0d496",
+    "data": {
+      "field": "locationOfCopies",
+      "body": "An insightful comment",
+      "isPromotable": true
+    },
+    "type": "annotation",
+    "relationships": {
+      "annotates": [
+        {
+          "id": "hu-002736-szemtanui-vallomasok-gyujtemenye-1945-2010-pih-i-m",
+          "data": {"identifier": "PIH I-M"},
+          "type": "documentaryUnit",
+          "relationships": {
+            "describes": [
+              {
+                "id": "hu-002736-collection-of-testimonies-1945-2010-pih-i-m-eng",
+                "data": {
+                  "languageCode": "eng",
+                  "name": "Deportáltakat Gondozó Országos Bizottság (DEGOB)"
+                },
+                "type": "documentDescription",
+                "relationships": {}
+              }
+            ]
+          },
+          "meta": {"childCount": 0}
+        }
+      ],
+      "hasAnnotation": [
+        {
+          "id": "mike",
+          "data": {
+            "name": "Mike",
+            "identifier": "mike"
+          },
+          "type": "userProfile",
+          "meta": {"following": 1}
+        }
+      ]
+    },
+    "meta": {
+      "promotionScore": 1,
+      "gid": 152936
+    }
+  }
+]

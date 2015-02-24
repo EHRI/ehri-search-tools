@@ -1,7 +1,7 @@
 package eu.ehri.project.indexing.source.impl;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import eu.ehri.project.indexing.source.Source;
-import org.codehaus.jackson.JsonNode;
 
 import java.io.File;
 import java.io.FileInputStream;

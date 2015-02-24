@@ -1,0 +1,52 @@
+[
+  {
+    "id": "hierarchy-test",
+    "data": {
+      "identifier": "hierarchy-test"
+    },
+    "type": "documentaryUnit",
+    "relationships": {
+      "childOf": [
+        {
+          "id": "hierarchy-test-p1",
+          "data": {
+              "identifier": "hierarchy-test-p1"
+          },
+          "type": "documentaryUnit",
+          "relationships": {
+            "childOf": [
+              {
+                "id": "hierarchy-test-p2",
+                "data": {
+                  "identifier": "hierarchy-test-p2"
+                },
+                "type": "documentaryUnit",
+                "relationships": {
+                    "childOf": [
+                        {
+                            "id": "hierarchy-test-p3",
+                            "data": {
+                                "identifier": "hierarchy-test-p3"
+                            }
+                        }
+                    ]
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "hasAnnotation": [
+        {
+          "id": "mike",
+          "data": {
+            "name": "Mike",
+            "identifier": "mike"
+          },
+          "type": "userProfile",
+          "meta": {"following": 1}
+        }
+      ]
+    }
+  }
+]
