@@ -355,6 +355,7 @@
         <field name="countryName" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="depthOfDescription" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="levelOfDescription" type="string" indexed="true" stored="true" multiValued="false"/>
+        <field name="languageOfMaterial" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="typeOfEntity" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="accessPoints" type="string_ci" indexed="true" stored="true" multiValued="true"/>
         <field name="accessPointNames" type="text_general" indexed="true" stored="false" multiValued="true"/>
