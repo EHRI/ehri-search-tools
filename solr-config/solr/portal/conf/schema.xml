@@ -357,10 +357,21 @@
         <field name="levelOfDescription" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="typeOfEntity" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="accessPoints" type="string_ci" indexed="true" stored="true" multiValued="true"/>
-        <field name="accessPointNames" type="text_general" indexed="true" stored="true" multiValued="true"/>
+        <field name="accessPointNames" type="text_general" indexed="true" stored="false" multiValued="true"/>
+        <field name="people" type="string_ci" indexed="true" stored="true" multiValued="true"/>
+        <field name="peopleNames" type="text_general" indexed="true" stored="true" multiValued="true"/>
+        <field name="corporateBodies" type="string_ci" indexed="true" stored="true" multiValued="true"/>
+        <field name="corporateBodyNames" type="text_general" indexed="true" stored="false" multiValued="true"/>
+        <field name="creator" type="string_ci" indexed="true" stored="true" multiValued="true"/>
+        <field name="creatorNames" type="text_general" indexed="true" stored="true" multiValued="true"/>
+        <field name="subjects" type="string_ci" indexed="true" stored="false" multiValued="true"/>
+        <field name="subjectNames" type="text_general" indexed="true" stored="true" multiValued="true"/>
+        <field name="places" type="string_ci" indexed="true" stored="true" multiValued="true"/>
+        <field name="placeNames" type="text_general" indexed="true" stored="false" multiValued="true"/>
         <field name="targets" type="string_ci" indexed="true" stored="true" multiValued="true"/>
-        <field name="targetNames" type="text_general" indexed="true" stored="true" multiValued="true"/>
-        <field name="targetNames_ngram" type="text_general_edge_ngram" indexed="true" stored="true" multiValued="true"/>
+        <field name="targetNames" type="text_general" indexed="true" stored="false" multiValued="true"/>
+        <field name="targetNames_ngram" type="text_general_edge_ngram" indexed="true" stored="false"
+               multiValued="true"/>
         <field name="addresses" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="priority" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="creationProcess" type="string" indexed="true" stored="true" multiValued="false" default="MANUAL"/>
@@ -370,7 +381,7 @@
         <field name="location" type="location" indexed="true" stored="true" multiValued="false"/>
         <field name="isPromotable" type="boolean" indexed="true" stored="true" multiValued="false" default="false"/>
         <field name="annotatorId" type="string" indexed="true" stored="true" multiValued="false"/>
-        <field name="annotatorName" type="string" indexed="true" stored="true" multiValued="false"/>
+        <field name="annotatorName" type="string" indexed="true" stored="false" multiValued="false"/>
         <field name="promotionScore" type="int" indexed="true" stored="true" multiValued="false" default="0"/>
         <field name="_version_" type="long" indexed="true" stored="true"/>
 
@@ -407,195 +418,198 @@
         <field name="txt_ro" type="text_ro" indexed="true" stored="false" termVectors="true" multiValued="true"/>
         <field name="txt_generic" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <!-- Language specific fields -->
-        <field name="title_en" type="text_en" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_en" type="text_en" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_en" type="text_en" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_en" type="text_en" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_en" type="text_en" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_en" type="text_en" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_en" type="text_en" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_en" type="text_en" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_en" type="text_en" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_en" type="text_en" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <!-- Language specific fields - these are NOT stored since they're all just copy fields -->
+        <field name="title_en" type="text_en" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_en" type="text_en" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_en" type="text_en" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_en" type="text_en" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_en" type="text_en" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_en" type="text_en" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_en" type="text_en" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_en" type="text_en" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_en" type="text_en" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_en" type="text_en" indexed="true" stored="false" termVectors="true" 
+               multiValued="true"/>
 
-        <field name="title_de" type="text_de" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_de" type="text_de" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_de" type="text_de" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_de" type="text_de" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_de" type="text_de" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_de" type="text_de" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_de" type="text_de" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_de" type="text_de" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_de" type="text_de" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_de" type="text_de" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_de" type="text_de" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_de" type="text_de" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_de" type="text_de" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_de" type="text_de" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_de" type="text_de" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_de" type="text_de" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_de" type="text_de" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_de" type="text_de" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_de" type="text_de" indexed="true" stored="false" termVectors="true" 
+               multiValued="false"/>
+        <field name="accessPoints_de" type="text_de" indexed="true" stored="false" termVectors="true" 
+               multiValued="true"/>
 
-        <field name="title_uk" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_uk" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_uk" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_uk" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_uk" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_uk" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_uk" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_uk" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_uk" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_uk" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_uk" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_uk" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_uk" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_uk" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_uk" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_uk" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_uk" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_uk" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_uk" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_uk" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <field name="title_pl" type="text_pl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_pl" type="text_pl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_pl" type="text_pl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_pl" type="text_pl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_pl" type="text_pl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_pl" type="text_pl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_pl" type="text_pl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_pl" type="text_pl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_pl" type="text_pl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_pl" type="text_pl" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_pl" type="text_pl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_pl" type="text_pl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_pl" type="text_pl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_pl" type="text_pl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_pl" type="text_pl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_pl" type="text_pl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_pl" type="text_pl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_pl" type="text_pl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_pl" type="text_pl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_pl" type="text_pl" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <field name="title_ru" type="text_ru" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_ru" type="text_ru" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_ru" type="text_ru" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_ru" type="text_ru" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_ru" type="text_ru" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_ru" type="text_ru" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_ru" type="text_ru" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_ru" type="text_ru" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_ru" type="text_ru" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_ru" type="text_ru" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_ru" type="text_ru" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_ru" type="text_ru" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_ru" type="text_ru" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_ru" type="text_ru" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_ru" type="text_ru" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_ru" type="text_ru" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_ru" type="text_ru" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_ru" type="text_ru" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_ru" type="text_ru" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_ru" type="text_ru" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <field name="title_hu" type="text_hu" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_hu" type="text_hu" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_hu" type="text_hu" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_hu" type="text_hu" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_hu" type="text_hu" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_hu" type="text_hu" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_hu" type="text_hu" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_hu" type="text_hu" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_hu" type="text_hu" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_hu" type="text_hu" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_hu" type="text_hu" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_hu" type="text_hu" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_hu" type="text_hu" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_hu" type="text_hu" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_hu" type="text_hu" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_hu" type="text_hu" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_hu" type="text_hu" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_hu" type="text_hu" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_hu" type="text_hu" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_hu" type="text_hu" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <field name="title_nl" type="text_nl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_nl" type="text_nl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_nl" type="text_nl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_nl" type="text_nl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_nl" type="text_nl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_nl" type="text_nl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_nl" type="text_nl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_nl" type="text_nl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_nl" type="text_nl" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_nl" type="text_nl" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_nl" type="text_nl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_nl" type="text_nl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_nl" type="text_nl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_nl" type="text_nl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_nl" type="text_nl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_nl" type="text_nl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_nl" type="text_nl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_nl" type="text_nl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_nl" type="text_nl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_nl" type="text_nl" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <field name="title_cs" type="text_cs" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_cs" type="text_cs" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_cs" type="text_cs" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_cs" type="text_cs" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_cs" type="text_cs" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_cs" type="text_cs" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_cs" type="text_cs" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_cs" type="text_cs" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_cs" type="text_cs" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_cs" type="text_cs" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_cs" type="text_cs" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_cs" type="text_cs" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_cs" type="text_cs" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_cs" type="text_cs" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_cs" type="text_cs" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_cs" type="text_cs" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_cs" type="text_cs" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_cs" type="text_cs" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_cs" type="text_cs" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_cs" type="text_cs" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <field name="title_it" type="text_it" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_it" type="text_it" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_it" type="text_it" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_it" type="text_it" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_it" type="text_it" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_it" type="text_it" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_it" type="text_it" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_it" type="text_it" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_it" type="text_it" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_it" type="text_it" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_it" type="text_it" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_it" type="text_it" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_it" type="text_it" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_it" type="text_it" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_it" type="text_it" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_it" type="text_it" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_it" type="text_it" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_it" type="text_it" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_it" type="text_it" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_it" type="text_it" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <field name="title_fr" type="text_fr" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_fr" type="text_fr" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_fr" type="text_fr" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_fr" type="text_fr" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_fr" type="text_fr" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_fr" type="text_fr" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_fr" type="text_fr" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_fr" type="text_fr" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_fr" type="text_fr" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_fr" type="text_fr" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_fr" type="text_fr" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_fr" type="text_fr" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_fr" type="text_fr" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_fr" type="text_fr" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_fr" type="text_fr" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_fr" type="text_fr" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_fr" type="text_fr" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_fr" type="text_fr" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_fr" type="text_fr" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_fr" type="text_fr" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <field name="title_hr" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_hr" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_hr" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_hr" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_hr" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_hr" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_hr" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_hr" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_hr" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_hr" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_hr" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_hr" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_hr" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_hr" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_hr" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_hr" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_hr" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_hr" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_hr" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_hr" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <field name="title_da" type="text_da" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_da" type="text_da" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_da" type="text_da" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_da" type="text_da" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_da" type="text_da" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_da" type="text_da" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_da" type="text_da" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_da" type="text_da" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_da" type="text_da" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_da" type="text_da" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_da" type="text_da" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_da" type="text_da" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_da" type="text_da" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_da" type="text_da" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_da" type="text_da" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_da" type="text_da" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_da" type="text_da" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_da" type="text_da" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_da" type="text_da" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_da" type="text_da" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <field name="title_el" type="text_el" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_el" type="text_el" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_el" type="text_el" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_el" type="text_el" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_el" type="text_el" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_el" type="text_el" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_el" type="text_el" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_el" type="text_el" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_el" type="text_el" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_el" type="text_el" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_el" type="text_el" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_el" type="text_el" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_el" type="text_el" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_el" type="text_el" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_el" type="text_el" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_el" type="text_el" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_el" type="text_el" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_el" type="text_el" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_el" type="text_el" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_el" type="text_el" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <field name="title_lv" type="text_lv" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_lv" type="text_lv" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_lv" type="text_lv" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_lv" type="text_lv" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_lv" type="text_lv" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_lv" type="text_lv" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_lv" type="text_lv" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_lv" type="text_lv" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_lv" type="text_lv" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_lv" type="text_lv" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_lv" type="text_lv" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_lv" type="text_lv" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_lv" type="text_lv" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_lv" type="text_lv" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_lv" type="text_lv" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_lv" type="text_lv" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_lv" type="text_lv" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_lv" type="text_lv" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_lv" type="text_lv" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_lv" type="text_lv" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <field name="title_no" type="text_no" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_no" type="text_no" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_no" type="text_no" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_no" type="text_no" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_no" type="text_no" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_no" type="text_no" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_no" type="text_no" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_no" type="text_no" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_no" type="text_no" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_no" type="text_no" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_no" type="text_no" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_no" type="text_no" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_no" type="text_no" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_no" type="text_no" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_no" type="text_no" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_no" type="text_no" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_no" type="text_no" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_no" type="text_no" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_no" type="text_no" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_no" type="text_no" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <field name="title_ro" type="text_ro" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_ro" type="text_ro" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_ro" type="text_ro" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_ro" type="text_ro" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_ro" type="text_ro" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_ro" type="text_ro" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_ro" type="text_ro" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_ro" type="text_ro" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_ro" type="text_ro" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_ro" type="text_ro" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_ro" type="text_ro" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_ro" type="text_ro" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_ro" type="text_ro" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_ro" type="text_ro" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_ro" type="text_ro" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_ro" type="text_ro" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_ro" type="text_ro" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_ro" type="text_ro" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_ro" type="text_ro" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_ro" type="text_ro" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
         <!-- when language detection modul is not able to identify the language -->
         <!-- the field will be annotated as "generic" -->
-        <field name="title_generic" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="name_generic" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="otherFormsOfName_generic" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="parallelFormsOfName_generic" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="scopeAndContent_generic" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivalHistory_generic" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="archivistNote_generic" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="abstract_generic" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="biographicalHistory_generic" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="false"/>
-        <field name="accessPoints_generic" type="text_general" indexed="true" stored="true" termVectors="true" multiValued="true"/>
+        <field name="title_generic" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_generic" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_generic" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_generic" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_generic" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_generic" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_generic" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_generic" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_generic" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_generic" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
     </fields>
 
@@ -620,6 +634,10 @@
     <copyField source="addresses" dest="text"/>
     <copyField source="accessPoints" dest="text"/>
     <copyField source="accessPoints" dest="accessPointNames" />
+    <copyField source="creator" dest="creatorNames" />
+    <copyField source="subjects" dest="subjectNames" />
+    <copyField source="places" dest="placeNames" />
+    <copyField source="corporateBodies" dest="corporateBodyNames" />
     <copyField source="targets" dest="targetNames"/>
     <copyField source="targets" dest="targetNames_ngram"/>
     <copyField source="targets" dest="text"/>

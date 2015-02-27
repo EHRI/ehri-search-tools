@@ -26,7 +26,7 @@ import static org.junit.Assert.assertNotSame;
 public class JsonConverterTest {
 
     private static final List<String> inputResources = ImmutableList.of(
-            "inputdoc1.json", "inputdoc2.json", "inputdoc3.json", "inputdoc4.json", "inputdoc5.json"
+            "inputdoc1.json", "inputdoc2.json", "inputdoc3.json", "inputdoc4.json", "inputdoc5.json", "inputdoc1.json"
     );
 
     private static final List<Integer> expectedNodeCount = ImmutableList.of(1, 2, 1, 1, 1);
@@ -64,6 +64,13 @@ public class JsonConverterTest {
                     "parentId", "hierarchy-test-p1",
                     "isTopLevel", false,
                     "ancestorIds", Lists.newArrayList("hierarchy-test-p1", "hierarchy-test-p2", "hierarchy-test-p3")
+            ),
+            ImmutableMap.<String,Object>of(
+                    "subjects", Lists.newArrayList("Refugees","Emigration","Persecution","Jewish","Holocaust",
+                            "Migration", "Nazism","Jews"),
+                    "places", Lists.newArrayList("London","Vienna - Austria"),
+                    "people", Lists.newArrayList("Berg, Susanne","Berg, Gustav","Berg, Herta. née Bass")
+
             )
     );
 
