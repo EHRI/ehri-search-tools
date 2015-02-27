@@ -636,6 +636,7 @@
     <copyField source="accessPoints" dest="text"/>
     <copyField source="accessPoints" dest="accessPointNames" />
     <copyField source="creator" dest="creatorNames" />
+    <copyField source="people" dest="peopleNames" />
     <copyField source="subjects" dest="subjectNames" />
     <copyField source="places" dest="placeNames" />
     <copyField source="corporateBodies" dest="corporateBodyNames" />
