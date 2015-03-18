@@ -59,7 +59,8 @@
             "languageCode": "eng",
             "name": "Photographic archives",
             "otherFormsOfName": ["CEGESOMA Photographic Archives"],
-            "rulesAndConventions": "EHRI Guidelines for Description v.1.0"
+            "rulesAndConventions": "EHRI Guidelines for Description v.1.0",
+            "languageOfMaterial": ["eng", "fre"]
           },
           "id": "be-002112-ca-eng",
           "meta": {
@@ -74,7 +75,8 @@
             "languageCode": "fre",
             "name": "Photographic archives",
             "otherFormsOfName": ["CEGESOMA Photographic Archives"],
-            "rulesAndConventions": "EHRI Guidelines for Description v.1.0"
+            "rulesAndConventions": "EHRI Guidelines for Description v.1.0",
+            "languageOfMaterial": ["eng", "fre"]
           },
           "id": "be-002112-ca-fre",
           "meta": {

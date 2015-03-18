@@ -26,7 +26,8 @@ import static org.junit.Assert.assertNotSame;
 public class JsonConverterTest {
 
     private static final List<String> inputResources = ImmutableList.of(
-            "inputdoc1.json", "inputdoc2.json", "inputdoc3.json", "inputdoc4.json", "inputdoc5.json", "inputdoc1.json"
+            "inputdoc1.json", "inputdoc2.json", "inputdoc3.json", "inputdoc4.json", "inputdoc5.json", "inputdoc1" +
+                    ".json", "inputdoc2.json"
     );
 
     private static final List<Integer> expectedNodeCount = ImmutableList.of(1, 2, 1, 1, 1);
@@ -70,7 +71,12 @@ public class JsonConverterTest {
                             "Migration", "Nazism","Jews"),
                     "places", Lists.newArrayList("London","Vienna - Austria"),
                     "people", Lists.newArrayList("Berg, Susanne","Berg, Gustav","Berg, Herta. née Bass")
-
+            ),
+            ImmutableMap.<String,Object>of(
+                    // Language of materials, an array value in multiple descriptions means
+                    // we'll get all values of all descriptions, which probably means duplication.
+                    // However, I think we can live with this.
+                    "languageOfMaterial", Lists.newArrayList("eng", "fre", "eng", "fre")
             )
     );
 
