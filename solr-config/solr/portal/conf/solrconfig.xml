@@ -235,5 +235,12 @@
         <processor class="solr.RunUpdateProcessorFactory"/>
     </updateRequestProcessorChain>
 
+    <!-- Unfortunately the only way we can currently search virtual collections
+         is to build a huge list of item IDs and filter the entire search space
+         on them. This list is frequently longer than the default Lucene max boolean
+         queries value of 1024, so triple it for good measure.  -->
+    <query>
+        <maxBooleanClauses>3072</maxBooleanClauses>
+    </query>
 </config>
 
