@@ -1,14 +1,14 @@
 package eu.ehri.project.indexing.sink.impl;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.ImmutableList;
 import eu.ehri.project.indexing.sink.Sink;
 
 import java.util.List;
 
 /**
+ * Run a function on write and finish.
+ *
  * @author Mike Bryant (http://github.com/mikesname)
- *         <p/>
- *         Run a function on write and finish.
  */
 public class CallbackSink<T> implements Sink<T> {
 
@@ -20,8 +20,12 @@ public class CallbackSink<T> implements Sink<T> {
 
     private final List<Callback<T>> callbacks;
 
-    public CallbackSink(Callback<T>... callback) {
-        callbacks = Lists.newArrayList(callback);
+    public CallbackSink(Callback<T> callback) {
+        this(ImmutableList.of(callback));
+    }
+
+    public CallbackSink(final List<Callback<T>> callbacks) {
+        this.callbacks = callbacks;
     }
 
     public void write(T t) {

@@ -6,9 +6,9 @@ import eu.ehri.project.indexing.converter.Converter;
 import java.util.List;
 
 /**
+ * Adapter to aggregate several converters.
+ *
  * @author Mike Bryant (http://github.com/mikesname)
- *         <p/>
- *         Adapter to aggregate several converters.
  */
 public class MultiConverter<T> implements Converter<T> {
     private final List<Converter<T>> converters;

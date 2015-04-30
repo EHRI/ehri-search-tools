@@ -13,10 +13,10 @@ import java.net.URI;
 import java.util.Properties;
 
 /**
+ * Fetch JSON from a web resource. It must accept and
+ * return MediaType application/json.
+ *
  * @author Mike Bryant (http://github.com/mikesname)
- *         <p/>
- *         Fetch JSON from a web resource. It must accept and
- *         return MediaType application/json.
  */
 public class WebJsonSource implements Source<JsonNode> {
     private final URI url;

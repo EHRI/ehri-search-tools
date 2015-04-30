@@ -19,9 +19,9 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /**
+ * Convert from EHRI graph JSON to Solr documents.
+ *
  * @author Mike Bryant (http://github.com/mikesname)
- *         <p/>
- *         Convert from EHRI graph JSON to Solr documents.
  */
 public class JsonConverter implements Converter<JsonNode> {
 

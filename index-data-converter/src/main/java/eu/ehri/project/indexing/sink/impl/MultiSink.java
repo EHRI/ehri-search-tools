@@ -6,9 +6,9 @@ import eu.ehri.project.indexing.sink.Sink;
 import java.util.List;
 
 /**
+ * Aggregate several sink together.
+ *
  * @author Mike Bryant (http://github.com/mikesname)
- *         <p/>
- *         Aggregate several sink together.
  */
 public class MultiSink<T, W extends Sink<T>> implements Sink<T> {
 

@@ -83,21 +83,21 @@ public class IndexHelper<T> {
 
         private Sink<T> getSink() {
             if (writers.size() > 1) {
-                return new MultiSink<T, Sink<T>>(writers);
+                return new MultiSink<>(writers);
             } else if (writers.size() == 1) {
                 return writers.get(0);
             } else {
-                return new NoopSink<T>();
+                return new NoopSink<>();
             }
         }
 
         public Source<T> getSource() {
             if (sources.size() > 1) {
-                return new MultiSource<T>(sources);
+                return new MultiSource<>(sources);
             } else if (sources.size() == 1) {
                 return sources.get(0);
             } else {
-                return new NoopSource<T>();
+                return new NoopSource<>();
             }
         }
 
@@ -108,11 +108,11 @@ public class IndexHelper<T> {
 
         public Converter<T> getConverter() {
             if (converters.size() > 1) {
-                return new MultiConverter<T>(converters);
+                return new MultiConverter<>(converters);
             } else if (converters.size() == 1) {
                 return converters.get(0);
             } else {
-                return new NoopConverter<T>();
+                return new NoopConverter<>();
             }
         }
 
@@ -122,7 +122,7 @@ public class IndexHelper<T> {
         }
 
         public IndexHelper<T> build() {
-            return new IndexHelper<T>(this);
+            return new IndexHelper<>(this);
         }
     }
 
@@ -280,7 +280,7 @@ public class IndexHelper<T> {
         String solrUrl = cmd.getOptionValue(SOLR_URL, DEFAULT_SOLR_URL);
         Properties restHeaders = cmd.getOptionProperties(HEADERS);
 
-        IndexHelper.Builder<JsonNode> builder = new IndexHelper.Builder<JsonNode>();
+        IndexHelper.Builder<JsonNode> builder = new IndexHelper.Builder<>();
 
         // Initialize the index...
         Index index = new SolrIndex(solrUrl);
@@ -324,8 +324,8 @@ public class IndexHelper<T> {
                     }
                 }
             };
-            //noinspection unchecked
-            builder.addSink(new CallbackSink<JsonNode>(cb));
+
+            builder.addSink(new CallbackSink<>(cb));
         }
 
         // Determine the source, either stdin, a file, or the rest service.

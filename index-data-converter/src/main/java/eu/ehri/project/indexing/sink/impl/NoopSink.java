@@ -3,9 +3,9 @@ package eu.ehri.project.indexing.sink.impl;
 import eu.ehri.project.indexing.sink.Sink;
 
 /**
+ * Basically /dev/null
+ *
  * @author Mike Bryant (http://github.com/mikesname)
- *         <p/>
- *         /dev/null
  */
 public class NoopSink<T> implements Sink<T> {
 

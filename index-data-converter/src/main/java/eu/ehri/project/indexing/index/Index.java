@@ -4,9 +4,9 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
+ * General interface for common search engine operations.
+ *
  * @author Mike Bryant (http://github.com/mikesname)
- *         <p/>
- *         General interface for common search engine operations.
  */
 public interface Index {
 

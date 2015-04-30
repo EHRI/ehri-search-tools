@@ -1,16 +1,19 @@
 package eu.ehri.project.indexing.source.impl;
 
-import com.google.common.collect.Lists;
 import eu.ehri.project.indexing.source.Source;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Queue;
 
 /**
+ * Aggregate multiple sources into one.
+ *
  * @author Mike Bryant (http://github.com/mikesname)
- *         <p/>
- *         Aggregate multiple sources into one.
  */
 public class MultiSource<T> implements Source<T> {
 
@@ -21,10 +24,6 @@ public class MultiSource<T> implements Source<T> {
     private boolean finished = false;
     private Source<T> currentSource = null;
     private Iterator<T> currentSourceIterator = null;
-
-    public MultiSource(Source<T> ... sources) {
-        this.sources = Lists.newArrayList(sources);
-    }
 
     public MultiSource(List<Source<T>> sources) {
         this.sources = sources;
@@ -38,7 +37,7 @@ public class MultiSource<T> implements Source<T> {
 
     @Override
     public Iterable<T> getIterable() throws SourceException {
-        final Queue<Source<T>> sourceQueue = new ArrayDeque<Source<T>>(sources);
+        final Queue<Source<T>> sourceQueue = new ArrayDeque<>(sources);
         return new Iterable<T>() {
 
             @Override

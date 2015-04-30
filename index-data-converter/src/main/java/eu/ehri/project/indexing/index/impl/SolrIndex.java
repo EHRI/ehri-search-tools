@@ -234,8 +234,7 @@ public class SolrIndex implements Index {
         // See Solr update syntax with duplicate object keys:
         StringWriter stringWriter = new StringWriter();
         try {
-            JsonGenerator g = jsonFactory.createGenerator(stringWriter);
-            try {
+            try (JsonGenerator g = jsonFactory.createGenerator(stringWriter)) {
                 g.writeStartObject();
                 for (String query : queries) {
                     g.writeFieldName("delete");
@@ -248,17 +247,13 @@ public class SolrIndex implements Index {
 
                 stringWriter.flush();
                 String str = stringWriter.toString();
-                InputStream stream = new ByteArrayInputStream(
-                        str.getBytes("UTF-8"));
-                try {
+                try (InputStream stream = new ByteArrayInputStream(
+                        str.getBytes("UTF-8"))) {
                     update(stream, commit);
-                } finally {
-                    stream.close();
                 }
             } catch (IOException e) {
                 throw new IndexException("Error creating delete payload", e);
             } finally {
-                g.close();
                 stringWriter.close();
             }
         } catch (IOException e) {

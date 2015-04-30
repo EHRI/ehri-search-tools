@@ -1,14 +1,14 @@
 package eu.ehri.project.indexing.source.impl;
 
-import com.google.common.collect.Iterators;
+import com.google.common.collect.ImmutableSet;
 import eu.ehri.project.indexing.source.Source;
 
 import java.util.Iterator;
 
 /**
+ * Source which does Nada. Mainly here for symmetry.
+ *
  * @author Mike Bryant (http://github.com/mikesname)
- *         <p/>
- *         Souce which does Nada. Mainly here for symmetry.
  */
 public class NoopSource<T> implements Source<T> {
     @Override
@@ -20,7 +20,7 @@ public class NoopSource<T> implements Source<T> {
         return new Iterable<T>() {
             @Override
             public Iterator<T> iterator() {
-                return Iterators.emptyIterator();
+                return ImmutableSet.<T>of().iterator();
             }
         };
     }
