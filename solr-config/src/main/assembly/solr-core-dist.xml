@@ -38,7 +38,6 @@
             <includes>
                 <include>com.ibm.icu:icu4j</include>
                 <include>net.arnx:jsonic</include>
-                <include>xml-apis:xml-apis</include>
                 <include>xerces:xercesImpl</include>
                 <include>org.apache.solr:solr-analysis-extras</include>
                 <include>org.apache.lucene:lucene-analyzers-icu</include>
