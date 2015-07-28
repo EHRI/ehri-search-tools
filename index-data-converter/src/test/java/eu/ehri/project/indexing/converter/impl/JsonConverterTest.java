@@ -27,7 +27,7 @@ public class JsonConverterTest {
 
     private static final List<String> inputResources = ImmutableList.of(
             "inputdoc1.json", "inputdoc2.json", "inputdoc3.json", "inputdoc4.json", "inputdoc5.json", "inputdoc1" +
-                    ".json", "inputdoc2.json"
+                    ".json", "inputdoc2.json", "inputdoc6.json"
     );
 
     private static final List<Integer> expectedNodeCount = ImmutableList.of(1, 2, 1, 1, 1);
@@ -77,6 +77,9 @@ public class JsonConverterTest {
                     // we'll get all values of all descriptions, which probably means duplication.
                     // However, I think we can live with this.
                     "languageOfMaterial", Lists.newArrayList("eng", "fre", "eng", "fre")
+            ),
+            ImmutableMap.<String,Object>of(
+                    "holderName", "Ehri Corporate Bodies"
             )
     );
 

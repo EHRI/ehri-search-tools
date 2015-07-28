@@ -1,0 +1,76 @@
+[
+  {
+    "relationships": {
+      "lifecycleEvent": [
+        {
+          "relationships": {
+            "hasActioner": [
+              {
+                "relationships": {},
+                "data": {
+                  "identifier": "user000080"
+                },
+                "meta": {
+                  "following": 1
+                },
+                "id": "user000080",
+                "type": "userProfile"
+              }
+            ]
+          },
+          "data": {
+            "eventType": "link",
+            "timestamp": "2015-04-28T10:48:39.423+02:00"
+          },
+          "meta": {
+            "childCount": 3
+          },
+          "id": "5d914e7b-ed83-11e4-82ee-a7bdbc5c4094",
+          "type": "systemEvent"
+        }
+      ],
+      "inAuthoritativeSet": [
+        {
+          "relationships": {},
+          "data": {
+            "identifier": "ehri-cb",
+            "name": "Ehri Corporate Bodies"
+          },
+          "meta": {
+            "childCount": 2737
+          },
+          "id": "ehri-cb",
+          "type": "authoritativeSet"
+        }
+      ],
+      "describes": [
+        {
+          "relationships": {},
+          "data": {
+            "creationProcess": "MANUAL",
+            "typeOfEntity": "corporateBody",
+            "name": "Ortskommandantur",
+            "rulesAndConventions": "EHRI Guidelines for Description v.1.0",
+            "institutionIdentifier": "EHRI Author",
+            "languageCode": "eng"
+          },
+          "meta": {
+            "gid": 352760
+          },
+          "id": "ehri_cb-001676.eng",
+          "type": "historicalAgentDescription"
+        }
+      ]
+    },
+    "data": {
+      "identifier": "001676",
+      "publicationStatus": "Draft"
+    },
+    "meta": {
+      "watchedBy": 0,
+      "gid": 352759
+    },
+    "id": "ehri-cb-001676",
+    "type": "historicalAgent"
+  }
+]
