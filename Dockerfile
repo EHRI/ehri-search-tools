@@ -1,7 +1,7 @@
 # Ubuntu-based Solr container
 FROM dockerfile/java:oracle-java8
 
-ENV SOLR_VERSION 4.10.2
+ENV SOLR_VERSION 4.10.4
 ENV SOLR solr-$SOLR_VERSION
 ENV SOLR_MIRROR http://archive.apache.org/dist/lucene/solr
 

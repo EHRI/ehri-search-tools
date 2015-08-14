@@ -95,8 +95,20 @@ public class SearchTest extends AbstractSolrTest {
     public void testSearchForHansFrank() throws Exception {
         // NB: Hans is a stop-word
         String json = runSearch("\"hans frank\"");
-        System.out.println(json);
+        //System.out.println(json);
         with(json)
                 .assertThat("$.grouped.itemId.matches", greaterThan(2));
+    }
+
+    @Test
+    public void testFacetCaseInsensitiveExactMatch() throws Exception {
+        // Filtering on the facet (_f) field won't match because it's case-sensitive
+        String json = runSearch("*", "fq", "accessPoints_facet:ESTONIA", "facet.field", "accessPoints_facet");
+        with(json)
+                .assertThat("$.grouped.itemId.matches", equalTo(0));
+        // But it will match with the standard case-insentitive field.
+        String json2 = runSearch("*", "fq", "accessPoints:ESTONIA", "facet.field", "accessPoints_facet");
+        with(json2)
+                .assertThat("$.grouped.itemId.matches", equalTo(18));
     }
 }

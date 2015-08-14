@@ -27,8 +27,8 @@
         <!-- Case-insensitive exact-match field -->
         <fieldType name="string_ci" class="solr.TextField" sortMissingLast="true" omitNorms="true">
             <analyzer>
-                <filter class="solr.LowerCaseFilterFactory" />
                 <tokenizer class="solr.KeywordTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory" />
             </analyzer>
         </fieldType>
 
@@ -358,16 +358,22 @@
         <field name="languageOfMaterial" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="typeOfEntity" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="accessPoints" type="string_ci" indexed="true" stored="true" multiValued="true"/>
+        <field name="accessPoints_facet" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="accessPointNames" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="people" type="string_ci" indexed="true" stored="true" multiValued="true"/>
+        <field name="people_facet" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="peopleNames" type="text_general" indexed="true" stored="false" multiValued="true"/>
         <field name="corporateBodies" type="string_ci" indexed="true" stored="true" multiValued="true"/>
+        <field name="corporateBodies_facet" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="corporateBodyNames" type="text_general" indexed="true" stored="false" multiValued="true"/>
         <field name="creator" type="string_ci" indexed="true" stored="true" multiValued="true"/>
+        <field name="creator_facet" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="creatorNames" type="text_general" indexed="true" stored="false" multiValued="true"/>
         <field name="subjects" type="string_ci" indexed="true" stored="true" multiValued="true"/>
+        <field name="subjects_facet" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="subjectNames" type="text_general" indexed="true" stored="false" multiValued="true"/>
         <field name="places" type="string_ci" indexed="true" stored="true" multiValued="true"/>
+        <field name="places_facet" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="placeNames" type="text_general" indexed="true" stored="false" multiValued="true"/>
         <field name="targets" type="string_ci" indexed="true" stored="true" multiValued="true"/>
         <field name="targetNames" type="text_general" indexed="true" stored="false" multiValued="true"/>
@@ -634,11 +640,17 @@
     <copyField source="holderName" dest="text"/>
     <copyField source="addresses" dest="text"/>
     <copyField source="accessPoints" dest="text"/>
+    <copyField source="accessPoints" dest="accessPoints_facet" />
     <copyField source="accessPoints" dest="accessPointNames" />
+    <copyField source="creator" dest="creator_facet" />
     <copyField source="creator" dest="creatorNames" />
+    <copyField source="people" dest="people_facet" />
     <copyField source="people" dest="peopleNames" />
+    <copyField source="subjects" dest="subjects_facet" />
     <copyField source="subjects" dest="subjectNames" />
+    <copyField source="places" dest="places_facet" />
     <copyField source="places" dest="placeNames" />
+    <copyField source="corporateBodies" dest="corporateBodies_facet" />
     <copyField source="corporateBodies" dest="corporateBodyNames" />
     <copyField source="targets" dest="targetNames"/>
     <copyField source="targets" dest="targetNames_ngram"/>
@@ -670,6 +682,7 @@
     <copyField source="biographicalHistory_en" dest="txt_en"/>
     <copyField source="biographicalHistory_en" dest="text"/>
     <copyField source="accessPoints_en" dest="accessPoints"/>
+    <copyField source="accessPoints_en" dest="accessPoints_facet"/>
     <copyField source="accessPoints_en" dest="accessPointNames"/>
     <copyField source="accessPoints_en" dest="txt_en"/>
     <copyField source="accessPoints_en" dest="text"/>
@@ -701,6 +714,7 @@
     <copyField source="abstract_hu" dest="text"/>
     <copyField source="biographicalHistory_hu" dest="text"/>
     <copyField source="accessPoints_hu" dest="accessPoints"/>
+    <copyField source="accessPoints_hu" dest="accessPoints_facet"/>
     <copyField source="accessPoints_hu" dest="accessPointNames"/>
     <copyField source="accessPoints_hu" dest="text"/>
     <copyField source="otherFormsOfName_hu" dest="otherFormsOfName"/>
@@ -731,6 +745,7 @@
     <copyField source="abstract_ru" dest="text"/>
     <copyField source="biographicalHistory_ru" dest="text"/>
     <copyField source="accessPoints_ru" dest="accessPoints"/>
+    <copyField source="accessPoints_ru" dest="accessPoints_facet"/>
     <copyField source="accessPoints_ru" dest="accessPointNames"/>
     <copyField source="accessPoints_ru" dest="text"/>
     <copyField source="otherFormsOfName_ru" dest="otherFormsOfName"/>
@@ -761,6 +776,7 @@
     <copyField source="abstract_pl" dest="text"/>
     <copyField source="biographicalHistory_pl" dest="text"/>
     <copyField source="accessPoints_pl" dest="accessPoints"/>
+    <copyField source="accessPoints_pl" dest="accessPoints_facet"/>
     <copyField source="accessPoints_pl" dest="accessPointNames"/>
     <copyField source="accessPoints_pl" dest="text"/>
     <copyField source="otherFormsOfName_pl" dest="otherFormsOfName"/>
@@ -791,6 +807,7 @@
     <copyField source="abstract_de" dest="text"/>
     <copyField source="biographicalHistory_de" dest="text"/>
     <copyField source="accessPoints_de" dest="accessPoints"/>
+    <copyField source="accessPoints_de" dest="accessPoints_facet"/>
     <copyField source="accessPoints_de" dest="accessPointNames"/>
     <copyField source="accessPoints_de" dest="text"/>
     <copyField source="otherFormsOfName_de" dest="otherFormsOfName"/>
@@ -821,6 +838,7 @@
     <copyField source="abstract_nl" dest="text"/>
     <copyField source="biographicalHistory_nl" dest="text"/>
     <copyField source="accessPoints_nl" dest="accessPoints"/>
+    <copyField source="accessPoints_nl" dest="accessPoints_facet"/>
     <copyField source="accessPoints_nl" dest="accessPointNames"/>
     <copyField source="accessPoints_nl" dest="text"/>
     <copyField source="otherFormsOfName_nl" dest="otherFormsOfName"/>
@@ -845,6 +863,7 @@
     <copyField source="abstract_cs" dest="text"/>
     <copyField source="biographicalHistory_cs" dest="text"/>
     <copyField source="accessPoints_cs" dest="accessPoints"/>
+    <copyField source="accessPoints_cs" dest="accessPoints_facet"/>
     <copyField source="accessPoints_cs" dest="accessPointNames"/>
     <copyField source="accessPoints_cs" dest="text"/>
     <copyField source="otherFormsOfName_cs" dest="otherFormsOfName"/>
@@ -881,6 +900,7 @@
     <copyField source="abstract_it" dest="text"/>
     <copyField source="biographicalHistory_it" dest="text"/>
     <copyField source="accessPoints_it" dest="accessPoints"/>
+    <copyField source="accessPoints_it" dest="accessPoints_facet"/>
     <copyField source="accessPoints_it" dest="accessPointNames"/>
     <copyField source="accessPoints_it" dest="text"/>
     <copyField source="otherFormsOfName_it" dest="otherFormsOfName"/>
@@ -911,6 +931,7 @@
     <copyField source="abstract_fr" dest="text"/>
     <copyField source="biographicalHistory_fr" dest="text"/>
     <copyField source="accessPoints_fr" dest="accessPoints"/>
+    <copyField source="accessPoints_fr" dest="accessPoints_facet"/>
     <copyField source="accessPoints_fr" dest="accessPointNames"/>
     <copyField source="accessPoints_fr" dest="text"/>
     <copyField source="otherFormsOfName_fr" dest="otherFormsOfName"/>
@@ -933,6 +954,7 @@
     <copyField source="abstract_uk" dest="text"/>
     <copyField source="biographicalHistory_uk" dest="text"/>
     <copyField source="accessPoints_uk" dest="accessPoints"/>
+    <copyField source="accessPoints_uk" dest="accessPoints_facet"/>
     <copyField source="accessPoints_uk" dest="accessPointNames"/>
     <copyField source="accessPoints_uk" dest="text"/>
     <copyField source="otherFormsOfName_uk" dest="otherFormsOfName"/>
@@ -953,6 +975,7 @@
     <copyField source="abstract_hr" dest="text"/>
     <copyField source="biographicalHistory_hr" dest="text"/>
     <copyField source="accessPoints_hr" dest="accessPoints"/>
+    <copyField source="accessPoints_hr" dest="accessPoints_facet"/>
     <copyField source="accessPoints_hr" dest="accessPointNames"/>
     <copyField source="accessPoints_hr" dest="text"/>
     <copyField source="otherFormsOfName_en" dest="otherFormsOfName"/>
@@ -981,6 +1004,7 @@
     <copyField source="abstract_da" dest="text"/>
     <copyField source="biographicalHistory_da" dest="text"/>
     <copyField source="accessPoints_da" dest="accessPoints"/>
+    <copyField source="accessPoints_da" dest="accessPoints_facet"/>
     <copyField source="accessPoints_da" dest="accessPointNames"/>
     <copyField source="accessPoints_da" dest="text"/>
     <copyField source="otherFormsOfName_da" dest="otherFormsOfName"/>
@@ -1011,6 +1035,7 @@
     <copyField source="abstract_el" dest="text"/>
     <copyField source="biographicalHistory_el" dest="text"/>
     <copyField source="accessPoints_el" dest="accessPoints"/>
+    <copyField source="accessPoints_el" dest="accessPoints_facet"/>
     <copyField source="accessPoints_el" dest="accessPointNames"/>
     <copyField source="accessPoints_el" dest="text"/>
     <copyField source="otherFormsOfName_el" dest="otherFormsOfName"/>
@@ -1041,6 +1066,7 @@
     <copyField source="abstract_lv" dest="text"/>
     <copyField source="biographicalHistory_lv" dest="text"/>
     <copyField source="accessPoints_lv" dest="accessPoints"/>
+    <copyField source="accessPoints_lv" dest="accessPoints_facet"/>
     <copyField source="accessPoints_lv" dest="accessPointNames"/>
     <copyField source="accessPoints_lv" dest="text"/>
     <copyField source="otherFormsOfName_lv" dest="otherFormsOfName"/>
@@ -1071,6 +1097,7 @@
     <copyField source="abstract_no" dest="text"/>
     <copyField source="biographicalHistory_no" dest="text"/>
     <copyField source="accessPoints_no" dest="accessPoints"/>
+    <copyField source="accessPoints_no" dest="accessPoints_facet"/>
     <copyField source="accessPoints_no" dest="accessPointNames"/>
     <copyField source="accessPoints_no" dest="text"/>
     <copyField source="otherFormsOfName_no" dest="otherFormsOfName"/>
@@ -1101,6 +1128,7 @@
     <copyField source="abstract_ro" dest="text"/>
     <copyField source="biographicalHistory_ro" dest="text"/>
     <copyField source="accessPoints_ro" dest="accessPoints"/>
+    <copyField source="accessPoints_ro" dest="accessPoints_facet"/>
     <copyField source="accessPoints_ro" dest="accessPointNames"/>
     <copyField source="accessPoints_ro" dest="text"/>
     <copyField source="otherFormsOfName_ro" dest="otherFormsOfName"/>
@@ -1123,6 +1151,7 @@
     <copyField source="abstract_generic" dest="text"/>
     <copyField source="biographicalHistory_generic" dest="text"/>
     <copyField source="accessPoints_generic" dest="accessPoints"/>
+    <copyField source="accessPoints_generic" dest="accessPoints_facet"/>
     <copyField source="accessPoints_generic" dest="accessPointNames"/>
     <copyField source="accessPoints_generic" dest="text"/>
     <copyField source="otherFormsOfName_generic" dest="otherFormsOfName"/>
