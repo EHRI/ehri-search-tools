@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
+ * A sink that buffers data to a temporary file before
+ * sending it to the index. This is considerably more
+ * efficient that making X number of individual requests.
+ *
  * @author Mike Bryant (http://github.com/mikesname)
  */
 public class IndexJsonSink implements Sink<JsonNode> {
@@ -18,10 +22,26 @@ public class IndexJsonSink implements Sink<JsonNode> {
     private final OutputStreamJsonSink npw;
     private int writeCount = 0;
 
-    public IndexJsonSink(Index index) {
+    private final EventHandler eventHandler;
+
+    public interface EventHandler {
+        void handleEvent(Object event);
+    }
+
+    private static class Noop implements EventHandler {
+        @Override
+        public void handleEvent(Object event) {}
+    }
+
+    public IndexJsonSink(Index index, EventHandler eventHandler) {
         this.index = index;
+        this.eventHandler = eventHandler;
         this.out = new FileBackedOutputStream(1024 * 1024);
         this.npw = new OutputStreamJsonSink(out);
+    }
+
+    public IndexJsonSink(Index index) {
+        this(index, new Noop());
     }
 
     public void write(JsonNode node) throws SinkException {
@@ -39,7 +59,7 @@ public class IndexJsonSink implements Sink<JsonNode> {
                 String[] cursor = {"|", "/", "-", "\\"};
                 int cursorPos = 0;
                 while (!done.get()) {
-                    System.err.println("Updating index... " + cursor[cursorPos]);
+                    eventHandler.handleEvent("Updating index... " + cursor[cursorPos]);
                     cursorPos = cursorPos == 3 ? 0 : cursorPos + 1;
                     try {
                         Thread.sleep(1000);

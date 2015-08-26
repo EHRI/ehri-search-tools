@@ -292,7 +292,12 @@ public class IndexHelper {
 
         // Determine if we need to actually index the data...
         if (cmd.hasOption(INDEX)) {
-            builder.addSink(new IndexJsonSink(index));
+            builder.addSink(new IndexJsonSink(index, new IndexJsonSink.EventHandler() {
+                @Override
+                public void handleEvent(Object event) {
+                    System.err.println(event);
+                }
+            }));
         }
 
         // Determine if we want to convert the data or print the incoming

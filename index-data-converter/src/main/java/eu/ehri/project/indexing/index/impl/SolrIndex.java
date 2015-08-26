@@ -11,6 +11,8 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.client.apache.ApacheHttpClient;
 import com.sun.jersey.client.apache.config.DefaultApacheHttpClientConfig;
 import eu.ehri.project.indexing.index.Index;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -31,6 +33,8 @@ import java.util.List;
  */
 public class SolrIndex implements Index {
 
+    private static final Logger logger = LoggerFactory.getLogger(SolrIndex.class);
+
     private static final Client client = ApacheHttpClient.create(getClientConfig());
     private static final JsonFactory jsonFactory = new JsonFactory();
 
@@ -38,7 +42,6 @@ public class SolrIndex implements Index {
      * Fields.
      */
     private final String url;
-
     /**
      * Constructor.
      *
@@ -52,6 +55,7 @@ public class SolrIndex implements Index {
      * Commit the Solr updates.
      */
     public void commit() {
+        logger.debug("Committing solr index...");
         WebResource commitResource = client.resource(
                 UriBuilder.fromPath(url).segment("update").build());
         ClientResponse response = commitResource
