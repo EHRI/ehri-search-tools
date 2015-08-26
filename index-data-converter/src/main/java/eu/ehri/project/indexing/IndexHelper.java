@@ -47,7 +47,7 @@ public class IndexHelper<T> {
 
         private int code;
 
-        private ErrCodes(int code) {
+        ErrCodes(int code) {
             this.code = code;
         }
 

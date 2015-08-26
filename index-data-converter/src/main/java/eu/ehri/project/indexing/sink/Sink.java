@@ -5,13 +5,13 @@ package eu.ehri.project.indexing.sink;
  */
 public interface Sink<T> {
 
-    public class SinkException extends Exception {
+    class SinkException extends Exception {
         public SinkException(String message, Exception e) {
             super(message, e);
         }
     }
 
-    public void write(T t) throws SinkException;
+    void write(T t) throws SinkException;
 
-    public void finish() throws SinkException;
+    void finish() throws SinkException;
 }

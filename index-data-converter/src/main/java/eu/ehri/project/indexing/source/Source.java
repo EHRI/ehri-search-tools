@@ -4,7 +4,7 @@ package eu.ehri.project.indexing.source;
  * @author Mike Bryant (http://github.com/mikesname)
  */
 public interface Source<T> {
-    public class SourceException extends Exception {
+    class SourceException extends Exception {
         public SourceException(String message) {
             super(message);
         }
@@ -14,9 +14,9 @@ public interface Source<T> {
         }
     }
 
-    public Iterable<T> getIterable() throws SourceException;
+    Iterable<T> getIterable() throws SourceException;
 
-    public boolean isFinished();
+    boolean isFinished();
 
-    public void finish() throws SourceException;
+    void finish() throws SourceException;
 }

@@ -12,10 +12,10 @@ import java.util.List;
  */
 public class CallbackSink<T> implements Sink<T> {
 
-    public static interface Callback<T> {
-        public void call(T t);
+    public interface Callback<T> {
+        void call(T t);
 
-        public void finish();
+        void finish();
     }
 
     private final List<Callback<T>> callbacks;

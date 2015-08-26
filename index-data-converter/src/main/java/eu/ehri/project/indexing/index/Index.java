@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface Index {
 
-    public class IndexException extends RuntimeException {
+    class IndexException extends RuntimeException {
         public IndexException(String message) {
             super(message);
         }
@@ -26,7 +26,7 @@ public interface Index {
      * @param commit Whether or not to commit the action.
      * @throws IndexException
      */
-    public void deleteAll(boolean commit) throws IndexException;
+    void deleteAll(boolean commit) throws IndexException;
 
     /**
      * Delete an item with the given ID or itemId.
@@ -35,7 +35,7 @@ public interface Index {
      * @param commit Whether or not to commit the action.
      * @throws IndexException
      */
-    public void deleteItem(String id, boolean commit) throws IndexException;
+    void deleteItem(String id, boolean commit) throws IndexException;
 
     /**
      * Delete all items with a given field value.
@@ -45,7 +45,7 @@ public interface Index {
      * @param commit Whether or not to commit the action.
      * @throws IndexException
      */
-    public void deleteByFieldValue(String field, String value, boolean commit) throws IndexException;
+    void deleteByFieldValue(String field, String value, boolean commit) throws IndexException;
 
     /**
      * Delete items identified by a set of ids or itemIds.
@@ -54,7 +54,7 @@ public interface Index {
      * @param commit Whether or not to commit the action.
      * @throws IndexException
      */
-    public void deleteItems(List<String> ids, boolean commit) throws IndexException;
+    void deleteItems(List<String> ids, boolean commit) throws IndexException;
 
     /**
      * Delete items belong to a given type.
@@ -63,7 +63,7 @@ public interface Index {
      * @param commit Whether or not to commit the action.
      * @throws IndexException
      */
-    public void deleteType(String type, boolean commit) throws IndexException;
+    void deleteType(String type, boolean commit) throws IndexException;
 
     /**
      * Delete items belonging to a list of types.
@@ -72,7 +72,7 @@ public interface Index {
      * @param commit Whether or not to commit the action.
      * @throws IndexException
      */
-    public void deleteTypes(List<String> types, boolean commit) throws IndexException;
+    void deleteTypes(List<String> types, boolean commit) throws IndexException;
 
     /**
      * Run a Solr update operation given arbitrary InputStream data.
@@ -80,10 +80,10 @@ public interface Index {
      * @param ios    The InputStream to upload
      * @param commit Whether or not to commit the upload immediately.
      */
-    public void update(InputStream ios, boolean commit);
+    void update(InputStream ios, boolean commit);
 
     /**
      * Commit outstanding Solr transactions.
      */
-    public void commit();
+    void commit();
 }
