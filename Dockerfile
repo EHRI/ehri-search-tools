@@ -4,6 +4,8 @@ FROM dockerfile/java:oracle-java8
 ENV SOLR_VERSION 4.10.4
 ENV SOLR solr-$SOLR_VERSION
 ENV SOLR_MIRROR http://archive.apache.org/dist/lucene/solr
+ENV TOOL_VERSION 1.1.1-SNAPSHOT
+ENV PORT 8983
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get update && \
@@ -15,12 +17,12 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   ln -s /opt/$SOLR /opt/solr
 
 # NB: Solr config should be mounted at /opt/solr-config/ehri
-COPY solr-config/target/solr-config-1.1.0-solr-core.tar.gz /tmp/
+COPY solr-config/target/solr-config-${TOOL_VERSION}-solr-core.tar.gz /tmp/
 RUN mkdir /opt/solr-config && \
-  tar -C /opt/solr-config --extract --file /tmp/solr-config-1.1.0-solr-core.tar.gz && \
+  tar -C /opt/solr-config --extract --file /tmp/solr-config-${TOOL_VERSION}-solr-core.tar.gz && \
   ln -s /opt/solr-config/ehri/lib-$SOLR_VERSION /opt/solr-config/ehri/lib
 
-EXPOSE 8983
+EXPOSE $PORT
 
 # Run the example Solr Jetty launcher with our config
 WORKDIR /opt/solr/example
