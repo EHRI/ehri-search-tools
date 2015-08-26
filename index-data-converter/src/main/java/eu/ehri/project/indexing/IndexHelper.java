@@ -33,7 +33,7 @@ import java.util.Properties;
  *
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class IndexHelper<T> {
+public class IndexHelper {
 
     public static final String PROGRAM_NAME = "index-helper";
     public static final String VERSION_NUMBER = "1.0.1";
@@ -64,24 +64,24 @@ public class IndexHelper<T> {
     private static final String DEFAULT_SOLR_URL = "http://localhost:8983/solr/portal";
     private static final String DEFAULT_EHRI_URL = "http://localhost:7474/ehri";
 
-    private final Source<T> source;
-    private final Sink<T> writer;
-    private final Converter<T> converter;
+    private final Source<JsonNode> source;
+    private final Sink<JsonNode> writer;
+    private final Converter<JsonNode> converter;
 
     /**
      * Builder for an Indexer. More options to come.
      */
-    public static class Builder<T> {
-        private final List<Source<T>> sources = Lists.newArrayList();
-        private final List<Sink<T>> writers = Lists.newArrayList();
-        private final List<Converter<T>> converters = Lists.newArrayList();
+    public static class Builder {
+        private final List<Source<JsonNode>> sources = Lists.newArrayList();
+        private final List<Sink<JsonNode>> writers = Lists.newArrayList();
+        private final List<Converter<JsonNode>> converters = Lists.newArrayList();
 
-        public Builder<T> addSink(Sink<T> writer) {
+        public Builder addSink(Sink<JsonNode> writer) {
             writers.add(writer);
             return this;
         }
 
-        private Sink<T> getSink() {
+        private Sink<JsonNode> getSink() {
             if (writers.size() > 1) {
                 return new MultiSink<>(writers);
             } else if (writers.size() == 1) {
@@ -91,7 +91,7 @@ public class IndexHelper<T> {
             }
         }
 
-        public Source<T> getSource() {
+        public Source<JsonNode> getSource() {
             if (sources.size() > 1) {
                 return new MultiSource<>(sources);
             } else if (sources.size() == 1) {
@@ -101,12 +101,12 @@ public class IndexHelper<T> {
             }
         }
 
-        public Builder<T> addSource(Source<T> source) {
+        public Builder addSource(Source<JsonNode> source) {
             this.sources.add(source);
             return this;
         }
 
-        public Converter<T> getConverter() {
+        public Converter<JsonNode> getConverter() {
             if (converters.size() > 1) {
                 return new MultiConverter<>(converters);
             } else if (converters.size() == 1) {
@@ -116,17 +116,17 @@ public class IndexHelper<T> {
             }
         }
 
-        public Builder<T> addConverter(Converter<T> converter) {
+        public Builder addConverter(Converter<JsonNode> converter) {
             this.converters.add(converter);
             return this;
         }
 
-        public IndexHelper<T> build() {
-            return new IndexHelper<>(this);
+        public IndexHelper build() {
+            return new IndexHelper(this);
         }
     }
 
-    private IndexHelper(Builder<T> builder) {
+    private IndexHelper(Builder builder) {
         this.writer = builder.getSink();
         this.source = builder.getSource();
         this.converter = builder.getConverter();
@@ -137,8 +137,8 @@ public class IndexHelper<T> {
      */
     public void iterate() throws Source.SourceException, Sink.SinkException, Converter.ConverterException {
         try {
-            for (T item : source.getIterable()) {
-                for (T out : converter.convert(item)) {
+            for (JsonNode item : source.getIterable()) {
+                for (JsonNode out : converter.convert(item)) {
                     writer.write(out);
                 }
             }
@@ -280,7 +280,7 @@ public class IndexHelper<T> {
         String solrUrl = cmd.getOptionValue(SOLR_URL, DEFAULT_SOLR_URL);
         Properties restHeaders = cmd.getOptionProperties(HEADERS);
 
-        IndexHelper.Builder<JsonNode> builder = new IndexHelper.Builder<>();
+        IndexHelper.Builder builder = new IndexHelper.Builder();
 
         // Initialize the index...
         Index index = new SolrIndex(solrUrl);
