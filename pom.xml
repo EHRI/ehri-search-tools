@@ -17,6 +17,29 @@
         <solr.version>4.10.4</solr.version>
     </properties>
 
+    <issueManagement>
+        <system>GitHub Issues</system>
+        <url>https://github.com/EHRI/ehri-search-tools/issues</url>
+    </issueManagement>
+
+    <distributionManagement>
+        <site>
+            <id>ehri-search-tools</id>
+            <name>EHRI Search Tools Site</name>
+            <url>http://github.com/EHRI/ehri-search-tools</url>
+        </site>
+        <snapshotRepository>
+            <id>ehridev</id>
+            <name>libs-snapshot-local</name>
+            <url>http://ehridev.dans.knaw.nl/artifactory/libs-snapshot-local</url>
+        </snapshotRepository>
+        <repository>
+            <id>ehridev</id>
+            <name>libs-release-local</name>
+            <url>http://ehridev.dans.knaw.nl/artifactory/libs-release-local</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
