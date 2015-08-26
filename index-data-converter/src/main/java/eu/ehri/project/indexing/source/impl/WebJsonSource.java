@@ -22,7 +22,7 @@ public class WebJsonSource implements Source<JsonNode> {
     private final URI url;
     private ClientResponse response = null;
     private InputStreamJsonSource ios = null;
-    private Properties headers;
+    private final Properties headers;
     private boolean finished = false;
 
     public WebJsonSource(URI url, Properties headers) {

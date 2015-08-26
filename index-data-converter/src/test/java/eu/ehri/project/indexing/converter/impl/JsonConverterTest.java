@@ -83,7 +83,7 @@ public class JsonConverterTest {
             )
     );
 
-    private List<JsonNode> inputs = Lists.newArrayList();
+    private final List<JsonNode> inputs = Lists.newArrayList();
 
     @Before
     public void setUp() throws Exception {

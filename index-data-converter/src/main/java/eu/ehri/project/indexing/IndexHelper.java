@@ -45,7 +45,7 @@ public class IndexHelper<T> {
         BAD_STATE_ERR(6),
         INDEX_ERR(7);
 
-        private int code;
+        private final int code;
 
         ErrCodes(int code) {
             this.code = code;
@@ -74,7 +74,7 @@ public class IndexHelper<T> {
     public static class Builder<T> {
         private final List<Source<T>> sources = Lists.newArrayList();
         private final List<Sink<T>> writers = Lists.newArrayList();
-        private List<Converter<T>> converters = Lists.newArrayList();
+        private final List<Converter<T>> converters = Lists.newArrayList();
 
         public Builder<T> addSink(Sink<T> writer) {
             writers.add(writer);

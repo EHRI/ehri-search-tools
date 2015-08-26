@@ -6,9 +6,6 @@ package eu.ehri.project.indexing.converter;
 public interface Converter<T> {
 
     class ConverterException extends Exception {
-        public ConverterException(String message) {
-            super(message);
-        }
 
         public ConverterException(String message, Exception e) {
             super(message, e);

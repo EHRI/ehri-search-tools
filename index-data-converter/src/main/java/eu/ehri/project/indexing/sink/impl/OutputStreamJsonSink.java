@@ -22,7 +22,6 @@ public class OutputStreamJsonSink implements Sink<JsonNode> {
     private final OutputStream out;
     private JsonGenerator generator;
     private PrintWriter pw;
-    private final boolean pretty;
     private final ObjectWriter writer;
 
     public OutputStreamJsonSink(OutputStream out) {
@@ -31,7 +30,6 @@ public class OutputStreamJsonSink implements Sink<JsonNode> {
 
     public OutputStreamJsonSink(OutputStream out, boolean pretty) {
         this.out = out;
-        this.pretty = pretty;
         this.writer = pretty
                 ? mapper.writerWithDefaultPrettyPrinter()
                 : mapper.writer();
