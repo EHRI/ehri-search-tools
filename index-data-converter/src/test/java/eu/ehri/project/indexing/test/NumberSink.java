@@ -7,16 +7,16 @@ import java.util.List;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class IntegerSink implements Sink<Integer> {
-    private final List<? super Integer> buffer;
+public class NumberSink implements Sink<Number> {
+    private final List<? super Number> buffer;
 
-    public IntegerSink(List<? super Integer> buffer) {
+    public NumberSink(List<? super Number> buffer) {
         this.buffer = buffer;
     }
 
     @Override
-    public void write(Integer Integer) throws SinkException {
-        buffer.add(Integer);
+    public void write(Number number) throws SinkException {
+        buffer.add(number);
     }
 
     @Override

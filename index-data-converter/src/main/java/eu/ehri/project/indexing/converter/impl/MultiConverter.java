@@ -11,16 +11,16 @@ import java.util.List;
  * @author Mike Bryant (http://github.com/mikesname)
  */
 public class MultiConverter<S, E> implements Converter<S, E> {
-    private final List<Converter<S, E>> converters;
+    private final List<Converter<S, ? extends E>> converters;
 
-    public MultiConverter(List<Converter<S, E>> converters) {
+    public MultiConverter(List<Converter<S, ? extends E>> converters) {
         this.converters = Lists.newArrayList(converters);
     }
 
     @Override
     public Iterable<E> convert(S t) throws ConverterException {
         List<E> temp = Lists.newArrayList();
-        for (Converter<S, E> converter : converters) {
+        for (Converter<S, ? extends E> converter : converters) {
             for (E out : converter.convert(t)) {
                 temp.add(out);
             }

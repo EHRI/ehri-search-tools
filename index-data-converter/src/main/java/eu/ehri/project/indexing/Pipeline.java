@@ -21,23 +21,23 @@ import java.util.List;
 public class Pipeline<S, E> {
 
     protected final Source<S> source;
-    protected final Sink<E> writer;
-    protected final Converter<S, E> converter;
+    protected final Sink<? super E> writer;
+    protected final Converter<S, ? extends E> converter;
 
     /**
      * Builder for an Indexer. More options to come.
      */
     public static class Builder<S, E> {
         private final List<Source<S>> sources = Lists.newArrayList();
-        private final List<Sink<E>> writers = Lists.newArrayList();
-        private final List<Converter<S, E>> converters = Lists.newArrayList();
+        private final List<Sink<? super E>> writers = Lists.newArrayList();
+        private final List<Converter<S, ? extends E>> converters = Lists.newArrayList();
 
         public Builder<S, E> addSink(Sink<E> writer) {
             writers.add(writer);
             return this;
         }
 
-        private Sink<E> getSink() {
+        protected Sink<? super E> getSink() {
             if (writers.size() > 1) {
                 return new MultiSink<>(writers);
             } else if (writers.size() == 1) {
@@ -47,7 +47,7 @@ public class Pipeline<S, E> {
             }
         }
 
-        public Source<S> getSource() {
+        protected Source<S> getSource() {
             if (sources.size() > 1) {
                 return new MultiSource<>(sources);
             } else if (sources.size() == 1) {
@@ -62,7 +62,7 @@ public class Pipeline<S, E> {
             return this;
         }
 
-        public Converter<S, E> getConverter() {
+        protected Converter<S, ? extends E> getConverter() {
             if (converters.size() > 1) {
                 return new MultiConverter<>(converters);
             } else if (converters.size() == 1) {
@@ -73,7 +73,7 @@ public class Pipeline<S, E> {
             }
         }
 
-        public Builder<S, E> addConverter(Converter<S, E> converter) {
+        public Builder<S, E> addConverter(Converter<S, ? extends E> converter) {
             this.converters.add(converter);
             return this;
         }
