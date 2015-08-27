@@ -120,6 +120,7 @@ public class IndexHelper extends Pipeline<JsonNode, JsonNode> {
     }
 
 
+    @SuppressWarnings("static-access")
     public static void main(String[] args) throws IOException, ParseException {
 
         // Long opts
