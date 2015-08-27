@@ -3,7 +3,7 @@ package eu.ehri.project.indexing.converter;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public interface Converter<T> {
+public interface Converter<S, E> {
 
     class ConverterException extends Exception {
 
@@ -12,5 +12,5 @@ public interface Converter<T> {
         }
     }
 
-    Iterable<T> convert(T t) throws ConverterException;
+    Iterable<E> convert(S t) throws ConverterException;
 }

@@ -10,18 +10,18 @@ import java.util.List;
  *
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class MultiConverter<T> implements Converter<T> {
-    private final List<Converter<T>> converters;
+public class MultiConverter<S, E> implements Converter<S, E> {
+    private final List<Converter<S, E>> converters;
 
-    public MultiConverter(List<Converter<T>> converters) {
+    public MultiConverter(List<Converter<S, E>> converters) {
         this.converters = Lists.newArrayList(converters);
     }
 
     @Override
-    public Iterable<T> convert(T t) throws ConverterException {
-        List<T> temp = Lists.newArrayList();
-        for (Converter<T> converter : converters) {
-            for (T out : converter.convert(t)) {
+    public Iterable<E> convert(S t) throws ConverterException {
+        List<E> temp = Lists.newArrayList();
+        for (Converter<S, E> converter : converters) {
+            for (E out : converter.convert(t)) {
                 temp.add(out);
             }
         }

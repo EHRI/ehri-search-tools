@@ -6,7 +6,6 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import eu.ehri.project.indexing.converter.Converter;
 import eu.ehri.project.indexing.converter.impl.JsonConverter;
-import eu.ehri.project.indexing.converter.impl.MultiConverter;
 import eu.ehri.project.indexing.converter.impl.NoopConverter;
 import eu.ehri.project.indexing.index.Index;
 import eu.ehri.project.indexing.index.impl.SolrIndex;
@@ -33,10 +32,17 @@ import java.util.Properties;
  *
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class IndexHelper {
+public class IndexHelper extends Pipeline<JsonNode, JsonNode> {
 
     public static final String PROGRAM_NAME = "index-helper";
-    public static final String VERSION_NUMBER = "1.0.1";
+
+    /**
+     * Default service end points.
+     * <p/>
+     * TODO: Store these in a properties file?
+     */
+    private static final String DEFAULT_SOLR_URL = "http://localhost:8983/solr/portal";
+    private static final String DEFAULT_EHRI_URL = "http://localhost:7474/ehri";
 
     enum ErrCodes {
         BAD_SOURCE_ERR(3),
@@ -56,96 +62,8 @@ public class IndexHelper {
         }
     }
 
-    /**
-     * Default service end points.
-     * <p/>
-     * TODO: Store these in a properties file?
-     */
-    private static final String DEFAULT_SOLR_URL = "http://localhost:8983/solr/portal";
-    private static final String DEFAULT_EHRI_URL = "http://localhost:7474/ehri";
-
-    private final Source<JsonNode> source;
-    private final Sink<JsonNode> writer;
-    private final Converter<JsonNode> converter;
-
-    /**
-     * Builder for an Indexer. More options to come.
-     */
-    public static class Builder {
-        private final List<Source<JsonNode>> sources = Lists.newArrayList();
-        private final List<Sink<JsonNode>> writers = Lists.newArrayList();
-        private final List<Converter<JsonNode>> converters = Lists.newArrayList();
-
-        public Builder addSink(Sink<JsonNode> writer) {
-            writers.add(writer);
-            return this;
-        }
-
-        private Sink<JsonNode> getSink() {
-            if (writers.size() > 1) {
-                return new MultiSink<>(writers);
-            } else if (writers.size() == 1) {
-                return writers.get(0);
-            } else {
-                return new NoopSink<>();
-            }
-        }
-
-        public Source<JsonNode> getSource() {
-            if (sources.size() > 1) {
-                return new MultiSource<>(sources);
-            } else if (sources.size() == 1) {
-                return sources.get(0);
-            } else {
-                return new NoopSource<>();
-            }
-        }
-
-        public Builder addSource(Source<JsonNode> source) {
-            this.sources.add(source);
-            return this;
-        }
-
-        public Converter<JsonNode> getConverter() {
-            if (converters.size() > 1) {
-                return new MultiConverter<>(converters);
-            } else if (converters.size() == 1) {
-                return converters.get(0);
-            } else {
-                return new NoopConverter<>();
-            }
-        }
-
-        public Builder addConverter(Converter<JsonNode> converter) {
-            this.converters.add(converter);
-            return this;
-        }
-
-        public IndexHelper build() {
-            return new IndexHelper(this);
-        }
-    }
-
-    private IndexHelper(Builder builder) {
-        this.writer = builder.getSink();
-        this.source = builder.getSource();
-        this.converter = builder.getConverter();
-    }
-
-    /**
-     * Perform the actual actions.
-     */
-    public void iterate() throws Source.SourceException, Sink.SinkException, Converter.ConverterException {
-        try {
-            for (JsonNode item : source.getIterable()) {
-                for (JsonNode out : converter.convert(item)) {
-                    writer.write(out);
-                }
-            }
-        } finally {
-            source.finish();
-            writer.finish();
-        }
+    private IndexHelper(Builder<JsonNode, JsonNode> builder) {
+        super(builder);
     }
 
     /**
@@ -256,7 +174,8 @@ public class IndexHelper {
         CommandLine cmd = parser.parse(options, args);
 
         if (cmd.hasOption(VERSION)) {
-            System.out.println(PROGRAM_NAME + " " + VERSION_NUMBER);
+            String version = IndexHelper.class.getPackage().getImplementationVersion();
+            System.out.println(PROGRAM_NAME + " " + version);
             System.exit(0);
         }
 
@@ -280,7 +199,7 @@ public class IndexHelper {
         String solrUrl = cmd.getOptionValue(SOLR_URL, DEFAULT_SOLR_URL);
         Properties restHeaders = cmd.getOptionProperties(HEADERS);
 
-        IndexHelper.Builder builder = new IndexHelper.Builder();
+        IndexHelper.Builder<JsonNode,JsonNode> builder = new IndexHelper.Builder<>();
 
         // Initialize the index...
         Index index = new SolrIndex(solrUrl);
@@ -302,9 +221,9 @@ public class IndexHelper {
 
         // Determine if we want to convert the data or print the incoming
         // JSON as-is...
-        if (!cmd.hasOption(NO_CONVERT)) {
-            builder.addConverter(new JsonConverter());
-        }
+        builder.addConverter(cmd.hasOption(NO_CONVERT)
+            ? new NoopConverter<JsonNode>()
+            : new JsonConverter());
 
         // See if we want to print stats... if so create a callback sink
         // to count the individual items and optionally print them...
@@ -372,7 +291,7 @@ public class IndexHelper {
             }
 
             // Now do the main indexing tasks
-            builder.build().iterate();
+            builder.build().run();
         } catch (Source.SourceException e) {
             System.err.println(e.getMessage());
             System.exit(ErrCodes.BAD_SOURCE_ERR.getCode());
