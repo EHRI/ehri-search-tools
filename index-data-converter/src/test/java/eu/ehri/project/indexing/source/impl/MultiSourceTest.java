@@ -48,7 +48,7 @@ public class MultiSourceTest {
         TestSource src3 = new TestSource("g", "h", "i");
 
         MultiSource<String> multiSource = new MultiSource<>(
-                Lists.<Source<String>>newArrayList(src1, src2, src3));
+                Lists.<Source<? extends String>>newArrayList(src1, src2, src3));
         Iterable<String> iterable = multiSource.getIterable();
         Iterator<String> iterator = iterable.iterator();
         assertEquals("a", iterator.next());
