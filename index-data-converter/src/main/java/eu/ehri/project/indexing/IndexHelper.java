@@ -10,11 +10,21 @@ import eu.ehri.project.indexing.converter.impl.NoopConverter;
 import eu.ehri.project.indexing.index.Index;
 import eu.ehri.project.indexing.index.impl.SolrIndex;
 import eu.ehri.project.indexing.sink.Sink;
-import eu.ehri.project.indexing.sink.impl.*;
+import eu.ehri.project.indexing.sink.impl.CallbackSink;
+import eu.ehri.project.indexing.sink.impl.IndexJsonSink;
+import eu.ehri.project.indexing.sink.impl.OutputStreamJsonSink;
 import eu.ehri.project.indexing.source.Source;
-import eu.ehri.project.indexing.source.impl.*;
+import eu.ehri.project.indexing.source.impl.FileJsonSource;
+import eu.ehri.project.indexing.source.impl.InputStreamJsonSource;
+import eu.ehri.project.indexing.source.impl.WebJsonSource;
 import eu.ehri.project.indexing.utils.Stats;
-import org.apache.commons.cli.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.OptionBuilder;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
@@ -33,8 +43,6 @@ import java.util.Properties;
  * @author Mike Bryant (http://github.com/mikesname)
  */
 public class IndexHelper extends Pipeline<JsonNode, JsonNode> {
-
-    public static final String PROGRAM_NAME = "index-helper";
 
     /**
      * Default service end points.
@@ -173,13 +181,15 @@ public class IndexHelper extends Pipeline<JsonNode, JsonNode> {
         CommandLineParser parser = new GnuParser();
         CommandLine cmd = parser.parse(options, args);
 
+        final String toolName = IndexHelper.class.getPackage().getImplementationTitle();
+        final String toolVersion = IndexHelper.class.getPackage().getImplementationVersion();
+
         if (cmd.hasOption(VERSION)) {
-            String version = IndexHelper.class.getPackage().getImplementationVersion();
-            System.out.println(PROGRAM_NAME + " " + version);
+            System.out.println(toolName + " " + toolVersion);
             System.exit(0);
         }
 
-        String usage = PROGRAM_NAME + " [OPTIONS] <spec> ... <specN>";
+        String usage = toolName + " [OPTIONS] <spec> ... <specN>";
         String help = "\n" +
                 "Each <spec> should consist of:\n" +
                 "   * an item type (all items of that type)\n" +
@@ -199,7 +209,7 @@ public class IndexHelper extends Pipeline<JsonNode, JsonNode> {
         String solrUrl = cmd.getOptionValue(SOLR_URL, DEFAULT_SOLR_URL);
         Properties restHeaders = cmd.getOptionProperties(HEADERS);
 
-        IndexHelper.Builder<JsonNode,JsonNode> builder = new IndexHelper.Builder<>();
+        IndexHelper.Builder<JsonNode, JsonNode> builder = new IndexHelper.Builder<>();
 
         // Initialize the index...
         Index index = new SolrIndex(solrUrl);
@@ -222,8 +232,8 @@ public class IndexHelper extends Pipeline<JsonNode, JsonNode> {
         // Determine if we want to convert the data or print the incoming
         // JSON as-is...
         builder.addConverter(cmd.hasOption(NO_CONVERT)
-            ? new NoopConverter<JsonNode>()
-            : new JsonConverter());
+                ? new NoopConverter<JsonNode>()
+                : new JsonConverter());
 
         // See if we want to print stats... if so create a callback sink
         // to count the individual items and optionally print them...
