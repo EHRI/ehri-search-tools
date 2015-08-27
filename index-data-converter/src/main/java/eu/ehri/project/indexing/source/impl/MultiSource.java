@@ -15,17 +15,17 @@ import java.util.Queue;
  *
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class MultiSource<T> implements Source<T> {
+public class MultiSource<T, S extends Source<? extends T>> implements Source<T> {
 
     private final static Logger logger = LoggerFactory.getLogger(MultiSource.class);
 
-    private final List<Source<T>> sources;
+    private final List<S> sources;
 
     private boolean finished = false;
-    private Source<T> currentSource = null;
-    private Iterator<T> currentSourceIterator = null;
+    private S currentSource = null;
+    private Iterator<? extends T> currentSourceIterator = null;
 
-    public MultiSource(List<Source<T>> sources) {
+    public MultiSource(List<S> sources) {
         this.sources = sources;
     }
 
@@ -37,7 +37,7 @@ public class MultiSource<T> implements Source<T> {
 
     @Override
     public Iterable<T> getIterable() throws SourceException {
-        final Queue<Source<T>> sourceQueue = new ArrayDeque<>(sources);
+        final Queue<S> sourceQueue = new ArrayDeque<>(sources);
         return new Iterable<T>() {
 
             @Override

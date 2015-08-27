@@ -23,7 +23,7 @@ import java.util.*;
  *
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class JsonConverter implements Converter<JsonNode> {
+public class JsonConverter implements Converter<JsonNode, JsonNode> {
 
     private static final Logger logger = LoggerFactory.getLogger(JsonConverter.class);
 
