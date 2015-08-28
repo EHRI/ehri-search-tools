@@ -26,7 +26,7 @@ public class MultiSourceTest {
         }
 
         @Override
-        public Iterable<String> getIterable() throws SourceException {
+        public Iterable<String> iterable() throws SourceException {
             return data;
         }
 
@@ -36,7 +36,7 @@ public class MultiSourceTest {
         }
 
         @Override
-        public void finish() throws SourceException {
+        public void close() throws SourceException {
             finished = true;
         }
     }
@@ -47,9 +47,9 @@ public class MultiSourceTest {
         TestSource src2 = new TestSource("d", "e", "f");
         TestSource src3 = new TestSource("g", "h", "i");
 
-        MultiSource<String> multiSource = new MultiSource<>(
-                Lists.<Source<String>>newArrayList(src1, src2, src3));
-        Iterable<String> iterable = multiSource.getIterable();
+        MultiSource<String, TestSource> multiSource = new MultiSource<>(
+                Lists.newArrayList(src1, src2, src3));
+        Iterable<String> iterable = multiSource.iterable();
         Iterator<String> iterator = iterable.iterator();
         assertEquals("a", iterator.next());
         assertEquals("b", iterator.next());

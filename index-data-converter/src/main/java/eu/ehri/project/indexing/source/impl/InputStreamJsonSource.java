@@ -26,7 +26,7 @@ public class InputStreamJsonSource implements Source<JsonNode> {
         this.ios = ios;
     }
 
-    public void finish() throws SourceException {
+    public void close() throws SourceException {
         finished = true;
         if (jsonParser != null) {
             try {
@@ -38,7 +38,7 @@ public class InputStreamJsonSource implements Source<JsonNode> {
     }
 
     @Override
-    public Iterable<JsonNode> getIterable() throws SourceException {
+    public Iterable<JsonNode> iterable() throws SourceException {
         try {
             jsonParser = jsonFactory.createParser(ios);
             JsonToken firstToken = jsonParser.nextValue();

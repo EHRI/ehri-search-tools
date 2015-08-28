@@ -15,29 +15,29 @@ import java.util.Queue;
  *
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class MultiSource<T> implements Source<T> {
+public class MultiSource<T, S extends Source<? extends T>> implements Source<T> {
 
     private final static Logger logger = LoggerFactory.getLogger(MultiSource.class);
 
-    private final List<Source<T>> sources;
+    private final List<S> sources;
 
     private boolean finished = false;
-    private Source<T> currentSource = null;
-    private Iterator<T> currentSourceIterator = null;
+    private S currentSource = null;
+    private Iterator<? extends T> currentSourceIterator = null;
 
-    public MultiSource(List<Source<T>> sources) {
+    public MultiSource(List<S> sources) {
         this.sources = sources;
     }
 
     @Override
-    public void finish() throws SourceException {
+    public void close() throws SourceException {
         finished = true;
         logger.trace("Finish");
     }
 
     @Override
-    public Iterable<T> getIterable() throws SourceException {
-        final Queue<Source<T>> sourceQueue = new ArrayDeque<>(sources);
+    public Iterable<T> iterable() throws SourceException {
+        final Queue<S> sourceQueue = new ArrayDeque<>(sources);
         return new Iterable<T>() {
 
             @Override
@@ -47,16 +47,16 @@ public class MultiSource<T> implements Source<T> {
                         try {
                             while (!sourceQueue.isEmpty()) {
                                 if (currentSource != null) {
-                                    currentSource.finish();
+                                    currentSource.close();
                                 }
                                 currentSource = sourceQueue.remove();
-                                currentSourceIterator = currentSource.getIterable().iterator();
+                                currentSourceIterator = currentSource.iterable().iterator();
                                 if (currentSourceIterator.hasNext()) {
                                     return true;
                                 }
                             }
                             if (currentSource != null) {
-                                currentSource.finish();
+                                currentSource.close();
                             }
                             return false;
                         } catch (SourceException e) {

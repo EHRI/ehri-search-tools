@@ -3,7 +3,7 @@ package eu.ehri.project.indexing.source;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public interface Source<T> {
+public interface Source<T> extends AutoCloseable {
     class SourceException extends Exception {
         public SourceException(String message) {
             super(message);
@@ -14,9 +14,9 @@ public interface Source<T> {
         }
     }
 
-    Iterable<T> getIterable() throws SourceException;
+    Iterable<T> iterable() throws SourceException;
 
     boolean isFinished();
 
-    void finish() throws SourceException;
+    void close() throws SourceException;
 }

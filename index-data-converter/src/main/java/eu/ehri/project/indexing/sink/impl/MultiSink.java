@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class MultiSink<T, W extends Sink<T>> implements Sink<T> {
+public class MultiSink<T, W extends Sink<? super T>> implements Sink<T> {
 
     private final List<W> writers;
 
@@ -24,9 +24,9 @@ public class MultiSink<T, W extends Sink<T>> implements Sink<T> {
         }
     }
 
-    public void finish() throws SinkException {
+    public void close() throws SinkException {
         for (W writer : writers) {
-            writer.finish();
+            writer.close();
         }
     }
 }

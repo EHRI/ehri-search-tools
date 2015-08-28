@@ -6,7 +6,7 @@ import eu.ehri.project.indexing.sink.Sink;
 import java.util.List;
 
 /**
- * Run a function on write and finish.
+ * Run a function on write and close.
  *
  * @author Mike Bryant (http://github.com/mikesname)
  */
@@ -34,7 +34,7 @@ public class CallbackSink<T> implements Sink<T> {
         }
     }
 
-    public void finish() {
+    public void close() {
         for (Callback<T> cb : callbacks) {
             cb.finish();
         }

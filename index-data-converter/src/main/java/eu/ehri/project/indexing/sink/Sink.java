@@ -3,7 +3,7 @@ package eu.ehri.project.indexing.sink;
 /**
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public interface Sink<T> {
+public interface Sink<T> extends AutoCloseable {
 
     class SinkException extends Exception {
         public SinkException(String message, Exception e) {
@@ -13,5 +13,5 @@ public interface Sink<T> {
 
     void write(T t) throws SinkException;
 
-    void finish() throws SinkException;
+    void close() throws SinkException;
 }
