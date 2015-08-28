@@ -42,7 +42,7 @@ import java.util.Properties;
  *
  * @author Mike Bryant (http://github.com/mikesname)
  */
-public class IndexHelper extends Pipeline<JsonNode, JsonNode> {
+public class IndexHelper {
 
     /**
      * Default service end points.
@@ -68,10 +68,6 @@ public class IndexHelper extends Pipeline<JsonNode, JsonNode> {
         public int getCode() {
             return code;
         }
-    }
-
-    private IndexHelper(Builder<JsonNode, JsonNode> builder) {
-        super(builder);
     }
 
     /**
@@ -210,7 +206,7 @@ public class IndexHelper extends Pipeline<JsonNode, JsonNode> {
         String solrUrl = cmd.getOptionValue(SOLR_URL, DEFAULT_SOLR_URL);
         Properties restHeaders = cmd.getOptionProperties(HEADERS);
 
-        IndexHelper.Builder<JsonNode, JsonNode> builder = new IndexHelper.Builder<>();
+        Pipeline.Builder<JsonNode, JsonNode> builder = new Pipeline.Builder<>();
 
         // Initialize the index...
         Index index = new SolrIndex(solrUrl);
