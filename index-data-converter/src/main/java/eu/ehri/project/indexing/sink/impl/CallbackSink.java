@@ -6,7 +6,8 @@ import eu.ehri.project.indexing.sink.Sink;
 import java.util.List;
 
 /**
- * Run a function on write and close.
+ * A sink that runs the given functions when it writes
+ * and item and when it finishes.
  *
  * @author Mike Bryant (http://github.com/mikesname)
  */

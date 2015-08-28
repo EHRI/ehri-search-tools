@@ -34,14 +34,11 @@ import java.util.List;
 public class SolrIndex implements Index {
 
     private static final Logger logger = LoggerFactory.getLogger(SolrIndex.class);
-
     private static final Client client = ApacheHttpClient.create(getClientConfig());
     private static final JsonFactory jsonFactory = new JsonFactory();
 
-    /**
-     * Fields.
-     */
     private final String url;
+
     /**
      * Constructor.
      *
@@ -51,9 +48,7 @@ public class SolrIndex implements Index {
         this.url = url;
     }
 
-    /**
-     * Commit the Solr updates.
-     */
+    @Override
     public void commit() {
         logger.debug("Committing solr index...");
         WebResource commitResource = client.resource(
@@ -72,63 +67,21 @@ public class SolrIndex implements Index {
         }
     }
 
-    /**
-     * Get the default client configuration. In order to prevent
-     * OutOfMemory Heap-space errors when POSTing large files to Solr
-     * we have to enable chunked encoding, which is done by setting the
-     * PROPERTY_CHUNKED_ENCODING_SIZE to a non-null value, with 0 indicating
-     * the default value.
-     */
-    private static ClientConfig getClientConfig() {
-        ClientConfig config = new DefaultClientConfig();
-        config.getProperties().put(
-                DefaultApacheHttpClientConfig.PROPERTY_CHUNKED_ENCODING_SIZE, 0);
-        return config;
-    }
-
-    /**
-     * Delete everything in the index.
-     *
-     * @param commit Whether or not to commit the action.
-     * @throws IndexException
-     */
     @Override
     public void deleteAll(boolean commit) throws IndexException {
         deleteByQuery("id:*", commit);
     }
 
-    /**
-     * Delete an item with the given ID or itemId.
-     *
-     * @param id     The item's id or itemId.
-     * @param commit Whether or not to commit the action.
-     * @throws IndexException
-     */
     @Override
     public void deleteItem(String id, boolean commit) throws IndexException {
         deleteByQuery(idMatchQuery(id), commit);
     }
 
-    /**
-     * Delete all items with a given field value.
-     *
-     * @param field  The field name
-     * @param value  The field value
-     * @param commit Whether or not to commit the action.
-     * @throws IndexException
-     */
     @Override
     public void deleteByFieldValue(String field, String value, boolean commit) throws IndexException {
         deleteByQuery(keyValueQuery(field, value), commit);
     }
 
-    /**
-     * Delete items identified by a set of ids or itemIds.
-     *
-     * @param ids    A set of ids matching items to delete.
-     * @param commit Whether or not to commit the action.
-     * @throws IndexException
-     */
     @Override
     public void deleteItems(List<String> ids, boolean commit) throws IndexException {
         List<String> queries = Lists.newArrayList();
@@ -138,25 +91,11 @@ public class SolrIndex implements Index {
         deleteByQueryList(queries, commit);
     }
 
-    /**
-     * Delete items belong to a given type.
-     *
-     * @param type   The type of objects to deleteByQuery.
-     * @param commit Whether or not to commit the action.
-     * @throws IndexException
-     */
     @Override
     public void deleteType(String type, boolean commit) throws IndexException {
         deleteByQuery("type:" + type, commit);
     }
 
-    /**
-     * Delete items belonging to a list of types.
-     *
-     * @param types  The types of objects to deleteByQuery.
-     * @param commit Whether or not to commit the action.
-     * @throws IndexException
-     */
     @Override
     public void deleteTypes(List<String> types, boolean commit) throws IndexException {
         List<String> queries = Lists.newArrayList();
@@ -166,12 +105,7 @@ public class SolrIndex implements Index {
         deleteByQueryList(queries, commit);
     }
 
-    /**
-     * Index some JSON data.
-     *
-     * @param ios      The input stream containing update JSON
-     * @param doCommit Whether or not to commit the update
-     */
+    @Override
     public void update(InputStream ios, boolean doCommit) {
         WebResource resource = client.resource(
                 UriBuilder.fromPath(url).segment("update").build());
@@ -189,52 +123,42 @@ public class SolrIndex implements Index {
         }
     }
 
-    /**
-     * Generate a Solr query matching all items with the given field value,
-     * i.e. "heldBy:us-005248"
-     *
-     * @param field The field key
-     * @param value The field value
-     * @return The key/value formatted as a Solr query
-     */
+    // Helpers
+
+    private static ClientConfig getClientConfig() {
+        // Get the default client configuration. In order to prevent
+        // OutOfMemory Heap-space errors when POSTing large files to Solr
+        // we have to enable chunked encoding, which is done by setting the
+        // PROPERTY_CHUNKED_ENCODING_SIZE to a non-null value, with 0 indicating
+        // the default value.
+        ClientConfig config = new DefaultClientConfig();
+        config.getProperties().put(
+                DefaultApacheHttpClientConfig.PROPERTY_CHUNKED_ENCODING_SIZE, 0);
+        return config;
+    }
+
     private String keyValueQuery(String field, String value) {
+        // Generate a Solr query matching all items with the given field value,
+        // i.e. "heldBy:us-005248"
         return String.format("%s:\"%s\"", field, value);
     }
 
-    /**
-     * Generate a Solr query matching EITHER the id or the itemId. This is
-     * because item's in the EHRI index are always grouped by the item id
-     * and so subject to deletion if the itemId is given.
-     *
-     * @param id The item id or itemId to deleteByQuery.
-     * @return A query matching the given item(s)
-     */
     private String idMatchQuery(String id) {
+        // Generate a Solr query matching EITHER the id or the itemId. This is
+        // because item's in the EHRI index are always grouped by the item id
+        // and so subject to deletion if the itemId is given.
         return String.format("id:\"%s\" OR itemId:\"%s\"", id, id);
     }
 
-    /**
-     * Delete a single item given a query.
-     *
-     * @param query  The query matching the item to deleteByQuery.
-     * @param commit Whether or not to commit the action.
-     * @throws IndexException
-     */
     private void deleteByQuery(String query, boolean commit) throws IndexException {
         deleteByQueryList(Lists.newArrayList(query), commit);
     }
 
-    /**
-     * Generate an update statement containing one or more deleteByQuery queries.
-     * Note that there can be several deleteByQuery queries in the update object,
-     * which is valid JSON, see:
-     * http://wiki.apache.org/solr/UpdateJSON
-     *
-     * @param queries Queries matching objects to deleteByQuery.
-     * @param commit  Whether or not to commit the action.
-     * @throws IndexException
-     */
     private void deleteByQueryList(List<String> queries, boolean commit) throws IndexException {
+        // Generate an update statement containing one or more deleteByQuery queries.
+        // Note that there can be several deleteByQuery queries in the update object,
+        // which is valid JSON, see:
+        // http://wiki.apache.org/solr/UpdateJSON
         // See Solr update syntax with duplicate object keys:
         StringWriter stringWriter = new StringWriter();
         try {

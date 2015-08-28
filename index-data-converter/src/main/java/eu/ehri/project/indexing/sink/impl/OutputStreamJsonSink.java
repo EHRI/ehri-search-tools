@@ -12,6 +12,8 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 
 /**
+ * A sink that writes its JSON data to the given output stream.
+ *
  * @author Mike Bryant (http://github.com/mikesname)
  */
 public class OutputStreamJsonSink implements Sink<JsonNode> {

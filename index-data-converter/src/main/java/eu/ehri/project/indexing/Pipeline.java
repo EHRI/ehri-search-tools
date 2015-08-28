@@ -78,23 +78,32 @@ public class Pipeline<S, E> {
             }
         }
 
+        /**
+         * Build a pipeline with the given sources, converters,
+         * and sinks.
+         *
+         * @return a new pipeline
+         * @throws IllegalStateException if there are no converters provided
+         */
         public Pipeline<S, E> build() {
-            return new Pipeline<>(this);
+            return new Pipeline<>(getSource(), getConverter(), getSink());
         }
     }
 
-    protected Pipeline(Builder<S, E> builder) {
-        this.writer = builder.getSink();
-        this.source = builder.getSource();
-        this.converter = builder.getConverter();
+    protected Pipeline(Source<? extends S> source,
+                       Converter<S, ? extends E> converter,
+                       Sink<? super E> sink) {
+        this.writer = sink;
+        this.source = source;
+        this.converter = converter;
     }
 
     /**
      * Initiate the pipeline.
      *
-     * @throws Source.SourceException
-     * @throws Sink.SinkException
-     * @throws Converter.ConverterException
+     * @throws eu.ehri.project.indexing.source.Source.SourceException when a source errors
+     * @throws eu.ehri.project.indexing.sink.Sink.SinkException when a sink errors
+     * @throws eu.ehri.project.indexing.converter.Converter.ConverterException when a converter errors
      */
     public void run() throws Source.SourceException, Sink.SinkException, Converter.ConverterException {
         try {

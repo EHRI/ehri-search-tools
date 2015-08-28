@@ -34,7 +34,7 @@ import java.util.Properties;
 
 /**
  * Pull data from the EHRI REST API and index it in Solr.
- * <p/>
+ * <p>
  * Designed allow very flexible input/output options without
  * incurring excessive complexity in the main logic. Orchestrates
  * a source, a converter, and one or more sink objects to get some JSON
@@ -44,13 +44,10 @@ import java.util.Properties;
  */
 public class IndexHelper {
 
-    /**
-     * Default service end points.
-     * <p/>
-     * TODO: Store these in a properties file?
-     */
-    private static final String DEFAULT_SOLR_URL = "http://localhost:8983/solr/portal";
-    private static final String DEFAULT_EHRI_URL = "http://localhost:7474/ehri";
+    // Default service end points.
+    // TODO: Store these in a properties file?
+    public static final String DEFAULT_SOLR_URL = "http://localhost:8983/solr/portal";
+    public static final String DEFAULT_EHRI_URL = "http://localhost:7474/ehri";
 
     enum ErrCodes {
         BAD_SOURCE_ERR(3),
@@ -71,10 +68,17 @@ public class IndexHelper {
     }
 
     /**
-     * Turn a list of specs into a set of EHRI REST URLs to download
-     * JSON lists from.
-     * <p/>
-     * This is gross and subject to change.
+     * Turn a list of specs into a set of EHRI web service URLs to download
+     * JSON data from.
+     * <p>
+     * Specs can be:
+     * <ul>
+     * <li>An item class name, e.g. &quot;documentaryUnit&quot;</li>
+     * <li>Item ids prefixed with an &quot;@&quot;</li>
+     * <li>An item type <i>and</i> ID, which denotes downloading
+     * the contents of that item, e.g. it's child items, and
+     * their descendants.</li>
+     * </ul>
      *
      * @param serviceUrl The base REST URL
      * @param specs      A list of specs

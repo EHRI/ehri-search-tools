@@ -24,7 +24,6 @@ public interface Index {
      * Delete everything in the index.
      *
      * @param commit Whether or not to commit the action.
-     * @throws IndexException
      */
     void deleteAll(boolean commit) throws IndexException;
 
@@ -33,7 +32,6 @@ public interface Index {
      *
      * @param id     The item's id or itemId.
      * @param commit Whether or not to commit the action.
-     * @throws IndexException
      */
     void deleteItem(String id, boolean commit) throws IndexException;
 
@@ -43,7 +41,6 @@ public interface Index {
      * @param field    The field name
      * @param value  The field value
      * @param commit Whether or not to commit the action.
-     * @throws IndexException
      */
     void deleteByFieldValue(String field, String value, boolean commit) throws IndexException;
 
@@ -52,7 +49,6 @@ public interface Index {
      *
      * @param ids    A set of ids matching items to delete.
      * @param commit Whether or not to commit the action.
-     * @throws IndexException
      */
     void deleteItems(List<String> ids, boolean commit) throws IndexException;
 
@@ -61,7 +57,6 @@ public interface Index {
      *
      * @param type   The type of objects to deleteByQuery.
      * @param commit Whether or not to commit the action.
-     * @throws IndexException
      */
     void deleteType(String type, boolean commit) throws IndexException;
 
@@ -70,7 +65,6 @@ public interface Index {
      *
      * @param types  The types of objects to deleteByQuery.
      * @param commit Whether or not to commit the action.
-     * @throws IndexException
      */
     void deleteTypes(List<String> types, boolean commit) throws IndexException;
 
