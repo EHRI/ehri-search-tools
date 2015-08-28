@@ -26,15 +26,15 @@ public class FileJsonSourceTest {
     public void testGetIterable() throws Exception {
         FileJsonSource source = new FileJsonSource(getResourcePath());
         try {
-            assertEquals(1, Iterables.size(source.getIterable()));
+            assertEquals(1, Iterables.size(source.iterable()));
         } finally {
-            source.finish();
+            source.close();
         }
     }
 
     @Test(expected = Source.SourceException.class)
     public void testGetIterableWithBadSource() throws Exception {
         FileJsonSource source = new FileJsonSource("DOES_NOT_EXIST");
-        assertEquals(1, Iterables.size(source.getIterable()));
+        assertEquals(1, Iterables.size(source.iterable()));
     }
 }

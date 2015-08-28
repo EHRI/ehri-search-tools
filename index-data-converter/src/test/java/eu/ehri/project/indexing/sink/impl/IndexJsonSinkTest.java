@@ -14,7 +14,7 @@ public class IndexJsonSinkTest {
         IndexJsonSink sink = new IndexJsonSink(dummy);
         sink.write(new TextNode("foo"));
         sink.write(new TextNode("bar"));
-        sink.finish();
+        sink.close();
         assertEquals("[\"foo\",\"bar\"]", dummy.getBuffer());
     }
 }

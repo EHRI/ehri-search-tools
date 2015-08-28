@@ -7,7 +7,7 @@
     <groupId>ehri-project</groupId>
     <artifactId>search-tools</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.2-SNAPSHOT</version>
     <modules>
         <module>solr-config</module>
         <module>index-data-converter</module>
@@ -67,6 +67,7 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.3</version>
                 <configuration>
                     <source>1.7</source>
                     <target>1.7</target>

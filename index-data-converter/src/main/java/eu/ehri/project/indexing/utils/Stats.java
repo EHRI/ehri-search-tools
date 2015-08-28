@@ -22,4 +22,8 @@ public class Stats {
         pw.println("Items indexed: " + itemCount);
         pw.println("Items per second: " + (itemCount / duration));
     }
+
+    public int getCount() {
+        return itemCount;
+    }
 }

@@ -49,8 +49,8 @@ public class IndexJsonSink implements Sink<JsonNode> {
         npw.write(node);
     }
 
-    public void finish() throws SinkException {
-        npw.finish();
+    public void close() throws SinkException {
+        npw.close();
         final AtomicBoolean done = new AtomicBoolean(false);
 
         new Thread() {

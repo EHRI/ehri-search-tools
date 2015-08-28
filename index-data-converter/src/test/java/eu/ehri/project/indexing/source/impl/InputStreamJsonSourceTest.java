@@ -59,9 +59,9 @@ public class InputStreamJsonSourceTest {
     private List<JsonNode> listFromStream(InputStream stream) throws Exception {
         Source<JsonNode> source = new InputStreamJsonSource(stream);
         try {
-            return Lists.newArrayList(source.getIterable());
+            return Lists.newArrayList(source.iterable());
         } finally {
-            source.finish();
+            source.close();
             stream.close();
             assertTrue(source.isFinished());
         }

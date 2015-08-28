@@ -12,11 +12,11 @@ import java.util.Iterator;
  */
 public class NoopSource<T> implements Source<T> {
     @Override
-    public void finish() throws SourceException {
+    public void close() throws SourceException {
     }
 
     @Override
-    public Iterable<T> getIterable() throws SourceException {
+    public Iterable<T> iterable() throws SourceException {
         return new Iterable<T>() {
             @Override
             public Iterator<T> iterator() {

@@ -30,10 +30,10 @@ public class WebJsonSource implements Source<JsonNode> {
         this.headers = headers;
     }
 
-    public void finish() throws SourceException {
+    public void close() throws SourceException {
         if (!finished) {
             if (ios != null) {
-                ios.finish();
+                ios.close();
                 ios = null;
             }
             if (response != null) {
@@ -45,7 +45,7 @@ public class WebJsonSource implements Source<JsonNode> {
     }
 
     @Override
-    public Iterable<JsonNode> getIterable() throws SourceException {
+    public Iterable<JsonNode> iterable() throws SourceException {
         response = getResponse();
         checkResponse(response);
         InputStream entityInputStream = response.getEntityInputStream();
@@ -53,7 +53,7 @@ public class WebJsonSource implements Source<JsonNode> {
             throw new SourceException("Entity stream is null for url: " + url);
         }
         ios = new InputStreamJsonSource(entityInputStream);
-        return ios.getIterable();
+        return ios.iterable();
     }
 
     @Override

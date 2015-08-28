@@ -23,10 +23,10 @@ public class FileJsonSource implements Source<JsonNode> {
         this.fileName = fileName;
     }
 
-    public void finish() throws SourceException {
+    public void close() throws SourceException {
         finished = true;
         if (ios != null) {
-            ios.finish();
+            ios.close();
         }
         try {
             if (fis != null) {
@@ -38,7 +38,7 @@ public class FileJsonSource implements Source<JsonNode> {
     }
 
     @Override
-    public Iterable<JsonNode> getIterable() throws SourceException {
+    public Iterable<JsonNode> iterable() throws SourceException {
         try {
             File file = new File(fileName);
             if (!(file.exists() && file.isFile())) {
@@ -50,7 +50,7 @@ public class FileJsonSource implements Source<JsonNode> {
         } catch (FileNotFoundException e) {
             throw new SourceException("File not found: " + fileName, e);
         }
-        return ios.getIterable();
+        return ios.iterable();
     }
 
     @Override
