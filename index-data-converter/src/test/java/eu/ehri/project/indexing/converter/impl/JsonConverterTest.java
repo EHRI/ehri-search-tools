@@ -89,11 +89,9 @@ public class JsonConverterTest {
     public void setUp() throws Exception {
         for (String testResource : inputResources) {
             InputStream stream = getClass().getClassLoader().getResourceAsStream(testResource);
-            Source<JsonNode> source = new InputStreamJsonSource(stream);
-            try {
+            try (Source<JsonNode> source = new InputStreamJsonSource(stream)) {
                 inputs.add(Iterables.get(source.iterable(), 0));
             } finally {
-                source.close();
                 stream.close();
             }
         }
