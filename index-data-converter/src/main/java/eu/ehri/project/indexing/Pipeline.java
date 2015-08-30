@@ -22,14 +22,14 @@ public class Pipeline<S, E> {
 
     protected final Source<? extends S> source;
     protected final Sink<? super E> writer;
-    protected final Converter<S, ? extends E> converter;
+    protected final Converter< S, ? extends E> converter;
 
     /**
      * Pipeline builder.
      */
     public static class Builder<S, E> {
         private final List<Source<? extends S>> sources = Lists.newArrayList();
-        private final List<Converter<S, ? extends E>> converters = Lists.newArrayList();
+        private final List<Converter< S, ? extends E>> converters = Lists.newArrayList();
         private final List<Sink<? super E>> writers = Lists.newArrayList();
 
         public Builder<S, E> addSink(Sink<E> writer) {

@@ -9,6 +9,10 @@ import eu.ehri.project.indexing.converter.Converter;
 public class StringToInteger implements Converter<String, Integer> {
     @Override
     public Iterable<Integer> convert(String t) throws ConverterException {
-        return Lists.newArrayList(Integer.valueOf(t));
+        try {
+            return Lists.newArrayList(Integer.valueOf(t));
+        } catch (NumberFormatException e) {
+            throw new ConverterException("Bad conversion", e);
+        }
     }
 }
