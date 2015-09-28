@@ -102,7 +102,7 @@ public class IndexHelper {
                 ids.add(spec.substring(1));
             } else {
                 URI url = UriBuilder.fromPath(serviceUrl)
-                        .segment(spec).segment("list")
+                        .segment(spec)
                         .queryParam("limit", -1).build();
                 urls.add(url);
             }

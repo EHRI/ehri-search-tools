@@ -51,9 +51,9 @@ public class IndexHelperTest {
         String base = IndexHelper.DEFAULT_EHRI_URL;
 
         // Item classes, where the classes are "foo" and "bar"
-        assertEquals(new URI(base + "/foo/list?limit=-1"),
+        assertEquals(new URI(base + "/foo?limit=-1"),
                 IndexHelper.urlsFromSpecs(base, "foo", "bar").get(0));
-        assertEquals(new URI(base + "/bar/list?limit=-1"),
+        assertEquals(new URI(base + "/bar?limit=-1"),
                 IndexHelper.urlsFromSpecs(base, "foo", "bar").get(1));
 
         // Single items, where the item IDs are "foo" and "bar'
