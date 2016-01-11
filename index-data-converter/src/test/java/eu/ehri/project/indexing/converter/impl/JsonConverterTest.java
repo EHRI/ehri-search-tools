@@ -36,21 +36,21 @@ public class JsonConverterTest {
             ImmutableMap.<String,Object>of(
                     "id", "eb747649-4f7b-4874-98cf-f236d2b5fa1d",
                     "itemId", "003348-wl1729",
-                    "type", "documentaryUnit",
+                    "type", "DocumentaryUnit",
                     "name", "Herta Berg: family recipe note books",
                     "isParent", false
             ),
             ImmutableMap.<String,Object>of(
                     "id", "be-002112-ca-eng",
                     "itemId", "be-002112-ca",
-                    "type", "documentaryUnit",
+                    "type", "DocumentaryUnit",
                     "otherFormsOfName", Lists.newArrayList("CEGESOMA Photographic Archives"),
                     "isParent", true
             ),
             ImmutableMap.<String,Object>of(
                     "id", "mike",
                     "itemId", "mike",
-                    "type", "userProfile",
+                    "type", "UserProfile",
                     "name", "Mike",
                     "isParent", false
             ),
@@ -58,7 +58,7 @@ public class JsonConverterTest {
                     "id", "380f80b0-7490-11e4-813b-a3ef93d0d496",
                     "annotatorId", "mike",
                     "annotatorName", "Mike",
-                    "type", "annotation"
+                    "type", "Annotation"
             ),
             ImmutableMap.<String,Object>of(
                     "id", "hierarchy-test",

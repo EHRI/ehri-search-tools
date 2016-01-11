@@ -64,7 +64,7 @@ public class SearchTest extends AbstractSolrTest {
         // repository. Because of this a case-insensitive altName field was
         // introduced to match alternative names such as acronyms exactly,
         // without stop word filtering.
-        String result = runSearch("dans", "fq", "type:repository");
+        String result = runSearch("dans", "fq", "type:Repository");
         //System.out.println(result);
         with(result)
                 .assertThat("$.grouped.itemId.matches", equalTo(2));

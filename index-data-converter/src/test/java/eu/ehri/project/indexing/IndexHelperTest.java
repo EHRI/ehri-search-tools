@@ -97,7 +97,7 @@ public class IndexHelperTest {
 
         // One item converted, plus three lines stats
         assertEquals(4, info.size());
-        assertEquals("documentaryUnit -> eb747649-4f7b-4874-98cf-f236d2b5fa1d",
+        assertEquals("DocumentaryUnit -> eb747649-4f7b-4874-98cf-f236d2b5fa1d",
                 info.get(0));
         assertEquals(info.get(2), "Items indexed: " + node.size());
     }

@@ -31,7 +31,7 @@
                 },
                 "id": "be-002112-eng",
                 "relationships": {},
-                "type": "repositoryDescription"
+                "type": "RepositoryDescription"
               }
             ],
             "hasCountry": [
@@ -44,11 +44,11 @@
                   "childCount": 97
                 },
                 "relationships": {},
-                "type": "country"
+                "type": "Country"
               }
             ]
           },
-          "type": "repository"
+          "type": "Repository"
         }
       ],
       "describes": [
@@ -67,7 +67,7 @@
             "gid": 354160
           },
           "relationships": {},
-          "type": "documentDescription"
+          "type": "DocumentaryUnitDescription"
         },
         {
           "data": {
@@ -83,7 +83,7 @@
             "gid": 354161
           },
           "relationships": {},
-          "type": "documentDescription"
+          "type": "DocumentaryUnitDescription"
         }
       ],
       "lifecycleEvent": [
@@ -98,10 +98,10 @@
           },
           "relationships": {
           },
-          "type": "systemEvent"
+          "type": "SystemEvent"
         }
       ]
     },
-    "type": "documentaryUnit"
+    "type": "DocumentaryUnit"
   }
 ]

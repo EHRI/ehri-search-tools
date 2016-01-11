@@ -19,7 +19,7 @@
                         "childCount": 80
                       },
                       "id": "portal",
-                      "type": "group"
+                      "type": "Group"
                     },
                     {
                       "relationships": {
@@ -32,7 +32,7 @@
                         "childCount": 6
                       },
                       "id": "admin",
-                      "type": "group"
+                      "type": "Group"
                     }
                   ]
                 },
@@ -46,7 +46,7 @@
                   "following": 14
                 },
                 "id": "mike",
-                "type": "userProfile"
+                "type": "UserProfile"
               }
             ]
           },
@@ -58,7 +58,7 @@
             "childCount": 2
           },
           "id": "c3b350b0-2480-11e4-b815-c7f30284d1a0",
-          "type": "systemEvent"
+          "type": "SystemEvent"
         }
       ],
       "belongsTo": [
@@ -73,7 +73,7 @@
             "childCount": 80
           },
           "id": "portal",
-          "type": "group"
+          "type": "Group"
         },
         {
           "relationships": {
@@ -86,13 +86,13 @@
             "childCount": 6
           },
           "id": "admin",
-          "type": "group"
+          "type": "Group"
         }
       ]
     },
     "data": {
       "identifier": "mike",
-      "languages": [ "en" ],
+      "languages": [ "eng" ],
       "name": "Mike",
       "location": "London"
     },
@@ -103,6 +103,6 @@
       "following": 14
     },
     "id": "mike",
-    "type": "userProfile"
+    "type": "UserProfile"
   }
 ]

@@ -56,7 +56,7 @@ The default URIs for Solr and the REST service are:
 Index documentary unit and repository types from default service endpoints:
 
 ```
-java -jar index-data-converter.jar --index documentaryUnit repository
+java -jar index-data-converter.jar --index DocumentaryUnit Repository
 ```
 
 Index individual item `us-005578`:
@@ -68,13 +68,13 @@ java -jar index-data-converter.jar --index @us-005578
 Pretty print (to stdout) the converted JSON output for all documentary units, but don't index:
 
 ```
-java -jar index-data-converter.jar --pretty documentaryUnit
+java -jar index-data-converter.jar --pretty DocumentaryUnit
 ```
 
 Pretty print (to stdout) the raw REST service output:
 
 ```
-java -jar index-data-converter.jar --pretty --noconvert documentaryUnit
+java -jar index-data-converter.jar --pretty --noconvert DocumentaryUnit
 ```
 
 Clear the entire index:

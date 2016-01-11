@@ -73,7 +73,7 @@ public class IndexHelper {
      * <p>
      * Specs can be:
      * <ul>
-     * <li>An item class name, e.g. &quot;documentaryUnit&quot;</li>
+     * <li>An item class name, e.g. &quot;DocumentaryUnit&quot;</li>
      * <li>Item ids prefixed with an &quot;@&quot;</li>
      * <li>An item type <i>and</i> ID, which denotes downloading
      * the contents of that item, e.g. it's child items, and
