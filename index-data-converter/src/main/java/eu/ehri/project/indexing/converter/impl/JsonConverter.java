@@ -117,7 +117,7 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
         // Matching paths in the 'item' node overrides that of the description,
         // though in practice there should almost never be any collisions. The
         // exceptions are the 'id', 'itemId' and 'type' fields. In these cases
-        // we use the item's type (i.e. documentaryUnit instead of documentDescription)
+        // we use the item's type (i.e. DocumentaryUnit instead of DocumentaryUnitDescription)
         // but the description's id. We therefore only have to prevent the description's
         // 'id' field being overwritten when we merge the item and description data.
         Map<String, Object> descriptionData = getData(description);
@@ -285,7 +285,7 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
         }
 
         // HACK: Set country name to name field on country type
-        if (data.containsKey("type") && data.get("type").equals("country")) {
+        if (data.containsKey("type") && data.get("type").equals("Country")) {
             data.put("name", countryLookup.get(id));
         }
 

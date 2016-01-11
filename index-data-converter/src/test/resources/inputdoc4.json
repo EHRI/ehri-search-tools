@@ -6,13 +6,13 @@
       "body": "An insightful comment",
       "isPromotable": true
     },
-    "type": "annotation",
+    "type": "Annotation",
     "relationships": {
       "annotates": [
         {
           "id": "hu-002736-szemtanui-vallomasok-gyujtemenye-1945-2010-pih-i-m",
           "data": {"identifier": "PIH I-M"},
-          "type": "documentaryUnit",
+          "type": "DocumentaryUnit",
           "relationships": {
             "describes": [
               {
@@ -21,7 +21,7 @@
                   "languageCode": "eng",
                   "name": "Deportáltakat Gondozó Országos Bizottság (DEGOB)"
                 },
-                "type": "documentDescription",
+                "type": "DocumentaryUnitDescription",
                 "relationships": {}
               }
             ]
@@ -36,7 +36,7 @@
             "name": "Mike",
             "identifier": "mike"
           },
-          "type": "userProfile",
+          "type": "UserProfile",
           "meta": {"following": 1}
         }
       ]

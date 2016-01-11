@@ -14,7 +14,7 @@
                   "following": 1
                 },
                 "id": "user000080",
-                "type": "userProfile"
+                "type": "UserProfile"
               }
             ]
           },
@@ -26,7 +26,7 @@
             "childCount": 3
           },
           "id": "5d914e7b-ed83-11e4-82ee-a7bdbc5c4094",
-          "type": "systemEvent"
+          "type": "SystemEvent"
         }
       ],
       "inAuthoritativeSet": [
@@ -40,7 +40,7 @@
             "childCount": 2737
           },
           "id": "ehri-cb",
-          "type": "authoritativeSet"
+          "type": "AuthoritativeSet"
         }
       ],
       "describes": [
@@ -58,7 +58,7 @@
             "gid": 352760
           },
           "id": "ehri_cb-001676.eng",
-          "type": "historicalAgentDescription"
+          "type": "HistoricalAgentDescription"
         }
       ]
     },
@@ -71,6 +71,6 @@
       "gid": 352759
     },
     "id": "ehri-cb-001676",
-    "type": "historicalAgent"
+    "type": "HistoricalAgent"
   }
 ]

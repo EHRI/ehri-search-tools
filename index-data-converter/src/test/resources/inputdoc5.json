@@ -4,7 +4,7 @@
     "data": {
       "identifier": "hierarchy-test"
     },
-    "type": "documentaryUnit",
+    "type": "DocumentaryUnit",
     "relationships": {
       "childOf": [
         {
@@ -12,7 +12,7 @@
           "data": {
               "identifier": "hierarchy-test-p1"
           },
-          "type": "documentaryUnit",
+          "type": "DocumentaryUnit",
           "relationships": {
             "childOf": [
               {
@@ -20,7 +20,7 @@
                 "data": {
                   "identifier": "hierarchy-test-p2"
                 },
-                "type": "documentaryUnit",
+                "type": "DocumentaryUnit",
                 "relationships": {
                     "childOf": [
                         {
@@ -43,7 +43,7 @@
             "name": "Mike",
             "identifier": "mike"
           },
-          "type": "userProfile",
+          "type": "UserProfile",
           "meta": {"following": 1}
         }
       ]

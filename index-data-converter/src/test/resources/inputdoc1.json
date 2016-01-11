@@ -3,13 +3,13 @@
   "data" : {
     "identifier" : "WL1729"
   },
-  "type" : "documentaryUnit",
+  "type" : "DocumentaryUnit",
   "relationships" : {
     "describes" : [ {
       "id" : "eb747649-4f7b-4874-98cf-f236d2b5fa1d",
       "data" : {
         "acquisition" : "Donated by Paul Sinclair",
-        "languageCode" : "en",
+        "languageCode" : "eng",
         "unitDates" : "c1939",
         "languageOfMaterial" : "de",
         "conditionsOfAccessRestrict" : "See Wiener Library access conditions at: http://www.wienerlibrary.co.uk/usinglibrary/usingthelibrary.aspx",
@@ -18,7 +18,7 @@
         "scopeAndContent" : "This collection consists of two note books containing family recipes by Herta Berg, an Austrian Jew who sought refuge in the UK with her family in 1938. One of the books contains recipes from her sister Teta.",
         "biographicalHistory" : "Herta Berg (n???e Bass) emigrated to the UK from Vienna in 1938 with her husband Gustav Berg and daughter Susanne to flee anti-Jewish persecutions under the Nazi regime."
       },
-      "type" : "documentDescription",
+      "type" : "DocumentaryUnitDescription",
       "relationships" : {
         "relatesTo" : [ {
           "id" : "37c28588-6a22-42ea-ad40-70c3dcd7528b",
@@ -26,7 +26,7 @@
             "name" : "London",
             "type" : "placeAccess"
           },
-          "type" : "relationship",
+          "type" : "AccessPoint",
           "relationships" : { },
           "meta" : { }
         }, {
@@ -35,7 +35,7 @@
             "name" : "Vienna - Austria",
             "type" : "placeAccess"
           },
-          "type" : "relationship",
+          "type" : "AccessPoint",
           "relationships" : { },
           "meta" : { }
         }, {
@@ -44,7 +44,7 @@
             "name" : "Refugees",
             "type" : "subjectAccess"
           },
-          "type" : "relationship",
+          "type" : "AccessPoint",
           "relationships" : { },
           "meta" : { }
         }, {
@@ -53,7 +53,7 @@
             "name" : "Emigration",
             "type" : "subjectAccess"
           },
-          "type" : "relationship",
+          "type" : "AccessPoint",
           "relationships" : { },
           "meta" : { }
         }, {
@@ -62,7 +62,7 @@
             "name" : "Persecution",
             "type" : "subjectAccess"
           },
-          "type" : "relationship",
+          "type" : "AccessPoint",
           "relationships" : { },
           "meta" : { }
         }, {
@@ -71,7 +71,7 @@
             "name" : "Jewish",
             "type" : "subjectAccess"
           },
-          "type" : "relationship",
+          "type" : "AccessPoint",
           "relationships" : { },
           "meta" : { }
         }, {
@@ -80,7 +80,7 @@
             "name" : "Holocaust",
             "type" : "subjectAccess"
           },
-          "type" : "relationship",
+          "type" : "AccessPoint",
           "relationships" : { },
           "meta" : { }
         }, {
@@ -89,7 +89,7 @@
             "name" : "Migration",
             "type" : "subjectAccess"
           },
-          "type" : "relationship",
+          "type" : "AccessPoint",
           "relationships" : { },
           "meta" : { }
         }, {
@@ -98,7 +98,7 @@
             "name" : "Nazism",
             "type" : "subjectAccess"
           },
-          "type" : "relationship",
+          "type" : "AccessPoint",
           "relationships" : { },
           "meta" : { }
         }, {
@@ -107,7 +107,7 @@
             "name" : "Jews",
             "type" : "subjectAccess"
           },
-          "type" : "relationship",
+          "type" : "AccessPoint",
           "relationships" : { },
           "meta" : { }
         }, {
@@ -116,7 +116,7 @@
             "name" : "Berg, Susanne",
             "type" : "personAccess"
           },
-          "type" : "relationship",
+          "type" : "AccessPoint",
           "relationships" : { },
           "meta" : { }
         }, {
@@ -125,7 +125,7 @@
             "name" : "Berg, Gustav",
             "type" : "personAccess"
           },
-          "type" : "relationship",
+          "type" : "AccessPoint",
           "relationships" : { },
           "meta" : { }
         }, {
@@ -134,7 +134,7 @@
             "name" : "Berg, Herta. née Bass",
             "type" : "personAccess"
           },
-          "type" : "relationship",
+          "type" : "AccessPoint",
           "relationships" : { },
           "meta" : { }
         } ],
@@ -148,7 +148,7 @@
             "ead_archdesc_did_origination_" : "Berg - Herta - n???e Bass",
             "ead_archdesc_" : "fonds"
           },
-          "type" : "property",
+          "type" : "UnknownProperty",
           "relationships" : { },
           "meta" : { }
         } ]
@@ -160,15 +160,15 @@
       "data" : {
         "identifier" : "003348"
       },
-      "type" : "repository",
+      "type" : "Repository",
       "relationships" : {
         "describes" : [ {
           "id" : "f001cb9b-0af0-4088-bab9-5180ec39658f",
           "data" : {
-            "languageCode" : "en",
+            "languageCode" : "eng",
             "name" : "The Wiener Library for the Study of the Holocaust&Genocide"
           },
-          "type" : "repositoryDescription",
+          "type" : "RepositoryDescription",
           "relationships" : { },
           "meta" : { }
         } ],
@@ -177,7 +177,7 @@
           "data" : {
             "identifier" : "gb"
           },
-          "type" : "country",
+          "type" : "Country",
           "relationships" : { },
           "meta" : { }
         } ]
@@ -190,7 +190,7 @@
         "timestamp" : "2013-08-22T22:29:30.644+01:00",
         "eventType" : "ingest"
       },
-      "type" : "systemEvent",
+      "type" : "SystemEvent",
       "relationships" : {
         "hasActioner" : [ {
           "id" : "mike",
@@ -198,7 +198,7 @@
             "name" : "Mike Bryant",
             "identifier" : "mike"
           },
-          "type" : "userProfile",
+          "type" : "UserProfile",
           "relationships" : {
             "belongsTo" : [ {
               "id" : "admin",
@@ -206,7 +206,7 @@
                 "name" : "Administrators",
                 "identifier" : "admin"
               },
-              "type" : "group",
+              "type" : "Group",
               "relationships" : { },
               "meta" : { }
             } ]
