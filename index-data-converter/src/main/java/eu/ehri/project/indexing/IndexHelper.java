@@ -18,13 +18,7 @@ import eu.ehri.project.indexing.source.impl.FileJsonSource;
 import eu.ehri.project.indexing.source.impl.InputStreamJsonSource;
 import eu.ehri.project.indexing.source.impl.WebJsonSource;
 import eu.ehri.project.indexing.utils.Stats;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.GnuParser;
-import org.apache.commons.cli.HelpFormatter;
-import org.apache.commons.cli.OptionBuilder;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
+import org.apache.commons.cli.*;
 
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
@@ -34,7 +28,7 @@ import java.util.Properties;
 
 /**
  * Pull data from the EHRI REST API and index it in Solr.
- * <p>
+ * <p/>
  * Designed allow very flexible input/output options without
  * incurring excessive complexity in the main logic. Orchestrates
  * a source, a converter, and one or more sink objects to get some JSON
@@ -70,7 +64,7 @@ public class IndexHelper {
     /**
      * Turn a list of specs into a set of EHRI web service URLs to download
      * JSON data from.
-     * <p>
+     * <p/>
      * Specs can be:
      * <ul>
      * <li>An item class name, e.g. &quot;DocumentaryUnit&quot;</li>
@@ -146,11 +140,12 @@ public class IndexHelper {
                 "Print converted JSON to stdout. The default action in the omission of --index.");
         options.addOption("D", CLEAR_ALL, false,
                 "Clear entire index first (use with caution.)");
-        options.addOption(OptionBuilder.withLongOpt(CLEAR_KEY_VALUE)
-                .withArgName("key=value")
-                .hasArgs(2).withValueSeparator()
-                .withDescription("Clear items with a given key=value pair. Can be used multiple times.")
-                .create("K"));
+        options.addOption(Option.builder("K").longOpt(CLEAR_KEY_VALUE)
+                .argName("key=value")
+                .numberOfArgs(2)
+                .valueSeparator()
+                .desc("Clear items with a given key=value pair. Can be used multiple times.")
+                .build());
         options.addOption("c", CLEAR_ID, true,
                 "Clear an individual id. Can be used multiple times.");
         options.addOption("C", CLEAR_TYPE, true,
@@ -163,23 +158,25 @@ public class IndexHelper {
                 "Read input from a file instead of the REST service. Use '-' for stdin.");
         options.addOption("r", REST_URL, true,
                 "Base URL for EHRI REST service.");
-        options.addOption(OptionBuilder.withArgName("header=value")
-                .hasArgs(2).withValueSeparator()
-                .withDescription("Set a header for the REST service.")
-                .create(HEADERS));
+        options.addOption(Option.builder(HEADERS)
+                .argName("header=value")
+                .numberOfArgs(2)
+                .valueSeparator()
+                .desc("Set a header for the REST service.")
+                .build());
         options.addOption("i", INDEX, false,
                 "Index the data. This is NOT the default for safety reasons.");
         options.addOption("n", NO_CONVERT, false,
                 "Don't convert data to index format.");
         options.addOption("v", VERBOSE, false,
                 "Print individual item ids to show progress.");
-        options.addOption(OptionBuilder.withLongOpt(VERSION)
-                .withDescription("Print the version number and exit.")
-                .create());
+        options.addOption(Option.builder().longOpt(VERSION)
+                .desc("Print the version number and exit.")
+                .build());
         options.addOption("S", STATS, false, "Print indexing stats.");
         options.addOption("h", HELP, false, "Print this message.");
 
-        CommandLineParser parser = new GnuParser();
+        CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(options, args);
 
         final String toolName = IndexHelper.class.getPackage().getImplementationTitle();
