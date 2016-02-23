@@ -73,31 +73,13 @@
         <!-- Field type for sorting items. Removes all non-alphanumeric.
           Pinched from http://stackoverflow.com/a/3783380/285374
           with ASCIIFoldingFilterFactory substituted for ISOLatin1AccentFactory -->
-        <fieldType name="text_prefix" class="solr.TextField" positionIncrementGap="1" sortMissingLast="true">
-            <analyzer type="index">
+        <fieldType name="text_prefix" class="solr.TextField" sortMissingLast="true">
+            <analyzer>
                 <tokenizer class="solr.KeywordTokenizerFactory"/>
-                <filter class="solr.ASCIIFoldingFilterFactory"/>
-                <filter class="solr.LowerCaseFilterFactory"/>
-                <!-- Remove non alpha-numeric characters -->
-                <filter class="solr.PatternReplaceFilterFactory" pattern="[^a-zA-Z0-9 ]" replacement="" replace="all"/>
-                <filter class="solr.TrimFilterFactory"/>
+                <filter class="solr.ICUFoldingFilterFactory"/>
                 <!-- Remove leading "the "-->
                 <filter class="solr.PatternReplaceFilterFactory" pattern="^the\s" replacement="" replace="all"/>
                 <filter class="solr.TrimFilterFactory"/>
-                <filter class="solr.EdgeNGramFilterFactory" minGramSize="1" maxGramSize="6"/>
-                <filter class="solr.ICUFoldingFilterFactory"/>
-            </analyzer>
-            <analyzer type="query">
-                <tokenizer class="solr.KeywordTokenizerFactory"/>
-                <filter class="solr.ASCIIFoldingFilterFactory"/>
-                <filter class="solr.LowerCaseFilterFactory"/>
-                <!-- Remove non alpha-numeric characters -->
-                <filter class="solr.PatternReplaceFilterFactory" pattern="[^a-zA-Z0-9 ]" replacement="" replace="all"/>
-                <filter class="solr.TrimFilterFactory"/>
-                <!-- Remove leading "the "-->
-                <filter class="solr.PatternReplaceFilterFactory" pattern="^the\s" replacement="" replace="all"/>
-                <filter class="solr.TrimFilterFactory"/>
-                <filter class="solr.ICUFoldingFilterFactory"/>
             </analyzer>
         </fieldType>
 

@@ -62,6 +62,15 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
             = ISODateTimeFormat.dateTime().withZoneUTC();
 
     /**
+     * Additional country/code mappings...
+     */
+    private static final Map<String, String> additionalCountries = ImmutableMap.of(
+            // As of 2016 ISO haven't assigned Kosovo a code, so
+            // we are using this "user-assigned" one instead.
+            "xk", "Kosovo"
+    );
+
+    /**
      * Static lookup of country names.
      */
     private static final ImmutableMap<String, String> countryLookup;
@@ -72,13 +81,8 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
             countries.put(cc.toLowerCase(),
                     new Locale(defaultLocale.getLanguage(), cc).getDisplayCountry());
         }
+        countries.putAll(additionalCountries);
         countryLookup = ImmutableMap.copyOf(countries);
-    }
-
-    /**
-     * Default constructor.
-     */
-    public JsonConverter() {
     }
 
     /**
@@ -285,15 +289,20 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
         }
 
         // HACK: Set country name to name field on country type
-        if (data.containsKey("type") && data.get("type").equals("Country")) {
+        if ("Country".equals(data.get("type"))) {
             data.put("name", countryLookup.get(id));
         }
 
         // HACK: Set charCount field as sum of string field data...
         int charCount = 0;
         for (Map.Entry<String, Object> entry : data.entrySet()) {
-            if (entry.getValue() instanceof String) {
-                charCount += ((String) entry.getValue()).length();
+            Object dataItem = entry.getValue();
+            if (dataItem instanceof String) {
+                charCount += ((String) dataItem).length();
+            } else if (dataItem instanceof List) {
+                for (Object e : ((List) dataItem)) {
+                    charCount += e.toString().length();
+                }
             }
         }
         data.put("charCount", charCount);
