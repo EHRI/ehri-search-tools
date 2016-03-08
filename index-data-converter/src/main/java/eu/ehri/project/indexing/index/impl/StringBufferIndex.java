@@ -12,8 +12,6 @@ import java.util.List;
 
 /**
  * A dummy index that buffers updates to a string.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class StringBufferIndex implements Index {
 

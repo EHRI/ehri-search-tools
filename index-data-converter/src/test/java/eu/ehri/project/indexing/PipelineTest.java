@@ -19,9 +19,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * @author Mike Bryant (http://github.com/mikesname)
- */
+
 public class PipelineTest {
 
     @Test

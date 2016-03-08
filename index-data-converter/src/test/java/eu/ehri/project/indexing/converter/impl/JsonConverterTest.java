@@ -20,9 +20,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 
-/**
- * @author Mike Bryant (http://github.com/mikesname)
- */
+
 public class JsonConverterTest {
 
     private static final List<String> inputResources = ImmutableList.of(

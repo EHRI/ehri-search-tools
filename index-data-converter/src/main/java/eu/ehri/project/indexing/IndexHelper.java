@@ -33,8 +33,6 @@ import java.util.Properties;
  * incurring excessive complexity in the main logic. Orchestrates
  * a source, a converter, and one or more sink objects to get some JSON
  * data, convert it to another format, and put it somewhere.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class IndexHelper {
 
@@ -88,6 +86,7 @@ public class IndexHelper {
                 String type = Iterables.get(split, 0);
                 String id = Iterables.get(split, 1);
                 URI url = UriBuilder.fromPath(serviceUrl)
+                        .segment("classes")
                         .segment(type).segment(id).segment("list")
                         .queryParam("limit", -1)
                         .queryParam("all", true).build();
@@ -96,6 +95,7 @@ public class IndexHelper {
                 ids.add(spec.substring(1));
             } else {
                 URI url = UriBuilder.fromPath(serviceUrl)
+                        .segment("classes")
                         .segment(spec)
                         .queryParam("limit", -1).build();
                 urls.add(url);

@@ -15,10 +15,9 @@ import java.util.Properties;
 /**
  * Fetch JSON from a web resource. It must accept and
  * return MediaType application/json.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class WebJsonSource implements Source<JsonNode> {
+    private static final Client client = Client.create();
     private final URI url;
     private ClientResponse response = null;
     private InputStreamJsonSource ios = null;
@@ -63,7 +62,7 @@ public class WebJsonSource implements Source<JsonNode> {
 
     private ClientResponse getResponse() throws SourceException {
         try {
-            WebResource.Builder rsc = Client.create().resource(url)
+            WebResource.Builder rsc = client.resource(url)
                     .accept(MediaType.APPLICATION_JSON)
                     .type(MediaType.APPLICATION_JSON);
             for (String header : headers.stringPropertyNames()) {

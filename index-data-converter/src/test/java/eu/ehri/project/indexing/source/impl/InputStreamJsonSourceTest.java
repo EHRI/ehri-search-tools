@@ -14,8 +14,6 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * Tes the InputStreamJsonSource behaves properly.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class InputStreamJsonSourceTest {
 

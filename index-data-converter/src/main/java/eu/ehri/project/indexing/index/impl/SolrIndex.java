@@ -28,8 +28,6 @@ import java.util.List;
  * the (non-default) Apache client instance here to avoid problems
  * with the default implementation's handling of chunked POST data
  * (which is necessary because we're streaming large files to Solr.)
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class SolrIndex implements Index {
 

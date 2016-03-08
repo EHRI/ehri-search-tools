@@ -12,8 +12,6 @@ import static org.hamcrest.Matchers.greaterThan;
  * Details on JSON path matching here:
  *
  *   http://code.google.com/p/json-path/
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class SearchTest extends AbstractSolrTest {
 
@@ -67,8 +65,7 @@ public class SearchTest extends AbstractSolrTest {
         String result = runSearch("dans", "fq", "type:Repository");
         //System.out.println(result);
         with(result)
-                .assertThat("$.grouped.itemId.matches", equalTo(2));
-        assertTrue(result.contains("Dansk-jødisk museum"));
+                .assertThat("$.grouped.itemId.matches", equalTo(1));
         assertTrue(result.contains("Data Archiving and Networked Services")); // DANS
     }
 

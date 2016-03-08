@@ -4,9 +4,7 @@ import eu.ehri.project.indexing.source.Source;
 
 import java.util.List;
 
-/**
- * @author Mike Bryant (http://github.com/mikesname)
- */
+
 public class StringSource implements Source<String> {
 
     private final List<String> strings;

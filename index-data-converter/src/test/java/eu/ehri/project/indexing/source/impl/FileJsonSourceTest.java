@@ -9,9 +9,7 @@ import java.net.URL;
 
 import static org.junit.Assert.assertEquals;
 
-/**
- * @author Mike Bryant (http://github.com/mikesname)
- */
+
 public class FileJsonSourceTest {
 
     public static final String testResource = "inputdoc1.json";

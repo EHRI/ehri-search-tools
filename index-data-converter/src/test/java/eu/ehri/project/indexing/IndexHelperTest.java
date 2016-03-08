@@ -16,9 +16,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
- * @author Mike Bryant (http://github.com/mikesname)
- */
+
 public class IndexHelperTest {
 
     // Reassign System.out/err/in to test the cmd-line output.
@@ -51,9 +49,9 @@ public class IndexHelperTest {
         String base = IndexHelper.DEFAULT_EHRI_URL;
 
         // Item classes, where the classes are "foo" and "bar"
-        assertEquals(new URI(base + "/foo?limit=-1"),
+        assertEquals(new URI(base + "/classes/foo?limit=-1"),
                 IndexHelper.urlsFromSpecs(base, "foo", "bar").get(0));
-        assertEquals(new URI(base + "/bar?limit=-1"),
+        assertEquals(new URI(base + "/classes/bar?limit=-1"),
                 IndexHelper.urlsFromSpecs(base, "foo", "bar").get(1));
 
         // Single items, where the item IDs are "foo" and "bar'
@@ -61,7 +59,7 @@ public class IndexHelperTest {
                 IndexHelper.urlsFromSpecs(base, "@foo", "@bar").get(0));
 
         // An item tree, where the type is "foo" and the ID is "bar"
-        assertEquals(new URI(base + "/foo/bar/list?limit=-1&all=true"),
+        assertEquals(new URI(base + "/classes/foo/bar/list?limit=-1&all=true"),
                 IndexHelper.urlsFromSpecs(base, "foo|bar").get(0));
     }
 

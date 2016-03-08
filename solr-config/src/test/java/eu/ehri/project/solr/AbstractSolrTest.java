@@ -14,8 +14,6 @@ import java.net.URL;
  * Base class for EHRI search engine tests. Currently
  * this assumes that the data does not change between tests,
  * i.e. that the index content is static.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public abstract class AbstractSolrTest extends SolrTestCaseJ4 {
 

@@ -12,9 +12,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
-/**
- * @author Mike Bryant (http://github.com/mikesname)
- */
+
 public class InputStreamJsonSource implements Source<JsonNode> {
     private static final ObjectMapper mapper = new ObjectMapper();
     private static final JsonFactory jsonFactory = new JsonFactory().setCodec(mapper);

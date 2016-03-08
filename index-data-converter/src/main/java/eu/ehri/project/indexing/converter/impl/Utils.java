@@ -11,9 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-/**
- * @author Mike Bryant (http://github.com/mikesname)
- */
+
 class Utils {
 
     private static final Splitter splitter = Splitter.on(",");

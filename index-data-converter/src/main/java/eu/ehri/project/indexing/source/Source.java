@@ -2,8 +2,6 @@ package eu.ehri.project.indexing.source;
 
 /**
  * A class that produces items of a given type T.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public interface Source<T> extends AutoCloseable {
     class SourceException extends Exception {

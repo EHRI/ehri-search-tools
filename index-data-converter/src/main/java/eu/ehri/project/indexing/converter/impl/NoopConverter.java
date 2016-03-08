@@ -6,8 +6,6 @@ import eu.ehri.project.indexing.converter.Converter;
 /**
  * A converter that does nothing, returning a single-item
  * iterable of it's input item.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class NoopConverter<T> implements Converter<T, T> {
     @Override
