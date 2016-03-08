@@ -10,8 +10,6 @@ import java.io.IOException;
 
 /**
  * Use a file as a node source.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class FileJsonSource implements Source<JsonNode> {
     private final String fileName;

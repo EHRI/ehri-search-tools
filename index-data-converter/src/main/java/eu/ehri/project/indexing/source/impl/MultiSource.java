@@ -12,8 +12,6 @@ import java.util.Queue;
 
 /**
  * Aggregate multiple sources into one.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class MultiSource<T, S extends Source<? extends T>> implements Source<T> {
 

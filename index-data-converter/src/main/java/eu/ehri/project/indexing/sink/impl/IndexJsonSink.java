@@ -12,8 +12,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * A sink that buffers data to a temporary file before
  * sending it to the index. This is considerably more
  * efficient that making X number of individual requests.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class IndexJsonSink implements Sink<JsonNode> {
 

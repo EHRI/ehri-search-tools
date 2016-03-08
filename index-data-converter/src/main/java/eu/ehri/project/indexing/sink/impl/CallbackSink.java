@@ -8,8 +8,6 @@ import java.util.List;
 /**
  * A sink that runs the given functions when it writes
  * and item and when it finishes.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class CallbackSink<T> implements Sink<T> {
 

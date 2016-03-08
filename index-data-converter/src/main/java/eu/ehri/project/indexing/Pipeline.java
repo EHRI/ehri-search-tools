@@ -15,8 +15,6 @@ import java.util.List;
 /**
  * A class to orchestrate flow from sources, converters,
  * and sinks.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class Pipeline<S, E> {
 

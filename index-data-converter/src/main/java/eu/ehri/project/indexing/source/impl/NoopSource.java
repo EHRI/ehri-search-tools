@@ -7,8 +7,6 @@ import java.util.Iterator;
 
 /**
  * Source which does Nada. Mainly here for symmetry.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class NoopSource<T> implements Source<T> {
     @Override

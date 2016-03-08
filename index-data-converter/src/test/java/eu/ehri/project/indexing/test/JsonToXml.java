@@ -20,8 +20,6 @@ import java.util.Map;
 
 /**
  * Test class for crude JSON-XML conversion.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class JsonToXml implements Converter<JsonNode, Node> {
 

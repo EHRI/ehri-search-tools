@@ -7,8 +7,6 @@ import java.util.List;
 
 /**
  * Adapter to aggregate several converters.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class MultiConverter<S, E> implements Converter<S, E> {
     private final List<Converter<S, ? extends E>> converters;

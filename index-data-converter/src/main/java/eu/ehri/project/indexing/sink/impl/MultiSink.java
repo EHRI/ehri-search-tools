@@ -7,8 +7,6 @@ import java.util.List;
 
 /**
  * Aggregate several sink together.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class MultiSink<T, W extends Sink<? super T>> implements Sink<T> {
 

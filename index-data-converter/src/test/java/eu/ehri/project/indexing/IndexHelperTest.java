@@ -16,9 +16,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-/**
- * @author Mike Bryant (http://github.com/mikesname)
- */
+
 public class IndexHelperTest {
 
     // Reassign System.out/err/in to test the cmd-line output.

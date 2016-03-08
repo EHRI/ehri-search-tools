@@ -2,8 +2,6 @@ package eu.ehri.project.indexing.sink;
 
 /**
  * A class that consumes some data.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public interface Sink<T> extends AutoCloseable {
 

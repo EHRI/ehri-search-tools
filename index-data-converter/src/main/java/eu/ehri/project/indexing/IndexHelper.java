@@ -33,8 +33,6 @@ import java.util.Properties;
  * incurring excessive complexity in the main logic. Orchestrates
  * a source, a converter, and one or more sink objects to get some JSON
  * data, convert it to another format, and put it somewhere.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class IndexHelper {
 

@@ -3,8 +3,6 @@ package eu.ehri.project.indexing.converter;
 /**
  * A class that converts items of one type into one or many items
  * of another type.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public interface Converter<S, E> {
 

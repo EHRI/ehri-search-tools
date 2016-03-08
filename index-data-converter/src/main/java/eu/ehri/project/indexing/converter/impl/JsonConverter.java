@@ -20,8 +20,6 @@ import java.util.*;
 
 /**
  * Convert from EHRI graph JSON to Solr documents.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class JsonConverter implements Converter<JsonNode, JsonNode> {
 

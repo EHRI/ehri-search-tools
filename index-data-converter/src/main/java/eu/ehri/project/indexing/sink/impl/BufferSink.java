@@ -7,8 +7,6 @@ import java.util.List;
 
 /**
  * A sink that puts items into a provided buffer.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class BufferSink<T> implements Sink<T> {
     private final Collection<? super T> buffer;

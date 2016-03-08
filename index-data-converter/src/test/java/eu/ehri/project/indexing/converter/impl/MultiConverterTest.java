@@ -12,8 +12,6 @@ import static org.junit.Assert.*;
 /**
  * Aggregation of converters produces a single output
  * stream with their results concatenated in input order.
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class MultiConverterTest {
 

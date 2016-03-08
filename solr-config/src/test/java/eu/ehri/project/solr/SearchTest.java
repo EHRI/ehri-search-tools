@@ -12,8 +12,6 @@ import static org.hamcrest.Matchers.greaterThan;
  * Details on JSON path matching here:
  *
  *   http://code.google.com/p/json-path/
- *
- * @author Mike Bryant (http://github.com/mikesname)
  */
 public class SearchTest extends AbstractSolrTest {
 
