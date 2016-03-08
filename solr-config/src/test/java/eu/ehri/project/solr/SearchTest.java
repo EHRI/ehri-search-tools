@@ -67,8 +67,7 @@ public class SearchTest extends AbstractSolrTest {
         String result = runSearch("dans", "fq", "type:Repository");
         //System.out.println(result);
         with(result)
-                .assertThat("$.grouped.itemId.matches", equalTo(2));
-        assertTrue(result.contains("Dansk-jødisk museum"));
+                .assertThat("$.grouped.itemId.matches", equalTo(1));
         assertTrue(result.contains("Data Archiving and Networked Services")); // DANS
     }
 
