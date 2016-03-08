@@ -88,6 +88,7 @@ public class IndexHelper {
                 String type = Iterables.get(split, 0);
                 String id = Iterables.get(split, 1);
                 URI url = UriBuilder.fromPath(serviceUrl)
+                        .segment("classes")
                         .segment(type).segment(id).segment("list")
                         .queryParam("limit", -1)
                         .queryParam("all", true).build();
@@ -96,6 +97,7 @@ public class IndexHelper {
                 ids.add(spec.substring(1));
             } else {
                 URI url = UriBuilder.fromPath(serviceUrl)
+                        .segment("classes")
                         .segment(spec)
                         .queryParam("limit", -1).build();
                 urls.add(url);
