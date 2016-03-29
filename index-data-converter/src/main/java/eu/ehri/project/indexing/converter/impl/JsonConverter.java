@@ -305,6 +305,17 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
         }
         data.put("charCount", charCount);
 
+        // HACK: Add a boolean for links with/without an external body
+        if (data.containsKey("linkBodyName")) {
+            data.put("hasBody", true);
+        }
+        if (data.containsKey("targetIds")) {
+            Object targets = data.get("targetIds");
+            if (targets instanceof List) {
+                data.put("targetCount", ((List) targets).size());
+            }
+        }
+
         return data;
     }
 

@@ -361,6 +361,9 @@
         <field name="targetNames" type="text_general" indexed="true" stored="false" multiValued="true"/>
         <field name="targetNames_ngram" type="text_general_edge_ngram" indexed="true" stored="false"
                multiValued="true"/>
+        <field name="targetIds" type="string" indexed="true" stored="true" multiValued="true"/>
+        <field name="targetTypes" type="string" indexed="true" stored="true" multiValued="true"/>
+        <field name="targetCount" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="addresses" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="priority" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="creationProcess" type="string" indexed="true" stored="true" multiValued="false" default="MANUAL"/>
@@ -372,6 +375,8 @@
         <field name="annotatorId" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="annotatorName" type="string" indexed="true" stored="false" multiValued="false"/>
         <field name="promotionScore" type="int" indexed="true" stored="true" multiValued="false" default="0"/>
+        <field name="linkBodyName" type="text_general" indexed="true" stored="false" multiValued="true"/>
+        <field name="hasBody" type="boolean" indexed="true" stored="true" multiValued="false" default="false"/>
         <field name="_version_" type="long" indexed="true" stored="true"/>
 
         <dynamicField name="*_i" type="int" indexed="true" stored="true"/>
