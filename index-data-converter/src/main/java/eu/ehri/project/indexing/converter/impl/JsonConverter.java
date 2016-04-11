@@ -33,7 +33,7 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
     /**
      * Json Parser
      */
-    public static final ParseContext parseContext = JsonPath.using(new JacksonJsonProvider());
+    private final ParseContext parseContext;
 
     /**
      * Keys which have types that require special handling.
@@ -83,6 +83,10 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
         countryLookup = ImmutableMap.copyOf(countries);
     }
 
+    public JsonConverter() {
+        parseContext = JsonPath.using(new JacksonJsonProvider());
+    }
+
     /**
      * Convert a individual item into one or more output items
      *
@@ -113,7 +117,7 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
      * @param item        The item's JSON node
      * @return A map of the extracted data
      */
-    private static Map<String, Object> getDescribedData(JsonNode description, JsonNode item) {
+    private Map<String, Object> getDescribedData(JsonNode description, JsonNode item) {
 
         // Tricky code alert!
         // Matching paths in the 'item' node overrides that of the description,
@@ -150,7 +154,7 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
      * @param node The item's JSON node
      * @return A map of the extracted data
      */
-    private static Map<String, Object> getData(JsonNode node) {
+    private Map<String, Object> getData(JsonNode node) {
         Map<String, Object> data = Maps.newHashMap();
         ReadContext ctx = parseContext.parse(node.toString());
 
