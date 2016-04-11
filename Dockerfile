@@ -4,7 +4,7 @@ FROM dockerfile/java:oracle-java8
 ENV SOLR_VERSION 4.10.4
 ENV SOLR solr-$SOLR_VERSION
 ENV SOLR_MIRROR http://archive.apache.org/dist/lucene/solr
-ENV TOOL_VERSION 1.1.1-SNAPSHOT
+ENV TOOL_VERSION 1.1.6
 ENV PORT 8983
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
