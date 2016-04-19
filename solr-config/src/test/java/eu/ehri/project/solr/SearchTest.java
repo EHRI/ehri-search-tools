@@ -1,6 +1,7 @@
 package eu.ehri.project.solr;
 
 import com.jayway.jsonpath.JsonPath;
+import org.apache.solr.SolrTestCaseJ4;
 import org.junit.Test;
 import static com.jayway.jsonassert.JsonAssert.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -13,6 +14,7 @@ import static org.hamcrest.Matchers.greaterThan;
  *
  *   http://code.google.com/p/json-path/
  */
+@SolrTestCaseJ4.SuppressSSL
 public class SearchTest extends AbstractSolrTest {
 
     /**
@@ -27,7 +29,7 @@ public class SearchTest extends AbstractSolrTest {
     @Test
     public void testBasicSearch() throws Exception {
         String data = runSearch("warsaw");
-        System.out.println(JsonPath.read(data, "$.grouped.itemId.matches"));
+        System.out.println(JsonPath.read(data, "$.grouped.itemId.matches").toString());
         with(data).assertThat("$.grouped.itemId.matches", equalTo(132));
     }
 
