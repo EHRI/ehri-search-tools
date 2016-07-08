@@ -24,7 +24,7 @@
           "id" : "37c28588-6a22-42ea-ad40-70c3dcd7528b",
           "data" : {
             "name" : "London",
-            "type" : "placeAccess"
+            "type" : "place"
           },
           "type" : "AccessPoint",
           "relationships" : { },
@@ -33,7 +33,7 @@
           "id" : "febc3d25-368f-4f8c-b169-a9a07fd28f3f",
           "data" : {
             "name" : "Vienna - Austria",
-            "type" : "placeAccess"
+            "type" : "place"
           },
           "type" : "AccessPoint",
           "relationships" : { },
@@ -42,7 +42,7 @@
           "id" : "90b76fb1-27e6-4897-afde-eed596263a4f",
           "data" : {
             "name" : "Refugees",
-            "type" : "subjectAccess"
+            "type" : "subject"
           },
           "type" : "AccessPoint",
           "relationships" : { },
@@ -51,7 +51,7 @@
           "id" : "add1b7bb-a348-44bc-874a-351404181edd",
           "data" : {
             "name" : "Emigration",
-            "type" : "subjectAccess"
+            "type" : "subject"
           },
           "type" : "AccessPoint",
           "relationships" : { },
@@ -60,7 +60,7 @@
           "id" : "6a756d49-7b0f-4d25-8831-119783e598c2",
           "data" : {
             "name" : "Persecution",
-            "type" : "subjectAccess"
+            "type" : "subject"
           },
           "type" : "AccessPoint",
           "relationships" : { },
@@ -69,7 +69,7 @@
           "id" : "e20bf641-e5e8-4053-910d-5840bb0610d6",
           "data" : {
             "name" : "Jewish",
-            "type" : "subjectAccess"
+            "type" : "subject"
           },
           "type" : "AccessPoint",
           "relationships" : { },
@@ -78,7 +78,7 @@
           "id" : "25bcd1bd-75b9-4ff3-9980-5e66d816da01",
           "data" : {
             "name" : "Holocaust",
-            "type" : "subjectAccess"
+            "type" : "subject"
           },
           "type" : "AccessPoint",
           "relationships" : { },
@@ -87,7 +87,7 @@
           "id" : "c8503301-a53c-448e-9009-c6c5b4d1f1c2",
           "data" : {
             "name" : "Migration",
-            "type" : "subjectAccess"
+            "type" : "subject"
           },
           "type" : "AccessPoint",
           "relationships" : { },
@@ -96,7 +96,7 @@
           "id" : "eaccff56-326c-424b-a74b-dfa6d9c9188f",
           "data" : {
             "name" : "Nazism",
-            "type" : "subjectAccess"
+            "type" : "subject"
           },
           "type" : "AccessPoint",
           "relationships" : { },
@@ -105,7 +105,7 @@
           "id" : "f17ee35d-e834-4973-b611-f0a9ed2c3f41",
           "data" : {
             "name" : "Jews",
-            "type" : "subjectAccess"
+            "type" : "subject"
           },
           "type" : "AccessPoint",
           "relationships" : { },
@@ -114,7 +114,7 @@
           "id" : "6a0d73ff-a81b-450c-82a8-0cbdd42599bd",
           "data" : {
             "name" : "Berg, Susanne",
-            "type" : "personAccess"
+            "type" : "person"
           },
           "type" : "AccessPoint",
           "relationships" : { },
@@ -123,7 +123,7 @@
           "id" : "381e6f05-b92a-4e41-a8c7-cb44e61208c7",
           "data" : {
             "name" : "Berg, Gustav",
-            "type" : "personAccess"
+            "type" : "person"
           },
           "type" : "AccessPoint",
           "relationships" : { },
@@ -132,7 +132,7 @@
           "id" : "ed98225b-f2d7-4352-8e67-34412d1b36e7",
           "data" : {
             "name" : "Berg, Herta. née Bass",
-            "type" : "personAccess"
+            "type" : "person"
           },
           "type" : "AccessPoint",
           "relationships" : { },
