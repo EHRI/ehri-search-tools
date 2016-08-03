@@ -25,10 +25,10 @@ public class JsonConverterTest {
 
     private static final List<String> inputResources = ImmutableList.of(
             "inputdoc1.json", "inputdoc2.json", "inputdoc3.json", "inputdoc4.json", "inputdoc5.json", "inputdoc1" +
-                    ".json", "inputdoc2.json", "inputdoc6.json"
+                    ".json", "inputdoc2.json", "inputdoc6.json", "inputdoc7.json"
     );
 
-    private static final List<Integer> expectedNodeCount = ImmutableList.of(1, 2, 1, 1, 1);
+    private static final List<Integer> expectedNodeCount = ImmutableList.of(1, 2, 1, 1, 1, 1, 2, 1, 1);
 
     private static final ImmutableList<ImmutableMap<String,Object>> expected = ImmutableList.of(
             ImmutableMap.<String,Object>of(
@@ -78,6 +78,9 @@ public class JsonConverterTest {
             ),
             ImmutableMap.<String,Object>of(
                     "holderName", "Ehri Corporate Bodies"
+            ),
+            ImmutableMap.<String,Object>of(
+                    "linkType", Lists.newArrayList("associative")
             )
     );
 
@@ -86,11 +89,9 @@ public class JsonConverterTest {
     @Before
     public void setUp() throws Exception {
         for (String testResource : inputResources) {
-            InputStream stream = getClass().getClassLoader().getResourceAsStream(testResource);
-            try (Source<JsonNode> source = new InputStreamJsonSource(stream)) {
+            try (InputStream stream = getClass().getClassLoader().getResourceAsStream(testResource);
+                 Source<JsonNode> source = new InputStreamJsonSource(stream)) {
                 inputs.add(Iterables.get(source.iterable(), 0));
-            } finally {
-                stream.close();
             }
         }
     }

@@ -1,0 +1,104 @@
+[
+  {
+    "id": "28539296-c897-11e4-840b-132830f5faa0",
+    "type": "Link",
+    "data": {
+      "isPromotable": false,
+      "description": "",
+      "type": "associative"
+    },
+    "meta": {
+      "gid": 62
+    },
+    "relationships": {
+      "hasLinkBody": [
+        {
+          "id": "2835d162-c897-11e4-840b-132830f5faa0",
+          "type": "AccessPoint",
+          "data": {
+            "name": "Sąd Rejonowy w Kędzierzynie-Koźlu",
+            "type": "creator"
+          },
+          "relationships": {}
+        }
+      ],
+      "hasLinkTarget": [
+        {
+          "id": "ehri-cb-003665",
+          "type": "HistoricalAgent",
+          "data": {
+            "identifier": "003665"
+          },
+          "meta": {
+            "watchedBy": 0
+          },
+          "relationships": {
+            "describes": [
+              {
+                "id": "ehri_cb-003665.pol",
+                "type": "HistoricalAgentDescription",
+                "data": {
+                  "name": "Sąd Rejonowy w Kędzierzynie-Koźlu",
+                  "languageCode": "pol"
+                },
+                "relationships": {}
+              }
+            ],
+            "inAuthoritativeSet": [
+              {
+                "id": "ehri-cb",
+                "type": "AuthoritativeSet",
+                "data": {
+                  "identifier": "ehri-cb",
+                  "name": "Ehri Corporate Bodies"
+                },
+                "meta": {
+                  "childCount": 2737
+                },
+                "relationships": {}
+              }
+            ]
+          }
+        },
+        {
+          "id": "pl-003153-2936",
+          "type": "DocumentaryUnit",
+          "data": {
+            "identifier": "2936"
+          },
+          "meta": {
+            "watchedBy": 0,
+            "childCount": 0
+          },
+          "relationships": {
+            "describes": [
+              {
+                "id": "pl-003153-2936.pol",
+                "type": "DocumentaryUnitDescription",
+                "data": {
+                  "name": "Sąd Rejonowy w Kędzierzynie-Koźlu",
+                  "languageCode": "pol"
+                },
+                "relationships": {}
+              }
+            ],
+            "heldBy": [
+              {
+                "id": "pl-003153",
+                "type": "Repository",
+                "data": {
+                  "identifier": "003153"
+                },
+                "meta": {
+                  "watchedBy": 0,
+                  "childCount": 192
+                },
+                "relationships": {}
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+]
