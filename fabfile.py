@@ -18,16 +18,16 @@ from contextlib import contextmanager as _contextmanager
 env.prod = False
 env.use_ssh_config = True
 env.tool_name = 'index-data-converter'
-env.service_name = 'tomcat6'
+env.service_name = 'solr'
 env.tool_jar_path = '/opt/webapps/docview/bin/indexer.jar'
-env.config_path = '/opt/webapps/solr4/ehri/portal/conf'
-env.remote_dir = '/opt/webapps/solr4'
-env.lib_path = '/opt/webapps/solr4/ehri/lib'
-env.data_path = '/opt/webapps/solr4/ehri/portal/data'
+env.solr_core_name = "portal"
+env.remote_dir = os.path.join('/opt/webapps/solr6/ehri', env.solr_core_name)
+env.config_path = os.path.join(env.remote_dir, "conf")
+env.lib_path = os.path.join(env.remote_dir, "lib")
+env.data_path = os.path.join(env.remote_dir, "data")
 env.user = os.getenv("USER")
 env.config_files = ["schema.xml", "solrconfig.xml", "*.txt", "lang/*"]
-env.solr_admin_url = "http://localhost:8080/ehri/admin"
-env.solr_core_name = "portal"
+env.solr_admin_url = "http://localhost:8983/solr/admin"
 
 TIMESTAMP_FORMAT = "%Y%m%d%H%M%S"
 
@@ -59,8 +59,13 @@ def reload():
     """
     Reload Solr config files by restarting the portal core.
     """
-    run("curl \"%(solr_admin_url)s/cores?action=RELOAD&core=%(solr_core_name)s\"" % env)
+    run("curl \"%(solr_admin_url)s/cores?action=RELOAD&wt=json&core=%(solr_core_name)s\"" % env)
 
+def status():
+    """
+    Get core status
+    """
+    run("curl \"%(solr_admin_url)s/cores?action=STATUS&wt=json&core=%(solr_core_name)s\"" % env)
 
 def clean_deploy():
     """Do a clean build, deploy the indexer tool, copy the Solr config, set the permissions
@@ -94,15 +99,15 @@ def copy_config():
             put(f, os.path.join(env.config_path, os.path.dirname(f)))
 
 def start():
-    "Start Tomcat"
+    "Start Solr"
     _run_service_cmd("start")
 
 def stop():
-    "Stop Tomcat"
+    "Stop Solr"
     _run_service_cmd("stop")
 
 def restart():
-    "Restart Tomcat"
+    "Restart Solr"
     _run_service_cmd("restart")
 
 def _set_permissions():

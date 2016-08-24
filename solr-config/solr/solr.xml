@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-
-<solr>
-    <!-- Nothing required here yet. Cores (e.g. the portal directory) are
-     auto-discovered. This is where we'd put any cluster configuration.
-     However, we still need this empty config file to tell Solr we don't
-     want to use the default configuration. -->
-</solr>

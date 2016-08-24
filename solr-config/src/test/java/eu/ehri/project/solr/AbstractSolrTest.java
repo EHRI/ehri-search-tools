@@ -17,16 +17,16 @@ import java.net.URL;
  */
 public abstract class AbstractSolrTest extends SolrTestCaseJ4 {
 
-    public static final String SOLRHOME = "solr";
-    public static final String CORENAME = "portal";
+    public static final String CORENAME = "core";
 
     private static String getSolrHome() {
-        return new File(System.getProperty("basedir"), SOLRHOME).getPath();
+        return new File(System.getProperty("basedir")).getPath();
     }
 
     private static String getSolrConfigPath(String name) {
-        String home = new File(getSolrHome(), CORENAME).getPath();
-        String conf = new File(home, "conf").getPath();
+        String home = new File(getSolrHome()).getPath();
+        String core = new File(home, CORENAME).getPath();
+        String conf = new File(core, "conf").getPath();
         return new File(conf, name).getPath();
     }
 

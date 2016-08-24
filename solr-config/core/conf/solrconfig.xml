@@ -17,7 +17,10 @@
 -->
 
 <config>
-    <luceneMatchVersion>LUCENE_46</luceneMatchVersion>
+    <luceneMatchVersion>LUCENE_6_1_0</luceneMatchVersion>
+
+    <!-- Use the classic schema for the time being, since managed is the default since 2.6 -->
+    <schemaFactory class="ClassicIndexSchemaFactory"/>
 
     <!--  The DirectoryFactory to use for indexes.
           solr.StandardDirectoryFactory, the default, is filesystem based.
@@ -65,8 +68,6 @@
             <str name="update.chain">langid</str>
         </lst>
     </requestHandler>
-
-    <requestHandler name="/admin/" class="org.apache.solr.handler.admin.AdminHandlers"/>
 
     <requestHandler name="/admin/ping" class="solr.PingRequestHandler">
         <lst name="invariants">

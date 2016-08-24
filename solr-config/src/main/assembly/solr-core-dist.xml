@@ -13,8 +13,8 @@
     <!-- Copy everything in solr/portal/conf to ehri/portal/conf -->
     <fileSets>
         <fileSet>
-            <directory>${basedir}/solr</directory>
-            <outputDirectory>/ehri/</outputDirectory>
+            <directory>${basedir}/core/</directory>
+            <outputDirectory>/</outputDirectory>
             <fileMode>0644</fileMode>
             <directoryMode>0755</directoryMode>
             <includes>
@@ -29,7 +29,7 @@
     <!-- Copy select dependencies to ehri/lib -->
     <dependencySets>
         <dependencySet>
-            <outputDirectory>/ehri/lib-${solr.version}</outputDirectory>
+            <outputDirectory>/lib-${solr.version}</outputDirectory>
             <directoryMode>0755</directoryMode>
             <fileMode>0755</fileMode>
             <unpack>false</unpack>

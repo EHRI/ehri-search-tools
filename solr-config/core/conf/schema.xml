@@ -42,7 +42,7 @@
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
                 <!-- Remove diacritics and white space tokenizer -->
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt" enablePositionIncrements="true"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt"/>
                 <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
             </analyzer>
@@ -53,7 +53,7 @@
                 <!-- treat hyphens equal to whitespace during query time -->
                 <filter class="solr.PatternReplaceFilterFactory" pattern="(\-)" replacement=" " replace="all"/>
                 <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="0" catenateWords="0" catenateNumbers="0" catenateAll="0" splitOnCaseChange="0"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt" enablePositionIncrements="true"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt"/>
                 <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
             </analyzer>
@@ -261,7 +261,7 @@
             <analyzer>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt" enablePositionIncrements="true"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt"/>
                 <filter class="solr.MorfologikFilterFactory"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
             </analyzer>
