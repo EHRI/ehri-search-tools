@@ -14,7 +14,7 @@
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <solr.version>6.1.0</solr.version>
+        <solr.version>6.2.0</solr.version>
     </properties>
 
     <issueManagement>

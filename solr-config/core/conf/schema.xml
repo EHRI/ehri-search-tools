@@ -298,7 +298,8 @@
         <field name="type" type="string" indexed="true" stored="true" multiValued="false" required="true"/>
         <field name="itemId" type="string" indexed="true" stored="true" multiValued="false" required="true"/>
         <field name="gid" type="long" indexed="true" stored="true" multiValued="false" required="false"/>
-        <field name="childCount" type="int" indexed="true" stored="true" default="0" multiValued="false" required="false"/>
+        <field name="childCount" type="int" indexed="true" stored="true" default="0" multiValued="true"
+               required="false"/>
         <field name="parentId" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="ancestorIds" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="dateStart" type="date" indexed="true" stored="true" multiValued="false"/>
@@ -335,7 +336,7 @@
         <field name="languageCode" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="countryCode" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="countryName" type="string" indexed="true" stored="true" multiValued="false"/>
-        <field name="depthOfDescription" type="int" indexed="true" stored="true" multiValued="false"/>
+        <field name="depthOfDescription" type="int" indexed="true" stored="true" multiValued="true"/>
         <field name="levelOfDescription" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="languageOfMaterial" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="typeOfEntity" type="string" indexed="true" stored="true" multiValued="false"/>
@@ -363,9 +364,9 @@
                multiValued="true"/>
         <field name="targetIds" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="targetTypes" type="string" indexed="true" stored="true" multiValued="true"/>
-        <field name="targetCount" type="int" indexed="true" stored="true" multiValued="false"/>
+        <field name="targetCount" type="int" indexed="true" stored="true" multiValued="true"/>
         <field name="addresses" type="text_general" indexed="true" stored="true" multiValued="true"/>
-        <field name="priority" type="int" indexed="true" stored="true" multiValued="false"/>
+        <field name="priority" type="int" indexed="true" stored="true" multiValued="true"/>
         <field name="creationProcess" type="string" indexed="true" stored="true" multiValued="false" default="MANUAL"/>
         <field name="charCount" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="latitude" type="double" indexed="true" stored="true" multiValued="false"/>
@@ -374,7 +375,7 @@
         <field name="isPromotable" type="boolean" indexed="true" stored="true" multiValued="false" default="false"/>
         <field name="annotatorId" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="annotatorName" type="string" indexed="true" stored="false" multiValued="false"/>
-        <field name="promotionScore" type="int" indexed="true" stored="true" multiValued="false" default="0"/>
+        <field name="promotionScore" type="int" indexed="true" stored="true" multiValued="true" default="0"/>
         <field name="linkBodyName" type="text_general" indexed="true" stored="false" multiValued="true"/>
         <field name="linkType" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="linkField" type="string" indexed="true" stored="true" multiValued="true"/>
