@@ -83,7 +83,7 @@ public class WebJsonSource implements Source<JsonNode> {
     private void checkResponse(ClientResponse response) throws SourceException {
         if (response.getStatus() != Response.Status.OK.getStatusCode()) {
             throw new SourceException(
-                    "Unexpected response from web resource: " + response.getStatus());
+                    "Unexpected response from web resource: '" + url + "': " + response.getStatus());
         }
     }
 }
