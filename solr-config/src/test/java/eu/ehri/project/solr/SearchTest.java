@@ -116,6 +116,7 @@ public class SearchTest extends AbstractSolrTest {
         // Test for SOLR-7495 bug which breaks faceting on non-multi-valued
         // int fields. As a workaround the fields where made multi-valued.
         // https://issues.apache.org/jira/browse/SOLR-7495
+        // Update: Fixed in Solr 6.4.0
         String json = runSearch("*", "fq", "priority:5", "facet.field", "priority", "rows", "0");
         //System.out.println(json);
         with(json)
