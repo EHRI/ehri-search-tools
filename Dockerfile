@@ -1,30 +1,11 @@
 # Ubuntu-based Solr container
-FROM dockerfile/java:oracle-java8
+FROM solr:6.4
 
-ENV SOLR_VERSION 6.1.0
-ENV SOLR solr-$SOLR_VERSION
-ENV SOLR_MIRROR http://archive.apache.org/dist/lucene/solr
-ENV TOOL_VERSION 1.1.9
-ENV PORT 8983
+ENV SOLR_HOME=/opt/solr/solr-config/ehri
 
-RUN export DEBIAN_FRONTEND=noninteractive && \
-  apt-get update && \
-  apt-get -y install lsof curl procps && \
-  mkdir -p /opt && \
-  wget -nv --output-document=/opt/$SOLR.tgz $SOLR_MIRROR/$SOLR_VERSION/$SOLR.tgz && \
-  tar -C /opt --extract --file /opt/$SOLR.tgz && \
-  rm /opt/$SOLR.tgz && \
-  ln -s /opt/$SOLR /opt/solr
-
-# NB: Solr config should be mounted at /opt/solr-config/ehri
-COPY solr-config/target/solr-config-${TOOL_VERSION}-solr-core.tar.gz /tmp/
-RUN mkdir -p /opt/solr-config/ehri/portal && \
-  echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n\n<solr></solr>" > /opt/solr-config/ehri/solr.xml && \
-  tar -C /opt/solr-config/ehri/portal --extract --file /tmp/solr-config-${TOOL_VERSION}-solr-core.tar.gz && \
-  ln -s /opt/solr-config/ehri/portal/lib-$SOLR_VERSION /opt/solr-config/ehri/portal/lib
-
-EXPOSE $PORT
-
-# Run the example Solr Jetty launcher with our config
-WORKDIR /opt/solr
-CMD bin/solr start -h 0.0.0.0 -p 8983 -s /opt/solr-config/ehri && tail -f server/logs/solr.log
+# NB: Solr config should be mounted at solr-config/ehri
+COPY solr-config/target/solr-config-*-solr-core.tar.gz /tmp/
+RUN mkdir -p /opt/solr/solr-config/ehri/portal && \
+  echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n\n<solr></solr>" > /opt/solr/solr-config/ehri/solr.xml && \
+  tar -C /opt/solr/solr-config/ehri/portal --extract --file /tmp/solr-config-*-solr-core.tar.gz && \
+  ln -s /opt/solr/solr-config/ehri/portal/lib-* /opt/solr/solr-config/ehri/portal/lib
