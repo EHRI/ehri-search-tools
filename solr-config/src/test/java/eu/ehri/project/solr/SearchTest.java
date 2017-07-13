@@ -137,4 +137,16 @@ public class SearchTest extends AbstractSolrTest {
                 .assertThat("$.grouped.itemId.doclist.docs[0].itemId",
                         equalTo("ehri-cb-556"));
     }
+
+    @Test
+    public void testMixedNumbersAndPunctuation() throws Exception {
+        // Test for searching for item's with a numerical/punctuation components
+        // in the title. This doesn't work correctly unless 'generateNumberParts' is true
+        // in the WordDelimiterFilterFactory
+        String json = runSearch("1923-2000", "fq", "type:DocumentaryUnit");
+        System.out.println(json);
+        with(json)
+                .assertThat("$.grouped.itemId.doclist.docs[0].itemId",
+                        equalTo("lu-002885-af-ae-aw"));
+    }
 }
