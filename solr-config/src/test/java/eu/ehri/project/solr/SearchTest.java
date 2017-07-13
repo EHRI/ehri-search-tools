@@ -126,4 +126,15 @@ public class SearchTest extends AbstractSolrTest {
         with(json2)
                 .assertThat("$.grouped.itemId.matches", equalTo(0));
     }
+
+    @Test
+    public void testMixedTextAndNumbers() throws Exception {
+        // Test for searching for item's with a mixed text/numerical component
+        // in the title. This doesn't work correctly unless 'splitOnNumerics' is false
+        // in the WordDelimiterFilterFactory
+        String json = runSearch("sonderkommando 4b", "fq", "type:HistoricalAgent", "rows", "1");
+        with(json)
+                .assertThat("$.grouped.itemId.doclist.docs[0].itemId",
+                        equalTo("ehri-cb-556"));
+    }
 }
