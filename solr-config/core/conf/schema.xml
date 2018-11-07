@@ -617,576 +617,576 @@
     <uniqueKey>id</uniqueKey>
 
     <!-- Copy all string and text values to text field -->
-    <copyField source="name" dest="name_ngram"/>
-    <copyField source="name" dest="name_sort"/>
-    <copyField source="otherFormsOfName" dest="name_ngram"/>
-    <copyField source="parallelFormsOfName" dest="name_ngram"/>
-    <copyField source="otherFormsOfName" dest="altName"/>
-    <copyField source="parallelFormsOfName" dest="altName"/>
-    <copyField source="name" dest="title"/>
-    <copyField source="itemId" dest="text"/>
-    <copyField source="name" dest="text"/>
-    <copyField source="identifier" dest="text"/>
-    <copyField source="title" dest="text"/>
-    <copyField source="otherFormsOfName" dest="text"/>
-    <copyField source="parallelFormsOfName" dest="text"/>
-    <copyField source="holderName" dest="text"/>
-    <copyField source="addresses" dest="text"/>
-    <copyField source="accessPoints" dest="text"/>
-    <copyField source="accessPoints" dest="accessPoints_facet" />
+    <copyField source="*_s" dest="text"/>
+    <copyField source="*_ss" dest="text"/>
+    <copyField source="*_t" dest="text"/>
     <copyField source="accessPoints" dest="accessPointNames" />
-    <copyField source="creator" dest="creator_facet" />
-    <copyField source="creator" dest="creatorNames" />
-    <copyField source="people" dest="people_facet" />
-    <copyField source="people" dest="peopleNames" />
-    <copyField source="subjects" dest="subjects_facet" />
-    <copyField source="subjects" dest="subjectNames" />
-    <copyField source="places" dest="places_facet" />
-    <copyField source="places" dest="placeNames" />
+    <copyField source="accessPoints" dest="accessPoints_facet" />
+    <copyField source="accessPoints" dest="text"/>
+    <copyField source="addresses" dest="text"/>
+    <copyField source="archivalHistory" dest="text"/>
+    <copyField source="biographicalHistory" dest="text"/>
     <copyField source="corporateBodies" dest="corporateBodies_facet" />
     <copyField source="corporateBodies" dest="corporateBodyNames" />
+    <copyField source="countryName" dest="text"/>
+    <copyField source="creator" dest="creator_facet" />
+    <copyField source="creator" dest="creatorNames" />
+    <copyField source="holderName" dest="text"/>
+    <copyField source="identifier" dest="text"/>
+    <copyField source="itemId" dest="text"/>
+    <copyField source="name" dest="name_ngram"/>
+    <copyField source="name" dest="name_sort"/>
+    <copyField source="name" dest="text"/>
+    <copyField source="name" dest="title"/>
+    <copyField source="otherFormsOfName" dest="altName"/>
+    <copyField source="otherFormsOfName" dest="name_ngram"/>
+    <copyField source="otherFormsOfName" dest="text"/>
+    <copyField source="parallelFormsOfName" dest="altName"/>
+    <copyField source="parallelFormsOfName" dest="name_ngram"/>
+    <copyField source="parallelFormsOfName" dest="text"/>
+    <copyField source="people" dest="people_facet" />
+    <copyField source="people" dest="peopleNames" />
+    <copyField source="places" dest="placeNames" />
+    <copyField source="places" dest="places_facet" />
+    <copyField source="scopeAndContent" dest="text"/>
+    <copyField source="subjects" dest="subjectNames" />
+    <copyField source="subjects" dest="subjects_facet" />
     <copyField source="targets" dest="targetNames"/>
     <copyField source="targets" dest="targetNames_ngram"/>
     <copyField source="targets" dest="text"/>
-    <copyField source="archivalHistory" dest="text"/>
-    <copyField source="biographicalHistory" dest="text"/>
-    <copyField source="scopeAndContent" dest="text"/>
-    <copyField source="countryName" dest="text"/>
-    <copyField source="*_s" dest="text"/>
-    <copyField source="*_t" dest="text"/>
-    <copyField source="*_ss" dest="text"/>
+    <copyField source="title" dest="text"/>
 
     <!-- Copy of fields after language detection into txt_lang fields for multilingual indexing-->
     <!-- Copy of fields after language detection into text field for term expansion-->
-    <copyField source="title_en" dest="txt_en"/>
-    <copyField source="name_en" dest="txt_en"/>
-    <copyField source="name_en" dest="name"/>
-    <copyField source="name_en" dest="title"/>
-    <copyField source="name_en" dest="text"/>
-    <copyField source="name_en" dest="name_sort"/>
-    <copyField source="name_en" dest="name_ngram"/>
-    <copyField source="scopeAndContent_en" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_en" dest="txt_en"/>
-    <copyField source="scopeAndContent_en" dest="text"/>
-    <copyField source="archivalHistory_en" dest="archivalHistory"/>
-    <copyField source="archivalHistory_en" dest="txt_en"/>
-    <copyField source="archivalHistory_en" dest="text"/>
-    <copyField source="archivistNote_en" dest="txt_en"/>
-    <copyField source="archivistNote_en" dest="text"/>
-    <copyField source="abstract_en" dest="txt_en"/>
     <copyField source="abstract_en" dest="text"/>
-    <copyField source="biographicalHistory_en" dest="biographicalHistory"/>
-    <copyField source="biographicalHistory_en" dest="txt_en"/>
-    <copyField source="biographicalHistory_en" dest="text"/>
+    <copyField source="abstract_en" dest="txt_en"/>
+    <copyField source="accessPoints_en" dest="accessPointNames"/>
     <copyField source="accessPoints_en" dest="accessPoints"/>
     <copyField source="accessPoints_en" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_en" dest="accessPointNames"/>
-    <copyField source="accessPoints_en" dest="txt_en"/>
     <copyField source="accessPoints_en" dest="text"/>
+    <copyField source="accessPoints_en" dest="txt_en"/>
+    <copyField source="archivalHistory_en" dest="archivalHistory"/>
+    <copyField source="archivalHistory_en" dest="text"/>
+    <copyField source="archivalHistory_en" dest="txt_en"/>
+    <copyField source="archivistNote_en" dest="text"/>
+    <copyField source="archivistNote_en" dest="txt_en"/>
+    <copyField source="biographicalHistory_en" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_en" dest="text"/>
+    <copyField source="biographicalHistory_en" dest="txt_en"/>
+    <copyField source="name_en" dest="name"/>
+    <copyField source="name_en" dest="name_ngram"/>
+    <copyField source="name_en" dest="name_sort"/>
+    <copyField source="name_en" dest="text"/>
+    <copyField source="name_en" dest="title"/>
+    <copyField source="name_en" dest="txt_en"/>
     <copyField source="otherFormsOfName_en" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_en" dest="parallelFormsOfName"/>
-    <copyField source="otherFormsOfName_en" dest="txt_en"/>
-    <copyField source="parallelFormsOfName_en" dest="txt_en"/>
     <copyField source="otherFormsOfName_en" dest="text"/>
+    <copyField source="otherFormsOfName_en" dest="txt_en"/>
+    <copyField source="parallelFormsOfName_en" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_en" dest="text"/>
+    <copyField source="parallelFormsOfName_en" dest="txt_en"/>
+    <copyField source="scopeAndContent_en" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_en" dest="text"/>
+    <copyField source="scopeAndContent_en" dest="txt_en"/>
+    <copyField source="title_en" dest="txt_en"/>
 
-    <copyField source="title_hu" dest="txt_hu"/>
-    <copyField source="name_hu" dest="txt_hu"/>
-    <copyField source="name_hu" dest="name"/>
-    <copyField source="name_hu" dest="title"/>
-    <copyField source="name_hu" dest="name_sort"/>
-    <copyField source="name_hu" dest="name_ngram"/>
-    <copyField source="scopeAndContent_hu" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_hu" dest="txt_hu"/>
-    <copyField source="scopeAndContent_hu" dest="text"/>
-    <copyField source="archivalHistory_hu" dest="archivalHistory"/>
-    <copyField source="archivalHistory_hu" dest="txt_hu"/>
-    <copyField source="archivalHistory_hu" dest="text"/>
-    <copyField source="archivistNote_hu" dest="txt_hu"/>
-    <copyField source="abstract_hu" dest="txt_hu"/>
-    <copyField source="biographicalHistory_hu" dest="biographicalHistory"/>
-    <copyField source="biographicalHistory_hu" dest="txt_hu"/>
-    <copyField source="biographicalHistory_hu" dest="text"/>
-    <copyField source="accessPoints_hu" dest="txt_hu"/>
-    <copyField source="title_hu" dest="text"/>
-    <copyField source="name_hu" dest="text"/>
-    <copyField source="archivistNote_hu" dest="text"/>
     <copyField source="abstract_hu" dest="text"/>
+    <copyField source="abstract_hu" dest="txt_hu"/>
+    <copyField source="accessPoints_hu" dest="accessPointNames"/>
     <copyField source="accessPoints_hu" dest="accessPoints"/>
     <copyField source="accessPoints_hu" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_hu" dest="accessPointNames"/>
     <copyField source="accessPoints_hu" dest="text"/>
+    <copyField source="accessPoints_hu" dest="txt_hu"/>
+    <copyField source="archivalHistory_hu" dest="archivalHistory"/>
+    <copyField source="archivalHistory_hu" dest="text"/>
+    <copyField source="archivalHistory_hu" dest="txt_hu"/>
+    <copyField source="archivistNote_hu" dest="text"/>
+    <copyField source="archivistNote_hu" dest="txt_hu"/>
+    <copyField source="biographicalHistory_hu" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_hu" dest="text"/>
+    <copyField source="biographicalHistory_hu" dest="txt_hu"/>
+    <copyField source="name_hu" dest="name"/>
+    <copyField source="name_hu" dest="name_ngram"/>
+    <copyField source="name_hu" dest="name_sort"/>
+    <copyField source="name_hu" dest="text"/>
+    <copyField source="name_hu" dest="title"/>
+    <copyField source="name_hu" dest="txt_hu"/>
     <copyField source="otherFormsOfName_hu" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_hu" dest="parallelFormsOfName"/>
-    <copyField source="otherFormsOfName_hu" dest="txt_en"/>
-    <copyField source="parallelFormsOfName_hu" dest="txt_hu"/>
     <copyField source="otherFormsOfName_hu" dest="text"/>
+    <copyField source="otherFormsOfName_hu" dest="txt_en"/>
+    <copyField source="parallelFormsOfName_hu" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_hu" dest="text"/>
+    <copyField source="parallelFormsOfName_hu" dest="txt_hu"/>
+    <copyField source="scopeAndContent_hu" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_hu" dest="text"/>
+    <copyField source="scopeAndContent_hu" dest="txt_hu"/>
+    <copyField source="title_hu" dest="text"/>
+    <copyField source="title_hu" dest="txt_hu"/>
 
-    <copyField source="title_ru" dest="txt_ru"/>
-    <copyField source="name_ru" dest="txt_ru"/>
-    <copyField source="name_ru" dest="name"/>
-    <copyField source="name_ru" dest="title"/>
-    <copyField source="name_ru" dest="name_sort"/>
-    <copyField source="name_ru" dest="name_ngram"/>
-    <copyField source="scopeAndContent_ru" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_ru" dest="txt_ru"/>
-    <copyField source="archivalHistory_ru" dest="archivalHistory"/>
-    <copyField source="archivalHistory_ru" dest="txt_ru"/>
-    <copyField source="archivistNote_ru" dest="txt_ru"/>
-    <copyField source="abstract_ru" dest="txt_ru"/>
-    <copyField source="biographicalHistory_ru" dest="biographicalHistory"/>
-    <copyField source="biographicalHistory_ru" dest="txt_ru"/>
-    <copyField source="biographicalHistory_ru" dest="text"/>
-    <copyField source="accessPoints_ru" dest="txt_ru"/>
-    <copyField source="title_ru" dest="text"/>
-    <copyField source="name_ru" dest="text"/>
-    <copyField source="scopeAndContent_ru" dest="text"/>
-    <copyField source="archivalHistory_ru" dest="text"/>
-    <copyField source="archivistNote_ru" dest="text"/>
     <copyField source="abstract_ru" dest="text"/>
+    <copyField source="abstract_ru" dest="txt_ru"/>
+    <copyField source="accessPoints_ru" dest="accessPointNames"/>
     <copyField source="accessPoints_ru" dest="accessPoints"/>
     <copyField source="accessPoints_ru" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_ru" dest="accessPointNames"/>
     <copyField source="accessPoints_ru" dest="text"/>
+    <copyField source="accessPoints_ru" dest="txt_ru"/>
+    <copyField source="archivalHistory_ru" dest="archivalHistory"/>
+    <copyField source="archivalHistory_ru" dest="text"/>
+    <copyField source="archivalHistory_ru" dest="txt_ru"/>
+    <copyField source="archivistNote_ru" dest="text"/>
+    <copyField source="archivistNote_ru" dest="txt_ru"/>
+    <copyField source="biographicalHistory_ru" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_ru" dest="text"/>
+    <copyField source="biographicalHistory_ru" dest="txt_ru"/>
+    <copyField source="name_ru" dest="name"/>
+    <copyField source="name_ru" dest="name_ngram"/>
+    <copyField source="name_ru" dest="name_sort"/>
+    <copyField source="name_ru" dest="text"/>
+    <copyField source="name_ru" dest="title"/>
+    <copyField source="name_ru" dest="txt_ru"/>
     <copyField source="otherFormsOfName_ru" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_ru" dest="parallelFormsOfName"/>
-    <copyField source="otherFormsOfName_ru" dest="txt_ru"/>
-    <copyField source="parallelFormsOfName_ru" dest="txt_ru"/>
     <copyField source="otherFormsOfName_ru" dest="text"/>
+    <copyField source="otherFormsOfName_ru" dest="txt_ru"/>
+    <copyField source="parallelFormsOfName_ru" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_ru" dest="text"/>
+    <copyField source="parallelFormsOfName_ru" dest="txt_ru"/>
+    <copyField source="scopeAndContent_ru" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_ru" dest="text"/>
+    <copyField source="scopeAndContent_ru" dest="txt_ru"/>
+    <copyField source="title_ru" dest="text"/>
+    <copyField source="title_ru" dest="txt_ru"/>
 
-    <copyField source="title_pl" dest="txt_pl"/>
-    <copyField source="name_pl" dest="txt_pl"/>
-    <copyField source="name_pl" dest="name"/>
-    <copyField source="name_pl" dest="title"/>
-    <copyField source="name_pl" dest="name_sort"/>
-    <copyField source="name_pl" dest="name_ngram"/>
-    <copyField source="scopeAndContent_pl" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_pl" dest="txt_pl"/>
-    <copyField source="archivalHistory_pl" dest="archivalHistory"/>
-    <copyField source="archivalHistory_pl" dest="txt_pl"/>
-    <copyField source="archivistNote_pl" dest="txt_pl"/>
-    <copyField source="abstract_pl" dest="txt_pl"/>
-    <copyField source="biographicalHistory_pl" dest="biographicalHistory"/>
-    <copyField source="biographicalHistory_pl" dest="txt_pl"/>
-    <copyField source="accessPoints_pl" dest="txt_pl"/>
-    <copyField source="title_pl" dest="text"/>
-    <copyField source="name_pl" dest="text"/>
-    <copyField source="scopeAndContent_pl" dest="text"/>
-    <copyField source="archivalHistory_pl" dest="text"/>
-    <copyField source="archivistNote_pl" dest="text"/>
     <copyField source="abstract_pl" dest="text"/>
-    <copyField source="biographicalHistory_pl" dest="text"/>
+    <copyField source="abstract_pl" dest="txt_pl"/>
+    <copyField source="accessPoints_pl" dest="accessPointNames"/>
     <copyField source="accessPoints_pl" dest="accessPoints"/>
     <copyField source="accessPoints_pl" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_pl" dest="accessPointNames"/>
     <copyField source="accessPoints_pl" dest="text"/>
+    <copyField source="accessPoints_pl" dest="txt_pl"/>
+    <copyField source="archivalHistory_pl" dest="archivalHistory"/>
+    <copyField source="archivalHistory_pl" dest="text"/>
+    <copyField source="archivalHistory_pl" dest="txt_pl"/>
+    <copyField source="archivistNote_pl" dest="text"/>
+    <copyField source="archivistNote_pl" dest="txt_pl"/>
+    <copyField source="biographicalHistory_pl" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_pl" dest="text"/>
+    <copyField source="biographicalHistory_pl" dest="txt_pl"/>
+    <copyField source="name_pl" dest="name"/>
+    <copyField source="name_pl" dest="name_ngram"/>
+    <copyField source="name_pl" dest="name_sort"/>
+    <copyField source="name_pl" dest="text"/>
+    <copyField source="name_pl" dest="title"/>
+    <copyField source="name_pl" dest="txt_pl"/>
     <copyField source="otherFormsOfName_pl" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_pl" dest="parallelFormsOfName"/>
-    <copyField source="otherFormsOfName_pl" dest="txt_pl"/>
-    <copyField source="parallelFormsOfName_pl" dest="txt_pl"/>
     <copyField source="otherFormsOfName_pl" dest="text"/>
+    <copyField source="otherFormsOfName_pl" dest="txt_pl"/>
+    <copyField source="parallelFormsOfName_pl" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_pl" dest="text"/>
+    <copyField source="parallelFormsOfName_pl" dest="txt_pl"/>
+    <copyField source="scopeAndContent_pl" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_pl" dest="text"/>
+    <copyField source="scopeAndContent_pl" dest="txt_pl"/>
+    <copyField source="title_pl" dest="text"/>
+    <copyField source="title_pl" dest="txt_pl"/>
 
-    <copyField source="title_de" dest="txt_de"/>
-    <copyField source="name_de" dest="txt_de"/>
-    <copyField source="name_de" dest="name"/>
-    <copyField source="name_de" dest="title"/>
-    <copyField source="name_de" dest="name_sort"/>
-    <copyField source="name_de" dest="name_ngram"/>
-    <copyField source="scopeAndContent_de" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_de" dest="txt_de"/>
-    <copyField source="archivalHistory_de" dest="archivalHistory"/>
-    <copyField source="archivalHistory_de" dest="txt_de"/>
-    <copyField source="archivistNote_de" dest="txt_de"/>
-    <copyField source="abstract_de" dest="txt_de"/>
-    <copyField source="biographicalHistory_de" dest="biographicalHistory"/>
-    <copyField source="biographicalHistory_de" dest="txt_de"/>
-    <copyField source="accessPoints_de" dest="txt_de"/>
-    <copyField source="title_de" dest="text"/>
-    <copyField source="name_de" dest="text"/>
-    <copyField source="scopeAndContent_de" dest="text"/>
-    <copyField source="archivalHistory_de" dest="text"/>
-    <copyField source="archivistNote_de" dest="text"/>
     <copyField source="abstract_de" dest="text"/>
-    <copyField source="biographicalHistory_de" dest="text"/>
+    <copyField source="abstract_de" dest="txt_de"/>
+    <copyField source="accessPoints_de" dest="accessPointNames"/>
     <copyField source="accessPoints_de" dest="accessPoints"/>
     <copyField source="accessPoints_de" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_de" dest="accessPointNames"/>
     <copyField source="accessPoints_de" dest="text"/>
+    <copyField source="accessPoints_de" dest="txt_de"/>
+    <copyField source="archivalHistory_de" dest="archivalHistory"/>
+    <copyField source="archivalHistory_de" dest="text"/>
+    <copyField source="archivalHistory_de" dest="txt_de"/>
+    <copyField source="archivistNote_de" dest="text"/>
+    <copyField source="archivistNote_de" dest="txt_de"/>
+    <copyField source="biographicalHistory_de" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_de" dest="text"/>
+    <copyField source="biographicalHistory_de" dest="txt_de"/>
+    <copyField source="name_de" dest="name"/>
+    <copyField source="name_de" dest="name_ngram"/>
+    <copyField source="name_de" dest="name_sort"/>
+    <copyField source="name_de" dest="text"/>
+    <copyField source="name_de" dest="title"/>
+    <copyField source="name_de" dest="txt_de"/>
     <copyField source="otherFormsOfName_de" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_de" dest="parallelFormsOfName"/>
-    <copyField source="otherFormsOfName_de" dest="txt_de"/>
-    <copyField source="parallelFormsOfName_de" dest="txt_de"/>
     <copyField source="otherFormsOfName_de" dest="text"/>
+    <copyField source="otherFormsOfName_de" dest="txt_de"/>
+    <copyField source="parallelFormsOfName_de" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_de" dest="text"/>
+    <copyField source="parallelFormsOfName_de" dest="txt_de"/>
+    <copyField source="scopeAndContent_de" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_de" dest="text"/>
+    <copyField source="scopeAndContent_de" dest="txt_de"/>
+    <copyField source="title_de" dest="text"/>
+    <copyField source="title_de" dest="txt_de"/>
 
-    <copyField source="title_nl" dest="txt_nl"/>
-    <copyField source="name_nl" dest="txt_nl"/>
-    <copyField source="name_nl" dest="name"/>
-    <copyField source="name_nl" dest="title"/>
-    <copyField source="name_nl" dest="name_sort"/>
-    <copyField source="name_nl" dest="name_ngram"/>
-    <copyField source="scopeAndContent_nl" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_nl" dest="txt_nl"/>
-    <copyField source="archivalHistory_nl" dest="archivalHistory"/>
-    <copyField source="archivalHistory_nl" dest="txt_nl"/>
-    <copyField source="archivistNote_nl" dest="txt_nl"/>
-    <copyField source="abstract_nl" dest="txt_nl"/>
-    <copyField source="biographicalHistory_nl" dest="biographicalHistory"/>
-    <copyField source="biographicalHistory_nl" dest="txt_nl"/>
-    <copyField source="accessPoints_nl" dest="txt_nl"/>
-    <copyField source="title_nl" dest="text"/>
-    <copyField source="name_nl" dest="text"/>
-    <copyField source="scopeAndContent_nl" dest="text"/>
-    <copyField source="archivalHistory_nl" dest="text"/>
-    <copyField source="archivistNote_nl" dest="text"/>
     <copyField source="abstract_nl" dest="text"/>
-    <copyField source="biographicalHistory_nl" dest="text"/>
+    <copyField source="abstract_nl" dest="txt_nl"/>
+    <copyField source="accessPoints_nl" dest="accessPointNames"/>
     <copyField source="accessPoints_nl" dest="accessPoints"/>
     <copyField source="accessPoints_nl" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_nl" dest="accessPointNames"/>
     <copyField source="accessPoints_nl" dest="text"/>
+    <copyField source="accessPoints_nl" dest="txt_nl"/>
+    <copyField source="archivalHistory_nl" dest="archivalHistory"/>
+    <copyField source="archivalHistory_nl" dest="text"/>
+    <copyField source="archivalHistory_nl" dest="txt_nl"/>
+    <copyField source="archivistNote_nl" dest="text"/>
+    <copyField source="archivistNote_nl" dest="txt_nl"/>
+    <copyField source="biographicalHistory_nl" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_nl" dest="text"/>
+    <copyField source="biographicalHistory_nl" dest="txt_nl"/>
+    <copyField source="name_nl" dest="name"/>
+    <copyField source="name_nl" dest="name_ngram"/>
+    <copyField source="name_nl" dest="name_sort"/>
+    <copyField source="name_nl" dest="text"/>
+    <copyField source="name_nl" dest="title"/>
+    <copyField source="name_nl" dest="txt_nl"/>
     <copyField source="otherFormsOfName_nl" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_nl" dest="parallelFormsOfName"/>
-    <copyField source="otherFormsOfName_nl" dest="txt_nl"/>
-    <copyField source="parallelFormsOfName_nl" dest="txt_nl"/>
     <copyField source="otherFormsOfName_nl" dest="text"/>
+    <copyField source="otherFormsOfName_nl" dest="txt_nl"/>
+    <copyField source="parallelFormsOfName_nl" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_nl" dest="text"/>
+    <copyField source="parallelFormsOfName_nl" dest="txt_nl"/>
+    <copyField source="scopeAndContent_nl" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_nl" dest="text"/>
+    <copyField source="scopeAndContent_nl" dest="txt_nl"/>
+    <copyField source="title_nl" dest="text"/>
+    <copyField source="title_nl" dest="txt_nl"/>
 
-    <copyField source="title_cs" dest="txt_cs"/>
-    <copyField source="title_cs" dest="text"/>
-    <copyField source="name_cs" dest="txt_cs"/>
-    <copyField source="name_cs" dest="text"/>
-    <copyField source="name_cs" dest="name"/>
-    <copyField source="name_cs" dest="title"/>
-    <copyField source="name_cs" dest="name_sort"/>
-    <copyField source="name_cs" dest="name_ngram"/>
-    <copyField source="scopeAndContent_cs" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_cs" dest="text"/>
-    <copyField source="archivalHistory_cs" dest="archivalHistory"/>
-    <copyField source="archivalHistory_cs" dest="text"/>
-    <copyField source="archivistNote_cs" dest="text"/>
     <copyField source="abstract_cs" dest="text"/>
-    <copyField source="biographicalHistory_cs" dest="biographicalHistory"/>
-    <copyField source="biographicalHistory_cs" dest="text"/>
+    <copyField source="abstract_cs" dest="txt_cs"/>
+    <copyField source="accessPoints_cs" dest="accessPointNames"/>
     <copyField source="accessPoints_cs" dest="accessPoints"/>
     <copyField source="accessPoints_cs" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_cs" dest="accessPointNames"/>
     <copyField source="accessPoints_cs" dest="text"/>
-    <copyField source="otherFormsOfName_cs" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_cs" dest="parallelFormsOfName"/>
-    <copyField source="otherFormsOfName_cs" dest="text"/>
-    <copyField source="parallelFormsOfName_cs" dest="text"/>
-    <copyField source="scopeAndContent_cs" dest="txt_cs"/>
-    <copyField source="archivalHistory_cs" dest="txt_cs"/>
-    <copyField source="archivistNote_cs" dest="txt_cs"/>
-    <copyField source="abstract_cs" dest="txt_cs"/>
-    <copyField source="biographicalHistory_cs" dest="txt_cs"/>
     <copyField source="accessPoints_cs" dest="txt_cs"/>
+    <copyField source="archivalHistory_cs" dest="archivalHistory"/>
+    <copyField source="archivalHistory_cs" dest="text"/>
+    <copyField source="archivalHistory_cs" dest="txt_cs"/>
+    <copyField source="archivistNote_cs" dest="text"/>
+    <copyField source="archivistNote_cs" dest="txt_cs"/>
+    <copyField source="biographicalHistory_cs" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_cs" dest="text"/>
+    <copyField source="biographicalHistory_cs" dest="txt_cs"/>
+    <copyField source="name_cs" dest="name"/>
+    <copyField source="name_cs" dest="name_ngram"/>
+    <copyField source="name_cs" dest="name_sort"/>
+    <copyField source="name_cs" dest="text"/>
+    <copyField source="name_cs" dest="title"/>
+    <copyField source="name_cs" dest="txt_cs"/>
+    <copyField source="otherFormsOfName_cs" dest="otherFormsOfName"/>
+    <copyField source="otherFormsOfName_cs" dest="text"/>
     <copyField source="otherFormsOfName_cs" dest="txt_cs"/>
+    <copyField source="parallelFormsOfName_cs" dest="parallelFormsOfName"/>
+    <copyField source="parallelFormsOfName_cs" dest="text"/>
     <copyField source="parallelFormsOfName_cs" dest="txt_cs"/>
+    <copyField source="scopeAndContent_cs" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_cs" dest="text"/>
+    <copyField source="scopeAndContent_cs" dest="txt_cs"/>
+    <copyField source="title_cs" dest="text"/>
+    <copyField source="title_cs" dest="txt_cs"/>
 
-    <copyField source="title_it" dest="txt_it"/>
-    <copyField source="name_it" dest="txt_it"/>
-    <copyField source="name_it" dest="name"/>
-    <copyField source="name_it" dest="title"/>
-    <copyField source="name_it" dest="name_sort"/>
-    <copyField source="name_it" dest="name_ngram"/>
-    <copyField source="scopeAndContent_it" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_it" dest="txt_it"/>
-    <copyField source="archivalHistory_it" dest="archivalHistory"/>
-    <copyField source="archivalHistory_it" dest="txt_it"/>
-    <copyField source="archivistNote_it" dest="txt_it"/>
-    <copyField source="abstract_it" dest="txt_it"/>
-    <copyField source="biographicalHistory_it" dest="biographicalHistory"/>
-    <copyField source="biographicalHistory_it" dest="txt_it"/>
-    <copyField source="accessPoints_it" dest="txt_it"/>
-    <copyField source="title_it" dest="text"/>
-    <copyField source="name_it" dest="text"/>
-    <copyField source="scopeAndContent_it" dest="text"/>
-    <copyField source="archivalHistory_it" dest="text"/>
-    <copyField source="archivistNote_it" dest="text"/>
     <copyField source="abstract_it" dest="text"/>
-    <copyField source="biographicalHistory_it" dest="text"/>
+    <copyField source="abstract_it" dest="txt_it"/>
+    <copyField source="accessPoints_it" dest="accessPointNames"/>
     <copyField source="accessPoints_it" dest="accessPoints"/>
     <copyField source="accessPoints_it" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_it" dest="accessPointNames"/>
     <copyField source="accessPoints_it" dest="text"/>
+    <copyField source="accessPoints_it" dest="txt_it"/>
+    <copyField source="archivalHistory_it" dest="archivalHistory"/>
+    <copyField source="archivalHistory_it" dest="text"/>
+    <copyField source="archivalHistory_it" dest="txt_it"/>
+    <copyField source="archivistNote_it" dest="text"/>
+    <copyField source="archivistNote_it" dest="txt_it"/>
+    <copyField source="biographicalHistory_it" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_it" dest="text"/>
+    <copyField source="biographicalHistory_it" dest="txt_it"/>
+    <copyField source="name_it" dest="name"/>
+    <copyField source="name_it" dest="name_ngram"/>
+    <copyField source="name_it" dest="name_sort"/>
+    <copyField source="name_it" dest="text"/>
+    <copyField source="name_it" dest="title"/>
+    <copyField source="name_it" dest="txt_it"/>
     <copyField source="otherFormsOfName_it" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_it" dest="parallelFormsOfName"/>
-    <copyField source="otherFormsOfName_it" dest="txt_it"/>
-    <copyField source="parallelFormsOfName_it" dest="txt_it"/>
     <copyField source="otherFormsOfName_it" dest="text"/>
+    <copyField source="otherFormsOfName_it" dest="txt_it"/>
+    <copyField source="parallelFormsOfName_it" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_it" dest="text"/>
+    <copyField source="parallelFormsOfName_it" dest="txt_it"/>
+    <copyField source="scopeAndContent_it" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_it" dest="text"/>
+    <copyField source="scopeAndContent_it" dest="txt_it"/>
+    <copyField source="title_it" dest="text"/>
+    <copyField source="title_it" dest="txt_it"/>
 
-    <copyField source="title_fr" dest="txt_fr"/>
-    <copyField source="name_fr" dest="txt_fr"/>
-    <copyField source="name_fr" dest="name"/>
-    <copyField source="name_fr" dest="title"/>
-    <copyField source="name_fr" dest="name_sort"/>
-    <copyField source="name_fr" dest="name_ngram"/>
-    <copyField source="scopeAndContent_fr" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_fr" dest="txt_fr"/>
-    <copyField source="archivalHistory_fr" dest="archivalHistory"/>
-    <copyField source="archivalHistory_fr" dest="txt_fr"/>
-    <copyField source="archivistNote_fr" dest="txt_fr"/>
-    <copyField source="abstract_fr" dest="txt_fr"/>
-    <copyField source="biographicalHistory_fr" dest="biographicalHistory"/>
-    <copyField source="biographicalHistory_fr" dest="txt_fr"/>
-    <copyField source="accessPoints_fr" dest="txt_fr"/>
-    <copyField source="title_fr" dest="text"/>
-    <copyField source="name_fr" dest="text"/>
-    <copyField source="scopeAndContent_fr" dest="text"/>
-    <copyField source="archivalHistory_fr" dest="text"/>
-    <copyField source="archivistNote_fr" dest="text"/>
     <copyField source="abstract_fr" dest="text"/>
-    <copyField source="biographicalHistory_fr" dest="text"/>
+    <copyField source="abstract_fr" dest="txt_fr"/>
+    <copyField source="accessPoints_fr" dest="accessPointNames"/>
     <copyField source="accessPoints_fr" dest="accessPoints"/>
     <copyField source="accessPoints_fr" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_fr" dest="accessPointNames"/>
     <copyField source="accessPoints_fr" dest="text"/>
+    <copyField source="accessPoints_fr" dest="txt_fr"/>
+    <copyField source="archivalHistory_fr" dest="archivalHistory"/>
+    <copyField source="archivalHistory_fr" dest="text"/>
+    <copyField source="archivalHistory_fr" dest="txt_fr"/>
+    <copyField source="archivistNote_fr" dest="text"/>
+    <copyField source="archivistNote_fr" dest="txt_fr"/>
+    <copyField source="biographicalHistory_fr" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_fr" dest="text"/>
+    <copyField source="biographicalHistory_fr" dest="txt_fr"/>
+    <copyField source="name_fr" dest="name"/>
+    <copyField source="name_fr" dest="name_ngram"/>
+    <copyField source="name_fr" dest="name_sort"/>
+    <copyField source="name_fr" dest="text"/>
+    <copyField source="name_fr" dest="title"/>
+    <copyField source="name_fr" dest="txt_fr"/>
     <copyField source="otherFormsOfName_fr" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_fr" dest="parallelFormsOfName"/>
-    <copyField source="otherFormsOfName_fr" dest="txt_fr"/>
-    <copyField source="parallelFormsOfName_fr" dest="txt_fr"/>
     <copyField source="otherFormsOfName_fr" dest="text"/>
+    <copyField source="otherFormsOfName_fr" dest="txt_fr"/>
+    <copyField source="parallelFormsOfName_fr" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_fr" dest="text"/>
+    <copyField source="parallelFormsOfName_fr" dest="txt_fr"/>
+    <copyField source="scopeAndContent_fr" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_fr" dest="text"/>
+    <copyField source="scopeAndContent_fr" dest="txt_fr"/>
+    <copyField source="title_fr" dest="text"/>
+    <copyField source="title_fr" dest="txt_fr"/>
 
-    <copyField source="title_uk" dest="text"/>
-    <copyField source="name_uk" dest="text"/>
-    <copyField source="name_uk" dest="name"/>
-    <copyField source="name_uk" dest="title"/>
-    <copyField source="name_uk" dest="name_sort"/>
-    <copyField source="name_uk" dest="name_ngram"/>
-    <copyField source="scopeAndContent_uk" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_uk" dest="text"/>
+    <copyField source="abstract_uk" dest="text"/>
+    <copyField source="accessPoints_uk" dest="accessPointNames"/>
+    <copyField source="accessPoints_uk" dest="accessPoints"/>
+    <copyField source="accessPoints_uk" dest="accessPoints_facet"/>
+    <copyField source="accessPoints_uk" dest="text"/>
     <copyField source="archivalHistory_uk" dest="archivalHistory"/>
     <copyField source="archivalHistory_uk" dest="text"/>
     <copyField source="archivistNote_uk" dest="text"/>
-    <copyField source="abstract_uk" dest="text"/>
     <copyField source="biographicalHistory_uk" dest="biographicalHistory"/>
     <copyField source="biographicalHistory_uk" dest="text"/>
-    <copyField source="accessPoints_uk" dest="accessPoints"/>
-    <copyField source="accessPoints_uk" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_uk" dest="accessPointNames"/>
-    <copyField source="accessPoints_uk" dest="text"/>
+    <copyField source="name_uk" dest="name"/>
+    <copyField source="name_uk" dest="name_ngram"/>
+    <copyField source="name_uk" dest="name_sort"/>
+    <copyField source="name_uk" dest="text"/>
+    <copyField source="name_uk" dest="title"/>
     <copyField source="otherFormsOfName_uk" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_uk" dest="parallelFormsOfName"/>
     <copyField source="otherFormsOfName_uk" dest="text"/>
+    <copyField source="parallelFormsOfName_uk" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_uk" dest="text"/>
+    <copyField source="scopeAndContent_uk" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_uk" dest="text"/>
+    <copyField source="title_uk" dest="text"/>
 
-    <copyField source="title_hr" dest="text"/>
-    <copyField source="name_hr" dest="text"/>
-    <copyField source="name_hr" dest="name"/>
-    <copyField source="name_hr" dest="title"/>
-    <copyField source="name_hr" dest="name_sort"/>
-    <copyField source="name_hr" dest="name_ngram"/>
-    <copyField source="scopeAndContent_hr" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_hr" dest="text"/>
+    <copyField source="abstract_hr" dest="text"/>
+    <copyField source="accessPoints_hr" dest="accessPointNames"/>
+    <copyField source="accessPoints_hr" dest="accessPoints"/>
+    <copyField source="accessPoints_hr" dest="accessPoints_facet"/>
+    <copyField source="accessPoints_hr" dest="text"/>
     <copyField source="archivalHistory_hr" dest="archivalHistory"/>
     <copyField source="archivalHistory_hr" dest="text"/>
     <copyField source="archivistNote_hr" dest="text"/>
-    <copyField source="abstract_hr" dest="text"/>
     <copyField source="biographicalHistory_hr" dest="biographicalHistory"/>
     <copyField source="biographicalHistory_hr" dest="text"/>
-    <copyField source="accessPoints_hr" dest="accessPoints"/>
-    <copyField source="accessPoints_hr" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_hr" dest="accessPointNames"/>
-    <copyField source="accessPoints_hr" dest="text"/>
+    <copyField source="name_hr" dest="name"/>
+    <copyField source="name_hr" dest="name_ngram"/>
+    <copyField source="name_hr" dest="name_sort"/>
+    <copyField source="name_hr" dest="text"/>
+    <copyField source="name_hr" dest="title"/>
     <copyField source="otherFormsOfName_en" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_en" dest="parallelFormsOfName"/>
     <copyField source="otherFormsOfName_en" dest="text"/>
+    <copyField source="parallelFormsOfName_en" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_hr" dest="text"/>
+    <copyField source="scopeAndContent_hr" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_hr" dest="text"/>
+    <copyField source="title_hr" dest="text"/>
 
-    <copyField source="title_da" dest="txt_da"/>
-    <copyField source="name_da" dest="txt_da"/>
-    <copyField source="name_da" dest="name"/>
-    <copyField source="name_da" dest="title"/>
-    <copyField source="name_da" dest="name_sort"/>
-    <copyField source="name_da" dest="name_ngram"/>
-    <copyField source="scopeAndContent_da" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_da" dest="txt_da"/>
-    <copyField source="archivalHistory_da" dest="archivalHistory"/>
-    <copyField source="archivalHistory_da" dest="txt_da"/>
-    <copyField source="archivistNote_da" dest="txt_da"/>
-    <copyField source="abstract_da" dest="txt_da"/>
-    <copyField source="biographicalHistory_da" dest="biographicalHistory"/>
-    <copyField source="biographicalHistory_da" dest="txt_da"/>
-    <copyField source="accessPoints_da" dest="txt_da"/>
-    <copyField source="title_da" dest="text"/>
-    <copyField source="name_da" dest="text"/>
-    <copyField source="scopeAndContent_da" dest="text"/>
-    <copyField source="archivalHistory_da" dest="text"/>
-    <copyField source="archivistNote_da" dest="text"/>
     <copyField source="abstract_da" dest="text"/>
-    <copyField source="biographicalHistory_da" dest="text"/>
+    <copyField source="abstract_da" dest="txt_da"/>
+    <copyField source="accessPoints_da" dest="accessPointNames"/>
     <copyField source="accessPoints_da" dest="accessPoints"/>
     <copyField source="accessPoints_da" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_da" dest="accessPointNames"/>
     <copyField source="accessPoints_da" dest="text"/>
+    <copyField source="accessPoints_da" dest="txt_da"/>
+    <copyField source="archivalHistory_da" dest="archivalHistory"/>
+    <copyField source="archivalHistory_da" dest="text"/>
+    <copyField source="archivalHistory_da" dest="txt_da"/>
+    <copyField source="archivistNote_da" dest="text"/>
+    <copyField source="archivistNote_da" dest="txt_da"/>
+    <copyField source="biographicalHistory_da" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_da" dest="text"/>
+    <copyField source="biographicalHistory_da" dest="txt_da"/>
+    <copyField source="name_da" dest="name"/>
+    <copyField source="name_da" dest="name_ngram"/>
+    <copyField source="name_da" dest="name_sort"/>
+    <copyField source="name_da" dest="text"/>
+    <copyField source="name_da" dest="title"/>
+    <copyField source="name_da" dest="txt_da"/>
     <copyField source="otherFormsOfName_da" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_da" dest="parallelFormsOfName"/>
-    <copyField source="otherFormsOfName_da" dest="txt_da"/>
-    <copyField source="parallelFormsOfName_da" dest="txt_da"/>
     <copyField source="otherFormsOfName_da" dest="text"/>
+    <copyField source="otherFormsOfName_da" dest="txt_da"/>
+    <copyField source="parallelFormsOfName_da" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_da" dest="text"/>
+    <copyField source="parallelFormsOfName_da" dest="txt_da"/>
+    <copyField source="scopeAndContent_da" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_da" dest="text"/>
+    <copyField source="scopeAndContent_da" dest="txt_da"/>
+    <copyField source="title_da" dest="text"/>
+    <copyField source="title_da" dest="txt_da"/>
 
-    <copyField source="title_el" dest="txt_el"/>
-    <copyField source="name_el" dest="txt_el"/>
-    <copyField source="name_el" dest="name"/>
-    <copyField source="name_el" dest="title"/>
-    <copyField source="name_el" dest="name_sort"/>
-    <copyField source="name_el" dest="name_ngram"/>
-    <copyField source="scopeAndContent_el" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_el" dest="txt_el"/>
-    <copyField source="archivalHistory_el" dest="archivalHistory"/>
-    <copyField source="archivalHistory_el" dest="txt_el"/>
-    <copyField source="archivistNote_el" dest="txt_el"/>
-    <copyField source="abstract_el" dest="txt_el"/>
-    <copyField source="biographicalHistory_el" dest="biographicalHistory"/>
-    <copyField source="biographicalHistory_el" dest="txt_el"/>
-    <copyField source="accessPoints_el" dest="txt_el"/>
-    <copyField source="title_el" dest="text"/>
-    <copyField source="name_el" dest="text"/>
-    <copyField source="scopeAndContent_el" dest="text"/>
-    <copyField source="archivalHistory_el" dest="text"/>
-    <copyField source="archivistNote_el" dest="text"/>
     <copyField source="abstract_el" dest="text"/>
-    <copyField source="biographicalHistory_el" dest="text"/>
+    <copyField source="abstract_el" dest="txt_el"/>
+    <copyField source="accessPoints_el" dest="accessPointNames"/>
     <copyField source="accessPoints_el" dest="accessPoints"/>
     <copyField source="accessPoints_el" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_el" dest="accessPointNames"/>
     <copyField source="accessPoints_el" dest="text"/>
+    <copyField source="accessPoints_el" dest="txt_el"/>
+    <copyField source="archivalHistory_el" dest="archivalHistory"/>
+    <copyField source="archivalHistory_el" dest="text"/>
+    <copyField source="archivalHistory_el" dest="txt_el"/>
+    <copyField source="archivistNote_el" dest="text"/>
+    <copyField source="archivistNote_el" dest="txt_el"/>
+    <copyField source="biographicalHistory_el" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_el" dest="text"/>
+    <copyField source="biographicalHistory_el" dest="txt_el"/>
+    <copyField source="name_el" dest="name"/>
+    <copyField source="name_el" dest="name_ngram"/>
+    <copyField source="name_el" dest="name_sort"/>
+    <copyField source="name_el" dest="text"/>
+    <copyField source="name_el" dest="title"/>
+    <copyField source="name_el" dest="txt_el"/>
     <copyField source="otherFormsOfName_el" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_el" dest="parallelFormsOfName"/>
-    <copyField source="otherFormsOfName_el" dest="txt_el"/>
-    <copyField source="parallelFormsOfName_el" dest="txt_el"/>
     <copyField source="otherFormsOfName_el" dest="text"/>
+    <copyField source="otherFormsOfName_el" dest="txt_el"/>
+    <copyField source="parallelFormsOfName_el" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_el" dest="text"/>
+    <copyField source="parallelFormsOfName_el" dest="txt_el"/>
+    <copyField source="scopeAndContent_el" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_el" dest="text"/>
+    <copyField source="scopeAndContent_el" dest="txt_el"/>
+    <copyField source="title_el" dest="text"/>
+    <copyField source="title_el" dest="txt_el"/>
 
-    <copyField source="title_lv" dest="txt_lv"/>
-    <copyField source="name_lv" dest="txt_lv"/>
-    <copyField source="name_lv" dest="name"/>
-    <copyField source="name_lv" dest="title"/>
-    <copyField source="name_lv" dest="name_sort"/>
-    <copyField source="name_lv" dest="name_ngram"/>
-    <copyField source="scopeAndContent_lv" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_lv" dest="txt_lv"/>
-    <copyField source="archivalHistory_lv" dest="archivalHistory"/>
-    <copyField source="archivalHistory_lv" dest="txt_lv"/>
-    <copyField source="archivistNote_lv" dest="txt_lv"/>
-    <copyField source="abstract_lv" dest="txt_lv"/>
-    <copyField source="biographicalHistory_lv" dest="biographicalHistory"/>
-    <copyField source="biographicalHistory_lv" dest="txt_lv"/>
-    <copyField source="accessPoints_lv" dest="txt_lv"/>
-    <copyField source="title_lv" dest="text"/>
-    <copyField source="name_lv" dest="text"/>
-    <copyField source="scopeAndContent_lv" dest="text"/>
-    <copyField source="archivalHistory_lv" dest="text"/>
-    <copyField source="archivistNote_lv" dest="text"/>
     <copyField source="abstract_lv" dest="text"/>
-    <copyField source="biographicalHistory_lv" dest="text"/>
+    <copyField source="abstract_lv" dest="txt_lv"/>
+    <copyField source="accessPoints_lv" dest="accessPointNames"/>
     <copyField source="accessPoints_lv" dest="accessPoints"/>
     <copyField source="accessPoints_lv" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_lv" dest="accessPointNames"/>
     <copyField source="accessPoints_lv" dest="text"/>
+    <copyField source="accessPoints_lv" dest="txt_lv"/>
+    <copyField source="archivalHistory_lv" dest="archivalHistory"/>
+    <copyField source="archivalHistory_lv" dest="text"/>
+    <copyField source="archivalHistory_lv" dest="txt_lv"/>
+    <copyField source="archivistNote_lv" dest="text"/>
+    <copyField source="archivistNote_lv" dest="txt_lv"/>
+    <copyField source="biographicalHistory_lv" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_lv" dest="text"/>
+    <copyField source="biographicalHistory_lv" dest="txt_lv"/>
+    <copyField source="name_lv" dest="name"/>
+    <copyField source="name_lv" dest="name_ngram"/>
+    <copyField source="name_lv" dest="name_sort"/>
+    <copyField source="name_lv" dest="text"/>
+    <copyField source="name_lv" dest="title"/>
+    <copyField source="name_lv" dest="txt_lv"/>
     <copyField source="otherFormsOfName_lv" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_lv" dest="parallelFormsOfName"/>
-    <copyField source="otherFormsOfName_lv" dest="txt_lv"/>
-    <copyField source="parallelFormsOfName_lv" dest="txt_lv"/>
     <copyField source="otherFormsOfName_lv" dest="text"/>
+    <copyField source="otherFormsOfName_lv" dest="txt_lv"/>
+    <copyField source="parallelFormsOfName_lv" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_lv" dest="text"/>
+    <copyField source="parallelFormsOfName_lv" dest="txt_lv"/>
+    <copyField source="scopeAndContent_lv" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_lv" dest="text"/>
+    <copyField source="scopeAndContent_lv" dest="txt_lv"/>
+    <copyField source="title_lv" dest="text"/>
+    <copyField source="title_lv" dest="txt_lv"/>
 
-    <copyField source="title_no" dest="txt_no"/>
-    <copyField source="name_no" dest="txt_no"/>
-    <copyField source="name_no" dest="name"/>
-    <copyField source="name_no" dest="title"/>
-    <copyField source="name_no" dest="name_sort"/>
-    <copyField source="name_no" dest="name_ngram"/>
-    <copyField source="scopeAndContent_no" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_no" dest="txt_no"/>
-    <copyField source="archivalHistory_no" dest="archivalHistory"/>
-    <copyField source="archivalHistory_no" dest="txt_no"/>
-    <copyField source="archivistNote_no" dest="txt_no"/>
-    <copyField source="abstract_no" dest="txt_no"/>
-    <copyField source="biographicalHistory_no" dest="biographicalHistory"/>
-    <copyField source="biographicalHistory_no" dest="txt_no"/>
-    <copyField source="accessPoints_no" dest="txt_no"/>
-    <copyField source="title_no" dest="text"/>
-    <copyField source="name_no" dest="text"/>
-    <copyField source="scopeAndContent_no" dest="text"/>
-    <copyField source="archivalHistory_no" dest="text"/>
-    <copyField source="archivistNote_no" dest="text"/>
     <copyField source="abstract_no" dest="text"/>
-    <copyField source="biographicalHistory_no" dest="text"/>
+    <copyField source="abstract_no" dest="txt_no"/>
+    <copyField source="accessPoints_no" dest="accessPointNames"/>
     <copyField source="accessPoints_no" dest="accessPoints"/>
     <copyField source="accessPoints_no" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_no" dest="accessPointNames"/>
     <copyField source="accessPoints_no" dest="text"/>
+    <copyField source="accessPoints_no" dest="txt_no"/>
+    <copyField source="archivalHistory_no" dest="archivalHistory"/>
+    <copyField source="archivalHistory_no" dest="text"/>
+    <copyField source="archivalHistory_no" dest="txt_no"/>
+    <copyField source="archivistNote_no" dest="text"/>
+    <copyField source="archivistNote_no" dest="txt_no"/>
+    <copyField source="biographicalHistory_no" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_no" dest="text"/>
+    <copyField source="biographicalHistory_no" dest="txt_no"/>
+    <copyField source="name_no" dest="name"/>
+    <copyField source="name_no" dest="name_ngram"/>
+    <copyField source="name_no" dest="name_sort"/>
+    <copyField source="name_no" dest="text"/>
+    <copyField source="name_no" dest="title"/>
+    <copyField source="name_no" dest="txt_no"/>
     <copyField source="otherFormsOfName_no" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_no" dest="parallelFormsOfName"/>
-    <copyField source="otherFormsOfName_no" dest="txt_no"/>
-    <copyField source="parallelFormsOfName_no" dest="txt_no"/>
     <copyField source="otherFormsOfName_no" dest="text"/>
+    <copyField source="otherFormsOfName_no" dest="txt_no"/>
+    <copyField source="parallelFormsOfName_no" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_no" dest="text"/>
+    <copyField source="parallelFormsOfName_no" dest="txt_no"/>
+    <copyField source="scopeAndContent_no" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_no" dest="text"/>
+    <copyField source="scopeAndContent_no" dest="txt_no"/>
+    <copyField source="title_no" dest="text"/>
+    <copyField source="title_no" dest="txt_no"/>
 
-    <copyField source="title_ro" dest="txt_ro"/>
-    <copyField source="name_ro" dest="txt_ro"/>
-    <copyField source="name_ro" dest="name"/>
-    <copyField source="name_ro" dest="title"/>
-    <copyField source="name_ro" dest="name_sort"/>
-    <copyField source="name_ro" dest="name_ngram"/>
-    <copyField source="scopeAndContent_ro" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_ro" dest="txt_ro"/>
-    <copyField source="archivalHistory_ro" dest="archivalHistory"/>
-    <copyField source="archivalHistory_ro" dest="txt_ro"/>
-    <copyField source="archivistNote_ro" dest="txt_ro"/>
-    <copyField source="abstract_ro" dest="txt_ro"/>
-    <copyField source="biographicalHistory_ro" dest="biographicalHistory"/>
-    <copyField source="biographicalHistory_ro" dest="txt_ro"/>
-    <copyField source="accessPoints_ro" dest="txt_ro"/>
-    <copyField source="title_ro" dest="text"/>
-    <copyField source="name_ro" dest="text"/>
-    <copyField source="scopeAndContent_ro" dest="text"/>
-    <copyField source="archivalHistory_ro" dest="text"/>
-    <copyField source="archivistNote_ro" dest="text"/>
     <copyField source="abstract_ro" dest="text"/>
-    <copyField source="biographicalHistory_ro" dest="text"/>
+    <copyField source="abstract_ro" dest="txt_ro"/>
+    <copyField source="accessPoints_ro" dest="accessPointNames"/>
     <copyField source="accessPoints_ro" dest="accessPoints"/>
     <copyField source="accessPoints_ro" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_ro" dest="accessPointNames"/>
     <copyField source="accessPoints_ro" dest="text"/>
+    <copyField source="accessPoints_ro" dest="txt_ro"/>
+    <copyField source="archivalHistory_ro" dest="archivalHistory"/>
+    <copyField source="archivalHistory_ro" dest="text"/>
+    <copyField source="archivalHistory_ro" dest="txt_ro"/>
+    <copyField source="archivistNote_ro" dest="text"/>
+    <copyField source="archivistNote_ro" dest="txt_ro"/>
+    <copyField source="biographicalHistory_ro" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_ro" dest="text"/>
+    <copyField source="biographicalHistory_ro" dest="txt_ro"/>
+    <copyField source="name_ro" dest="name"/>
+    <copyField source="name_ro" dest="name_ngram"/>
+    <copyField source="name_ro" dest="name_sort"/>
+    <copyField source="name_ro" dest="text"/>
+    <copyField source="name_ro" dest="title"/>
+    <copyField source="name_ro" dest="txt_ro"/>
     <copyField source="otherFormsOfName_ro" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_ro" dest="parallelFormsOfName"/>
-    <copyField source="otherFormsOfName_ro" dest="txt_ro"/>
-    <copyField source="parallelFormsOfName_ro" dest="txt_ro"/>
     <copyField source="otherFormsOfName_ro" dest="text"/>
+    <copyField source="otherFormsOfName_ro" dest="txt_ro"/>
+    <copyField source="parallelFormsOfName_ro" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_ro" dest="text"/>
+    <copyField source="parallelFormsOfName_ro" dest="txt_ro"/>
+    <copyField source="scopeAndContent_ro" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_ro" dest="text"/>
+    <copyField source="scopeAndContent_ro" dest="txt_ro"/>
+    <copyField source="title_ro" dest="text"/>
+    <copyField source="title_ro" dest="txt_ro"/>
 
-    <copyField source="title_generic" dest="text"/>
-    <copyField source="name_generic" dest="text"/>
-    <copyField source="name_generic" dest="name"/>
-    <copyField source="name_generic" dest="title"/>
-    <copyField source="name_generic" dest="name_sort"/>
-    <copyField source="name_generic" dest="name_ngram"/>
-    <copyField source="scopeAndContent_generic" dest="scopeAndContent"/>
-    <copyField source="scopeAndContent_generic" dest="text"/>
+    <copyField source="abstract_generic" dest="text"/>
+    <copyField source="accessPoints_generic" dest="accessPointNames"/>
+    <copyField source="accessPoints_generic" dest="accessPoints"/>
+    <copyField source="accessPoints_generic" dest="accessPoints_facet"/>
+    <copyField source="accessPoints_generic" dest="text"/>
     <copyField source="archivalHistory_generic" dest="archivalHistory"/>
     <copyField source="archivalHistory_generic" dest="text"/>
     <copyField source="archivistNote_generic" dest="text"/>
-    <copyField source="abstract_generic" dest="text"/>
     <copyField source="biographicalHistory_generic" dest="biographicalHistory"/>
     <copyField source="biographicalHistory_generic" dest="text"/>
-    <copyField source="accessPoints_generic" dest="accessPoints"/>
-    <copyField source="accessPoints_generic" dest="accessPoints_facet"/>
-    <copyField source="accessPoints_generic" dest="accessPointNames"/>
-    <copyField source="accessPoints_generic" dest="text"/>
+    <copyField source="name_generic" dest="name"/>
+    <copyField source="name_generic" dest="name_ngram"/>
+    <copyField source="name_generic" dest="name_sort"/>
+    <copyField source="name_generic" dest="text"/>
+    <copyField source="name_generic" dest="title"/>
     <copyField source="otherFormsOfName_generic" dest="otherFormsOfName"/>
-    <copyField source="parallelFormsOfName_generic" dest="parallelFormsOfName"/>
     <copyField source="otherFormsOfName_generic" dest="text"/>
+    <copyField source="parallelFormsOfName_generic" dest="parallelFormsOfName"/>
     <copyField source="parallelFormsOfName_generic" dest="text"/>
+    <copyField source="scopeAndContent_generic" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_generic" dest="text"/>
+    <copyField source="title_generic" dest="text"/>
 
     <!-- field for the QueryParser to use when an explicit fieldname is absent -->
     <defaultSearchField>text</defaultSearchField>
