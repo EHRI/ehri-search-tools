@@ -52,9 +52,9 @@
                 <!-- Remove diacritics and white space tokenizer -->
                 <!-- treat hyphens equal to whitespace during query time -->
                 <filter class="solr.PatternReplaceFilterFactory" pattern="(\-)" replacement=" " replace="all"/>
-                <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="0" catenateNumbers="0" catenateAll="0" splitOnCaseChange="0" splitOnNumerics="0"/>
+                <filter class="solr.WordDelimiterGraphFilterFactory" generateWordParts="1" generateNumberParts="1" catenateWords="0" catenateNumbers="0" catenateAll="0" splitOnCaseChange="0" splitOnNumerics="0"/>
                 <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt"/>
-                <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
+                <filter class="solr.SynonymGraphFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
             </analyzer>
         </fieldType>

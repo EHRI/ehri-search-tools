@@ -1,5 +1,5 @@
 # Ubuntu-based Solr container
-FROM solr:6.4
+FROM solr:6.6
 
 ENV SOLR_HOME=/opt/solr/solr-config/ehri
 
