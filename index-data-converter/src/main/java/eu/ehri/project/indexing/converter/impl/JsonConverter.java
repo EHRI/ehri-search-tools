@@ -320,6 +320,22 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
             }
         }
 
+        // HACK: Get a collection ID, which is either the last
+        // ID in ancestorIds or the ID of the item itself
+        // (if ancestor IDs is empty)
+        if (data.containsKey("ancestorIds")) {
+            Object ancestorIds = data.get("ancestorIds");
+            if (ancestorIds instanceof List) {
+                List ancestors = (List) ancestorIds;
+                data.put("depth", ancestors.size());
+                if (!ancestors.isEmpty()) {
+                    data.put("collectionId", ancestors.get(ancestors.size() - 1));
+                } else {
+                    data.put("collectionId", Lists.newArrayList(data.get("itemId")));
+                }
+            }
+        }
+
         return data;
     }
 
