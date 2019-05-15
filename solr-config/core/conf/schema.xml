@@ -42,7 +42,6 @@
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
                 <!-- Remove diacritics and white space tokenizer -->
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt"/>
                 <filter class="solr.RemoveDuplicatesTokenFilterFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
             </analyzer>
