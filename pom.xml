@@ -7,7 +7,7 @@
     <groupId>ehri-project</groupId>
     <artifactId>search-tools</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.10</version>
+    <version>1.1.11</version>
     <modules>
         <module>solr-config</module>
         <module>index-data-converter</module>

@@ -297,9 +297,10 @@
         <field name="type" type="string" indexed="true" stored="true" multiValued="false" required="true"/>
         <field name="itemId" type="string" indexed="true" stored="true" multiValued="false" required="true"/>
         <field name="gid" type="long" indexed="true" stored="true" multiValued="false" required="false"/>
-        <field name="childCount" type="int" indexed="true" stored="true" default="0" multiValued="true"
-               required="false"/>
+        <field name="depth" type="int" indexed="true" stored="true" default="0" required="false"/>
+        <field name="childCount" type="int" indexed="true" stored="true" default="0" required="false"/>
         <field name="parentId" type="string" indexed="true" stored="true" multiValued="true"/>
+        <field name="collectionId" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="ancestorIds" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="dateStart" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="dateEnd" type="date" indexed="true" stored="true" multiValued="false"/>
@@ -338,7 +339,6 @@
         <field name="languageCode" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="countryCode" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="countryName" type="string" indexed="true" stored="true" multiValued="false"/>
-        <field name="depthOfDescription" type="int" indexed="true" stored="true"/>
         <field name="levelOfDescription" type="string" indexed="true" stored="true" multiValued="false"/>
         <field name="languageOfMaterial" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="typeOfEntity" type="string" indexed="true" stored="true" multiValued="false"/>
