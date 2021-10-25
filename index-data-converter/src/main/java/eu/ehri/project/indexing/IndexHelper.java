@@ -23,6 +23,7 @@ import org.apache.commons.cli.*;
 import javax.ws.rs.core.UriBuilder;
 import java.io.IOException;
 import java.net.URI;
+import java.util.Base64;
 import java.util.List;
 import java.util.Properties;
 
@@ -114,8 +115,7 @@ public class IndexHelper {
     }
 
 
-    @SuppressWarnings("static-access")
-    public static void main(String[] args) throws IOException, ParseException {
+    public static void main(String[] args) throws ParseException {
 
         // Long opts
         final String PRINT = "print";
@@ -130,6 +130,8 @@ public class IndexHelper {
         final String SOLR_URL = "solr";
         final String INDEX = "index";
         final String NO_CONVERT = "noconvert";
+        final String USERNAME = "username";
+        final String PASSWORD = "password";
         final String VERBOSE = "verbose";
         final String VERSION = "version";
         final String STATS = "stats";
@@ -173,6 +175,10 @@ public class IndexHelper {
         options.addOption(Option.builder().longOpt(VERSION)
                 .desc("Print the version number and exit.")
                 .build());
+        options.addOption("U", USERNAME, true,
+                "Data service basic authentication username");
+        options.addOption("p", PASSWORD, true,
+                "Data service basic authentication password");
         options.addOption("S", STATS, false, "Print indexing stats.");
         options.addOption("h", HELP, false, "Print this message.");
 
@@ -206,6 +212,11 @@ public class IndexHelper {
         String ehriUrl = cmd.getOptionValue(REST_URL, DEFAULT_EHRI_URL);
         String solrUrl = cmd.getOptionValue(SOLR_URL, DEFAULT_SOLR_URL);
         Properties restHeaders = cmd.getOptionProperties(HEADERS);
+        if (cmd.hasOption(USERNAME) && cmd.hasOption(PASSWORD)) {
+            String credentials = Base64.getEncoder()
+                    .encodeToString((cmd.getOptionValue(USERNAME) + ":" + cmd.getOptionValue(PASSWORD)).getBytes());
+            restHeaders.setProperty("Authorization", "Basic " + credentials);
+        }
 
         Pipeline.Builder<JsonNode, JsonNode> builder = new Pipeline.Builder<>();
 
@@ -219,18 +230,13 @@ public class IndexHelper {
 
         // Determine if we need to actually index the data...
         if (cmd.hasOption(INDEX)) {
-            builder.addSink(new IndexJsonSink(index, new IndexJsonSink.EventHandler() {
-                @Override
-                public void handleEvent(Object event) {
-                    System.err.println(event);
-                }
-            }));
+            builder.addSink(new IndexJsonSink(index, System.err::println));
         }
 
         // Determine if we want to convert the data or print the incoming
         // JSON as-is...
         builder.addConverter(cmd.hasOption(NO_CONVERT)
-                ? new NoopConverter<JsonNode>()
+                ? new NoopConverter<>()
                 : new JsonConverter());
 
         // See if we want to print stats... if so create a callback sink
