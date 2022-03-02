@@ -23,9 +23,6 @@
     </issueManagement>
 
     <distributionManagement>
-        <relocation>
-            <groupId>ehri-project</groupId>
-        </relocation>
         <site>
             <id>ehri-search-tools</id>
             <name>EHRI Search Tools Site</name>
