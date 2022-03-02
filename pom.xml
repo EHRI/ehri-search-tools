@@ -4,10 +4,10 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>ehri-project</groupId>
+    <groupId>eu.ehri-project</groupId>
     <artifactId>search-tools</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.11</version>
+    <version>1.1.12</version>
     <modules>
         <module>solr-config</module>
         <module>index-data-converter</module>
@@ -23,6 +23,9 @@
     </issueManagement>
 
     <distributionManagement>
+        <relocation>
+            <groupId>ehri-project</groupId>
+        </relocation>
         <site>
             <id>ehri-search-tools</id>
             <name>EHRI Search Tools Site</name>
