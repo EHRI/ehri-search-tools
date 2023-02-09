@@ -27,3 +27,9 @@ Television, Televisions, TV, TVs
 # Synonym mappings can be used for spelling correction too
 pixima => pixma
 
+# Domain specific synonyms (these is just a start)
+# US-UK spelling
+organisation,organization
+
+# Places
+kyiv,kiev

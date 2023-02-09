@@ -149,4 +149,14 @@ public class SearchTest extends AbstractSolrTest {
                 .assertThat("$.grouped.itemId.doclist.docs[0].itemId",
                         equalTo("lu-002885-af-ae-aw"));
     }
+
+    @Test
+    public void testSynonymsGiveSameResults() throws Exception {
+        String json1 = runSearch("organisation");
+        String json2 = runSearch("organization");
+
+        int expected = 371;
+        with(json1).assertThat("$.grouped.itemId.matches", equalTo(expected));
+        with(json2).assertThat("$.grouped.itemId.matches", equalTo(expected));
+    }
 }
