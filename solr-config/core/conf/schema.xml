@@ -23,6 +23,7 @@
         <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0"/>
         <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
         <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="date_range" class="solr.DateRangeField" />
 
         <!-- Case-insensitive exact-match field -->
         <fieldType name="string_ci" class="solr.TextField" sortMissingLast="true" omitNorms="true">
@@ -303,7 +304,7 @@
         <field name="ancestorIds" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="dateStart" type="date" indexed="true" stored="true" multiValued="false"/>
         <field name="dateEnd" type="date" indexed="true" stored="true" multiValued="false"/>
-        <field name="dateRange" type="date" indexed="true" stored="true" multiValued="true"/>
+        <field name="dateRange" type="date_range" indexed="true" stored="true" multiValued="true"/>
         <field name="isTopLevel" type="boolean" indexed="true" stored="true" multiValued="false"/>
         <field name="isParent" type="boolean" indexed="true" stored="true" multiValued="false" default="false" />
         <field name="repositoryId" type="string" indexed="true" stored="true" multiValued="false"/>
