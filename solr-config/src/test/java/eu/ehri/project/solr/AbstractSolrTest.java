@@ -38,6 +38,11 @@ public abstract class AbstractSolrTest extends SolrTestCaseJ4 {
         return getSolrConfigPath("schema.xml");
     }
 
+    public static final String standardFields =
+            "itemId^15 identifier^10 name^8 title^8 otherFormsOfName^8 parallelFormsOfName^8 altName^10 name_sort text ";
+    public static final String multiLingualFields =
+            "txt_bg txt_cs txt_da txt_en txt_de txt_el txt_fi txt_fr txt_hu txt_it txt_lv txt_no txt_pl txt_ro txt_ru";
+
     /**
      * The standard EHRI query params. Items are grouped by itemId because
      * there may be multiple documents representing descriptions for the
@@ -65,9 +70,7 @@ public abstract class AbstractSolrTest extends SolrTestCaseJ4 {
             "facet", "true",
             "facet.minCount", "1",
             // query fields
-            "qf", "itemId^15 identifier^10 name^8 title^8 otherFormsOfName^8 " +
-                "parallelFormsOfName^8 altName^10 " +
-                "name_sort text",
+            "qf", standardFields + multiLingualFields,
             // spellcheck
             "spellcheck", "true",
             "spellcheck.count", "10",
@@ -75,7 +78,10 @@ public abstract class AbstractSolrTest extends SolrTestCaseJ4 {
             "spellcheck.accuracy", "0.6",
             "spellcheck.collate", "true",
             "spellcheck.maxCollations", "10",
-            "spellcheck.maxCollationTries", "10"
+            "spellcheck.maxCollationTries", "10",
+            // minimum match, simulating AND for 3 or fewer terms
+            "mm", "3<90%",
+            "mm.autoRelax", "true"
         );
     }
 
@@ -87,7 +93,7 @@ public abstract class AbstractSolrTest extends SolrTestCaseJ4 {
         for (int i = 0; i < otherParams.length; i += 2) {
             basic.set(otherParams[i], otherParams[i+1]);
         }
-        System.out.println(basic.toString());
+        System.out.println(basic);
         return basic;
     }
 

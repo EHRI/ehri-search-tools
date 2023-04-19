@@ -3,7 +3,8 @@ package eu.ehri.project.solr;
 import com.jayway.jsonpath.JsonPath;
 import org.apache.solr.SolrTestCaseJ4;
 import org.junit.Test;
-import static com.jayway.jsonassert.JsonAssert.*;
+
+import static com.jayway.jsonassert.JsonAssert.with;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 
@@ -144,7 +145,7 @@ public class SearchTest extends AbstractSolrTest {
         // in the title. This doesn't work correctly unless 'generateNumberParts' is true
         // in the WordDelimiterFilterFactory
         String json = runSearch("1923-2000", "fq", "type:DocumentaryUnit");
-        System.out.println(json);
+        //System.out.println(json);
         with(json)
                 .assertThat("$.grouped.itemId.doclist.docs[0].itemId",
                         equalTo("lu-002885-af-ae-aw"));
@@ -152,11 +153,20 @@ public class SearchTest extends AbstractSolrTest {
 
     @Test
     public void testSynonymsGiveSameResults() throws Exception {
-        String json1 = runSearch("organisation");
-        String json2 = runSearch("organization");
+        // NB: only text_general uses the synonyms file,
+        // so exclude the language fields from the search..
+        String json1 = runSearch("organisation", "qf", standardFields);
+        String json2 = runSearch("organization", "qf", standardFields);
 
         int expected = 371;
         with(json1).assertThat("$.grouped.itemId.matches", equalTo(expected));
         with(json2).assertThat("$.grouped.itemId.matches", equalTo(expected));
+    }
+
+    @Test
+    public void testElisionWithMinimumMatch() throws Exception {
+        String json = runSearch("Archives Nationales d'Outre-mer", "fq", "type:Repository");
+        with(json)
+                .assertThat("$.grouped.itemId.matches", equalTo(1));
     }
 }
