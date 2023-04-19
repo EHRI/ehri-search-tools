@@ -84,7 +84,7 @@
         </fieldType>
 
         <!-- some examples for different languages (generally ordered by ISO code) -->
-        <!-- Polish, no present in the distribution, has been added. Read README.md file to install -->
+        <!-- Polish, not present in the distribution, has been added. Read README.md file to install -->
         <!-- the necessary libraries and stopwords list -->
 
         <!-- Bulgarian -->
@@ -92,7 +92,7 @@
             <analyzer>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_bg.txt"/>
                 <filter class="solr.BulgarianStemFilterFactory"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
             </analyzer>
@@ -105,7 +105,7 @@
             <analyzer>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_cs.txt"/>
                 <filter class="solr.CzechStemFilterFactory"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
             </analyzer>
@@ -116,7 +116,7 @@
             <analyzer>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt" format="snowball"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_da.txt" format="snowball"/>
                 <filter class="solr.SnowballPorterFilterFactory" language="Danish"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
             </analyzer>
@@ -127,7 +127,7 @@
         <fieldType name="text_en" class="solr.TextField" positionIncrementGap="100">
             <analyzer type="index">
                 <tokenizer class="solr.StandardTokenizerFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
                 <filter class="solr.EnglishPossessiveFilterFactory"/>
@@ -144,7 +144,7 @@
             <analyzer>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt" format="snowball"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_de.txt" format="snowball"/>
                 <filter class="solr.GermanNormalizationFilterFactory"/>
                 <filter class="solr.GermanLightStemFilterFactory"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
@@ -159,7 +159,7 @@
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <!-- greek specific lowercase for sigma -->
                 <filter class="solr.GreekLowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="false" words="generic_swl.txt"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="false" words="lang/stopwords_el.txt"/>
                 <filter class="solr.GreekStemFilterFactory"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
             </analyzer>
@@ -170,7 +170,7 @@
             <analyzer>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt" format="snowball"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_fi.txt" format="snowball"/>
                 <filter class="solr.SnowballPorterFilterFactory" language="Finnish"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
                 <!-- less aggressive: <filter class="solr.FinnishLightStemFilterFactory"/> -->
@@ -184,7 +184,7 @@
                 <!-- removes l', etc -->
                 <filter class="solr.ElisionFilterFactory" ignoreCase="true" articles="lang/contractions_fr.txt"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt" format="snowball"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_fr.txt" format="snowball"/>
                 <filter class="solr.FrenchLightStemFilterFactory"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
                 <!-- less aggressive: <filter class="solr.FrenchMinimalStemFilterFactory"/> -->
@@ -198,7 +198,7 @@
             <analyzer>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt" format="snowball"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_hu.txt" format="snowball"/>
                 <filter class="solr.SnowballPorterFilterFactory" language="Hungarian"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
                 <!-- less aggressive: <filter class="solr.HungarianLightStemFilterFactory"/> -->
@@ -212,7 +212,7 @@
                 <!-- removes l', etc -->
                 <filter class="solr.ElisionFilterFactory" ignoreCase="true" articles="lang/contractions_it.txt"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt" format="snowball"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_it.txt" format="snowball"/>
                 <filter class="solr.ItalianLightStemFilterFactory"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
                 <!-- more aggressive: <filter class="solr.SnowballPorterFilterFactory" language="Italian"/> -->
@@ -224,7 +224,7 @@
             <analyzer>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_lv.txt"/>
                 <filter class="solr.LatvianStemFilterFactory"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
             </analyzer>
@@ -235,7 +235,7 @@
             <analyzer>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt" format="snowball"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_nl.txt" format="snowball"/>
                 <filter class="solr.StemmerOverrideFilterFactory" dictionary="lang/stemdict_nl.txt" ignoreCase="false"/>
                 <filter class="solr.SnowballPorterFilterFactory" language="Dutch"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
@@ -247,7 +247,7 @@
             <analyzer>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt" format="snowball"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_no.txt" format="snowball"/>
                 <filter class="solr.SnowballPorterFilterFactory" language="Norwegian"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
                 <!-- less aggressive: <filter class="solr.NorwegianLightStemFilterFactory" variant="nb"/> -->
@@ -261,7 +261,7 @@
             <analyzer>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_pl.txt"/>
                 <filter class="solr.MorfologikFilterFactory"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
             </analyzer>
@@ -272,7 +272,7 @@
             <analyzer>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_ro.txt"/>
                 <filter class="solr.SnowballPorterFilterFactory" language="Romanian"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
             </analyzer>
@@ -283,7 +283,7 @@
             <analyzer>
                 <tokenizer class="solr.StandardTokenizerFactory"/>
                 <filter class="solr.LowerCaseFilterFactory"/>
-                <filter class="solr.StopFilterFactory" ignoreCase="true" words="generic_swl.txt" format="snowball"/>
+                <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_ru.txt" format="snowball"/>
                 <filter class="solr.SnowballPorterFilterFactory" language="Russian"/>
                 <filter class="solr.ICUFoldingFilterFactory"/>
                 <!-- less aggressive: <filter class="solr.RussianLightStemFilterFactory"/> -->
@@ -598,7 +598,7 @@
         <field name="biographicalHistory_ro" type="text_ro" indexed="true" stored="false" termVectors="true" multiValued="false"/>
         <field name="accessPoints_ro" type="text_ro" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
-        <!-- when language detection modul is not able to identify the language -->
+        <!-- when language detection module is not able to identify the language -->
         <!-- the field will be annotated as "generic" -->
         <field name="title_generic" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
         <field name="name_generic" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="false"/>
