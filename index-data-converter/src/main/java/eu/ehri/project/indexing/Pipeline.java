@@ -28,7 +28,7 @@ public class Pipeline<S, E> {
     public static class Builder<S, E> {
         private final List<Source<? extends S>> sources = Lists.newArrayList();
         private final List<Converter< S, ? extends E>> converters = Lists.newArrayList();
-        private final List<Sink<? super E>> writers = Lists.newArrayList();
+        private final List<Sink<E>> writers = Lists.newArrayList();
 
         public Builder<S, E> addSink(Sink<E> writer) {
             writers.add(writer);
