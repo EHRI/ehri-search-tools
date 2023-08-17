@@ -81,7 +81,9 @@ public abstract class AbstractSolrTest extends SolrTestCaseJ4 {
             "spellcheck.maxCollationTries", "10",
             // minimum match, simulating AND for 3 or fewer terms
             "mm", "3<90%",
-            "mm.autoRelax", "true"
+            "mm.autoRelax", "true",
+            "df", "text",
+            "q.op", "or"
         );
     }
 

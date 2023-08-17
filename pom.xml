@@ -7,14 +7,14 @@
     <groupId>eu.ehri-project</groupId>
     <artifactId>search-tools</artifactId>
     <packaging>pom</packaging>
-    <version>1.1.13</version>
+    <version>2.0.0</version>
     <modules>
         <module>solr-config</module>
         <module>index-data-converter</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <solr.version>6.6.6</solr.version>
+        <solr.version>7.7.3</solr.version>
     </properties>
 
     <issueManagement>
