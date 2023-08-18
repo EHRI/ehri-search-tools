@@ -8,7 +8,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.jayway.jsonpath.*;
-import com.jayway.jsonpath.internal.spi.json.JacksonJsonProvider;
+import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
 import eu.ehri.project.indexing.converter.Converter;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
@@ -24,6 +24,7 @@ import java.util.*;
 public class JsonConverter implements Converter<JsonNode, JsonNode> {
 
     private static final Logger logger = LoggerFactory.getLogger(JsonConverter.class);
+
 
     /**
      * Set of key -> JsonPath extractors
@@ -84,7 +85,8 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
     }
 
     public JsonConverter() {
-        parseContext = JsonPath.using(new JacksonJsonProvider());
+        Configuration config = Configuration.defaultConfiguration().jsonProvider(new JacksonJsonProvider());
+        parseContext = JsonPath.using(config);
     }
 
     /**

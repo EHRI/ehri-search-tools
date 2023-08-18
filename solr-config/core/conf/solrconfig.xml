@@ -17,7 +17,7 @@
 -->
 
 <config>
-    <luceneMatchVersion>LUCENE_6_1_0</luceneMatchVersion>
+    <luceneMatchVersion>LUCENE_7_0_0</luceneMatchVersion>
 
     <!-- Use the classic schema for the time being, since managed is the default since 2.6 -->
     <schemaFactory class="ClassicIndexSchemaFactory"/>

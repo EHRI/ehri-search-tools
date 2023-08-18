@@ -62,7 +62,7 @@ public class PipelineTest {
 
         assertEquals(2, stats.getCount());
         assertEquals(2, outText.size());
-        assertEquals("<test>\n<foo>bar</foo>\n</test>\n", outText.get(0));
+        assertEquals("<test>\n    <foo>bar</foo>\n</test>\n", outText.get(0));
     }
 
     @Test(expected = IllegalStateException.class)
