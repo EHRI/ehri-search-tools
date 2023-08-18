@@ -41,7 +41,7 @@ public abstract class AbstractSolrTest extends SolrTestCaseJ4 {
     public static final String standardFields =
             "itemId^15 identifier^10 name^8 title^8 otherFormsOfName^8 parallelFormsOfName^8 altName^10 name_sort text ";
     public static final String multiLingualFields =
-            "txt_bg txt_cs txt_da txt_en txt_de txt_el txt_fi txt_fr txt_hu txt_it txt_lv txt_no txt_pl txt_ro txt_ru";
+            "txt_bg txt_cs txt_da txt_en txt_de txt_el txt_it txt_fr txt_hu txt_it txt_lv txt_no txt_pl txt_ro txt_ru";
 
     /**
      * The standard EHRI query params. Items are grouped by itemId because

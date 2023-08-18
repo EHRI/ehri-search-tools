@@ -90,17 +90,17 @@
         <dependency>
             <groupId>org.carrot2</groupId>
             <artifactId>morfologik-stemming</artifactId>
-            <version>2.1.0</version>
+            <version>2.1.5</version>
         </dependency>
         <dependency>
             <groupId>org.carrot2</groupId>
             <artifactId>morfologik-fsa</artifactId>
-            <version>2.1.0</version>
+            <version>2.1.5</version>
         </dependency>
         <dependency>
             <groupId>org.carrot2</groupId>
             <artifactId>morfologik-polish</artifactId>
-            <version>2.1.0</version>
+            <version>2.1.5</version>
         </dependency>
 
         <dependency>

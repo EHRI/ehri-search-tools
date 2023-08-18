@@ -406,6 +406,7 @@
         <field name="txt_pl" type="text_pl" indexed="true" stored="false" termVectors="true" multiValued="true"/>
         <field name="txt_de" type="text_de" indexed="true" stored="false" termVectors="true" multiValued="true"/>
         <field name="txt_nl" type="text_nl" indexed="true" stored="false" termVectors="true" multiValued="true"/>
+        <field name="txt_bg" type="text_bg" indexed="true" stored="false" termVectors="true" multiValued="true"/>
         <field name="txt_cs" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="true"/>
         <field name="txt_it" type="text_it" indexed="true" stored="false" termVectors="true" multiValued="true"/>
         <field name="txt_fr" type="text_fr" indexed="true" stored="false" termVectors="true" multiValued="true"/>
@@ -498,6 +499,17 @@
         <field name="abstract_nl" type="text_nl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
         <field name="biographicalHistory_nl" type="text_nl" indexed="true" stored="false" termVectors="true" multiValued="false"/>
         <field name="accessPoints_nl" type="text_nl" indexed="true" stored="false" termVectors="true" multiValued="true"/>
+
+        <field name="title_bg" type="text_bg" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="name_bg" type="text_bg" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="otherFormsOfName_bg" type="text_bg" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="parallelFormsOfName_bg" type="text_bg" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="scopeAndContent_bg" type="text_bg" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivalHistory_bg" type="text_bg" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="archivistNote_bg" type="text_bg" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="abstract_bg" type="text_bg" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="biographicalHistory_bg" type="text_bg" indexed="true" stored="false" termVectors="true" multiValued="false"/>
+        <field name="accessPoints_bg" type="text_bg" indexed="true" stored="false" termVectors="true" multiValued="true"/>
 
         <field name="title_cs" type="text_cs" indexed="true" stored="false" termVectors="true" multiValued="false"/>
         <field name="name_cs" type="text_cs" indexed="true" stored="false" termVectors="true" multiValued="false"/>
@@ -854,6 +866,39 @@
     <copyField source="scopeAndContent_nl" dest="txt_nl"/>
     <copyField source="title_nl" dest="text"/>
     <copyField source="title_nl" dest="txt_nl"/>
+
+    <copyField source="abstract_bg" dest="text"/>
+    <copyField source="abstract_bg" dest="txt_bg"/>
+    <copyField source="accessPoints_bg" dest="accessPointNames"/>
+    <copyField source="accessPoints_bg" dest="accessPoints"/>
+    <copyField source="accessPoints_bg" dest="accessPoints_facet"/>
+    <copyField source="accessPoints_bg" dest="text"/>
+    <copyField source="accessPoints_bg" dest="txt_bg"/>
+    <copyField source="archivalHistory_bg" dest="archivalHistory"/>
+    <copyField source="archivalHistory_bg" dest="text"/>
+    <copyField source="archivalHistory_bg" dest="txt_bg"/>
+    <copyField source="archivistNote_bg" dest="text"/>
+    <copyField source="archivistNote_bg" dest="txt_bg"/>
+    <copyField source="biographicalHistory_bg" dest="biographicalHistory"/>
+    <copyField source="biographicalHistory_bg" dest="text"/>
+    <copyField source="biographicalHistory_bg" dest="txt_bg"/>
+    <copyField source="name_bg" dest="name"/>
+    <copyField source="name_bg" dest="name_ngram"/>
+    <copyField source="name_bg" dest="name_sort"/>
+    <copyField source="name_bg" dest="text"/>
+    <copyField source="name_bg" dest="title"/>
+    <copyField source="name_bg" dest="txt_bg"/>
+    <copyField source="otherFormsOfName_bg" dest="otherFormsOfName"/>
+    <copyField source="otherFormsOfName_bg" dest="text"/>
+    <copyField source="otherFormsOfName_bg" dest="txt_bg"/>
+    <copyField source="parallelFormsOfName_bg" dest="parallelFormsOfName"/>
+    <copyField source="parallelFormsOfName_bg" dest="text"/>
+    <copyField source="parallelFormsOfName_bg" dest="txt_bg"/>
+    <copyField source="scopeAndContent_bg" dest="scopeAndContent"/>
+    <copyField source="scopeAndContent_bg" dest="text"/>
+    <copyField source="scopeAndContent_bg" dest="txt_bg"/>
+    <copyField source="title_bg" dest="text"/>
+    <copyField source="title_bg" dest="txt_bg"/>
 
     <copyField source="abstract_cs" dest="text"/>
     <copyField source="abstract_cs" dest="txt_cs"/>

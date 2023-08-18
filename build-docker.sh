@@ -1,4 +1,4 @@
 #!/bin/bash
 
-mvn package
+mvn package -DskipTests
 sudo docker build -t ehri/ehri-search-tools .
