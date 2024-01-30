@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/EHRI/ehri-search-tools.svg?branch=master)](https://travis-ci.org/EHRI/ehri-search-tools)
+[![Java CI with Maven](https://github.com/EHRI/ehri-search-tools/actions/workflows/CI.yml/badge.svg)](https://github.com/EHRI/ehri-search-tools/actions/workflows/CI.yml)
 
 # EHRI Solr Configuration & Tools
 
@@ -34,9 +34,7 @@ mvn package -pl solr-config # will generate the tar solr-config/target/solr-conf
 The `fabfile.py` handles some deployment tasks, viewable by running `fab --list`. These include:
 
 ```
-    clean_deploy    Build a clean version and deploy.
-    copy_solr_core  Copy the Solr lib, plus core config files to the server
-    copy_to_server  Upload the indexer tool to its target directory.
     deploy          Deploy the indexer tool, copy the Solr config, set the permissions
+    copy-solr-core  Copy the Solr lib, plus core config files to the server
     reload          Reload Solr config files by restarting the portal core.
 ```
