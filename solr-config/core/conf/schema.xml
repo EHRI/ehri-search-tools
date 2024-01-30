@@ -33,6 +33,16 @@
             </analyzer>
         </fieldType>
 
+        <!-- Case-insensitive field for URLs -->
+        <fieldType name="url_ci" class="solr.TextField" sortMissingLast="true" omitNorms="true">
+            <analyzer>
+                <tokenizer class="solr.KeywordTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory" />
+                <!-- Truncate URLs to 300 chars -->
+                <filter class="solr.LengthFilterFactory" min="0" max="300" />
+            </analyzer>
+        </fieldType>
+
         <!-- A general text field that has reasonable, generic
           cross-language defaults: it tokenizes with StandardTokenizer,
           removes stop words from case-insensitive "stopwords.txt"
@@ -326,6 +336,7 @@
         <field name="text" type="text_general" indexed="true" stored="false" termVectors="true" multiValued="true"/>
         <field name="otherFormsOfName" type="text_general" indexed="true" stored="true" multiValued="true"/>
         <field name="parallelFormsOfName" type="text_general" indexed="true" stored="true" multiValued="true"/>
+        <field name="urls" type="url_ci" indexed="true" stored="true" multiValued="true" />
         <!-- altName has a string case-insensitive type more suited for acronyms
              that may also - and this has happened! - be multi-lingual stop words. -->
         <field name="altName" type="string_ci" indexed="true" stored="true" multiValued="true"/>

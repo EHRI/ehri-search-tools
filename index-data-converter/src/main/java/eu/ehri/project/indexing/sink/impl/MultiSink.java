@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Aggregate several sink together.
  */
-public class MultiSink<T, W extends Sink<? super T>> implements Sink<T> {
+public class MultiSink<T, W extends Sink<T>> implements Sink<T> {
 
     private final List<W> writers;
 
