@@ -3,6 +3,9 @@ package eu.ehri.project.indexing.converter.impl;
 import com.fasterxml.jackson.core.JsonToken;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -48,6 +51,11 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
     // JSON mapper
     private static final ObjectMapper mapper = new ObjectMapper();
 
+    // Languages for which we generate parallelFormsOfName for countries
+    private static final List<String> parallelFormsLanguages = Lists.newArrayList(
+            "de", "fr", "it", "es", "nl", "pl", "cs", "hu", "ru", "uk", "he", "ro"
+    );
+
     /**
      * Default locale for language/country conversions...
      */
@@ -68,20 +76,30 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
             "xk", "Kosovo"
     );
 
-    /**
-     * Static lookup of country names.
-     */
-    private static final ImmutableMap<String, String> countryLookup;
+    private final LoadingCache<String, String> countryNames = CacheBuilder.newBuilder()
+            .build(new CacheLoader<String, String>() {
+                @Override
+                public String load(String countryCode) throws Exception {
+                    if (additionalCountries.containsKey(countryCode)) {
+                        return additionalCountries.get(countryCode);
+                    }
+                    return new Locale(defaultLocale.getLanguage(), countryCode).getDisplayCountry();
+                }
+            });
 
-    static {
-        Map<String, String> countries = Maps.newHashMap();
-        for (String cc : Locale.getISOCountries()) {
-            countries.put(cc.toLowerCase(),
-                    new Locale(defaultLocale.getLanguage(), cc).getDisplayCountry());
-        }
-        countries.putAll(additionalCountries);
-        countryLookup = ImmutableMap.copyOf(countries);
-    }
+    private final LoadingCache<String, List<String>> countryAltNames = CacheBuilder.newBuilder()
+            .build(new CacheLoader<String, List<String>>() {
+                @Override
+                public List<String> load(String countryCode) throws Exception {
+                    List<String> names = Lists.newArrayList();
+                    for (String lang : parallelFormsLanguages) {
+                        Locale pl = new Locale(lang, countryCode);
+                        final String displayCountry = pl.getDisplayCountry(pl);
+                        names.add(displayCountry);
+                    }
+                    return names;
+                }
+            });
 
     public JsonConverter() {
         parseContext = JsonPath.using(new JacksonJsonProvider());
@@ -218,7 +236,7 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
      * @param data The original data.
      * @return The enhanced data.
      */
-    public static Map<String, Object> postProcess(Map<String, Object> data) {
+    public Map<String, Object> postProcess(Map<String, Object> data) {
         // Extract the ID, which should always be there...
         String id = (String) data.get("id");
 
@@ -287,12 +305,13 @@ public class JsonConverter implements Converter<JsonNode, JsonNode> {
 
         // HACK: if countryCode is set, translate it to a name in the default locale:
         if (data.containsKey("countryCode")) {
-            data.put("countryName", countryLookup.get(data.get("countryCode")));
+            data.put("countryName", countryNames.getUnchecked((String)data.get("countryCode")));
         }
 
         // HACK: Set country name to name field on country type
         if ("Country".equals(data.get("type"))) {
-            data.put("name", countryLookup.get(id));
+            data.put("name", countryNames.getUnchecked(id));
+            data.put("parallelFormsOfName", countryAltNames.getUnchecked(id));
         }
 
         // HACK: Set charCount field as sum of string field data...

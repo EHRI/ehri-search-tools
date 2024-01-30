@@ -1,0 +1,46 @@
+[
+  {
+    "id": "ar",
+    "type": "Country",
+    "data": {
+      "identifier": "ar"
+    },
+    "meta": {
+      "childCount": 10,
+      "gid": 24343
+    },
+    "relationships": {
+      "lifecycleEvent": [
+        {
+          "id": "cccabcea-a251-11e9-b486-2f17457d63cb",
+          "type": "SystemEvent",
+          "data": {
+            "eventType": "modification",
+            "timestamp": "2019-07-09T14:59:42.340+01:00"
+          },
+          "meta": {
+            "childCount": 1
+          },
+          "relationships": {
+            "hasActioner": [
+              {
+                "id": "user001727",
+                "type": "UserProfile",
+                "data": {
+                  "identifier": "user001727",
+                  "name": "Test"
+                },
+                "meta": {
+                  "followers": 0,
+                  "watching": 0,
+                  "following": 2
+                },
+                "relationships": {}
+              }
+            ]
+          }
+        }
+      ]
+    }
+  }
+]

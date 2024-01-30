@@ -24,63 +24,69 @@ import static org.junit.Assert.assertNotSame;
 public class JsonConverterTest {
 
     private static final List<String> inputResources = ImmutableList.of(
-            "inputdoc1.json", "inputdoc2.json", "inputdoc3.json", "inputdoc4.json", "inputdoc5.json", "inputdoc1" +
-                    ".json", "inputdoc2.json", "inputdoc6.json", "inputdoc7.json"
+            "inputdoc1.json", "inputdoc2.json", "inputdoc3.json", "inputdoc4.json", "inputdoc5.json",
+            "inputdoc1.json", "inputdoc2.json", "inputdoc6.json", "inputdoc7.json", "inputdoc8.json"
     );
 
-    private static final List<Integer> expectedNodeCount = ImmutableList.of(1, 2, 1, 1, 1, 1, 2, 1, 1);
+    private static final List<Integer> expectedNodeCount = ImmutableList.of(1, 2, 1, 1, 1, 1, 2, 1, 1, 1);
 
-    private static final ImmutableList<ImmutableMap<String,Object>> expected = ImmutableList.of(
-            ImmutableMap.<String,Object>of(
+    private static final ImmutableList<ImmutableMap<String, Object>> expected = ImmutableList.of(
+            ImmutableMap.of(
                     "id", "eb747649-4f7b-4874-98cf-f236d2b5fa1d",
                     "itemId", "003348-wl1729",
                     "type", "DocumentaryUnit",
                     "name", "Herta Berg: family recipe note books",
                     "isParent", false
             ),
-            ImmutableMap.<String,Object>of(
+            ImmutableMap.of(
                     "id", "be-002112-ca-eng",
                     "itemId", "be-002112-ca",
                     "type", "DocumentaryUnit",
                     "otherFormsOfName", Lists.newArrayList("CEGESOMA Photographic Archives"),
                     "isParent", true
             ),
-            ImmutableMap.<String,Object>of(
+            ImmutableMap.of(
                     "id", "mike",
                     "itemId", "mike",
                     "type", "UserProfile",
                     "name", "Mike",
                     "isParent", false
             ),
-            ImmutableMap.<String,Object>of(
+            ImmutableMap.of(
                     "id", "380f80b0-7490-11e4-813b-a3ef93d0d496",
                     "annotatorId", "mike",
                     "annotatorName", "Mike",
                     "type", "Annotation"
             ),
-            ImmutableMap.<String,Object>of(
+            ImmutableMap.of(
                     "id", "hierarchy-test",
                     "parentId", "hierarchy-test-p1",
                     "isTopLevel", false,
                     "ancestorIds", Lists.newArrayList("hierarchy-test-p1", "hierarchy-test-p2", "hierarchy-test-p3")
             ),
-            ImmutableMap.<String,Object>of(
-                    "subjects", Lists.newArrayList("Refugees","Emigration","Persecution","Jewish","Holocaust",
-                            "Migration", "Nazism","Jews"),
-                    "places", Lists.newArrayList("London","Vienna - Austria"),
-                    "people", Lists.newArrayList("Berg, Susanne","Berg, Gustav","Berg, Herta. née Bass")
+            ImmutableMap.of(
+                    "subjects", Lists.newArrayList("Refugees", "Emigration", "Persecution", "Jewish", "Holocaust",
+                            "Migration", "Nazism", "Jews"),
+                    "places", Lists.newArrayList("London", "Vienna - Austria"),
+                    "people", Lists.newArrayList("Berg, Susanne", "Berg, Gustav", "Berg, Herta. née Bass")
             ),
-            ImmutableMap.<String,Object>of(
+            ImmutableMap.of(
                     // Language of materials, an array value in multiple descriptions means
                     // we'll get all values of all descriptions, which probably means duplication.
                     // However, I think we can live with this.
                     "languageOfMaterial", Lists.newArrayList("eng", "fre", "eng", "fre")
             ),
-            ImmutableMap.<String,Object>of(
+            ImmutableMap.of(
                     "holderName", "Ehri Corporate Bodies"
             ),
-            ImmutableMap.<String,Object>of(
+            ImmutableMap.<String, Object>of(
                     "linkType", Lists.newArrayList("associative")
+            ),
+            ImmutableMap.of(
+                    "id", "ar",
+                    "name", "Argentina",
+                    "parallelFormsOfName", Lists.newArrayList("Argentinien","Argentine","Argentina","Argentina","Argentinië","Argentyna","Argentina","Argentína","Аргентина","Аргентина","ארגנטינה","Argentina"),
+                    "type", "Country"
             )
     );
 
@@ -116,9 +122,9 @@ public class JsonConverterTest {
     public void testOutputDoc1ContainsRightValues() throws Exception {
         for (int i = 0; i < expected.size(); i++) {
             JsonNode out = Iterables.get(new JsonConverter().convert(inputs.get(i)), 0);
-            System.out.println(out.toString());
+            // System.out.println(out.toString());
             JsonAsserter asserter = with(out.toString());
-            for (Map.Entry<String,Object> entry : expected.get(i).entrySet()) {
+            for (Map.Entry<String, Object> entry : expected.get(i).entrySet()) {
                 asserter.assertThat("$." + entry.getKey(), equalTo(entry.getValue()), "Doc " + (i + 1) + " incorrect");
             }
         }
