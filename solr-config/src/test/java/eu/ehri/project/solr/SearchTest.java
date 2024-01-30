@@ -10,10 +10,6 @@ import static org.hamcrest.Matchers.greaterThan;
 
 /**
  * Test for query functionality.
- *
- * Details on JSON path matching here:
- *
- *   http://code.google.com/p/json-path/
  */
 @SolrTestCaseJ4.SuppressSSL
 public class SearchTest extends AbstractSolrTest {
