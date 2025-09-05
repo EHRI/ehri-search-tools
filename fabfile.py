@@ -8,7 +8,6 @@ from datetime import datetime
 
 from fabric import task
 from invoke import run as local
-from patchwork import files
 
 tool_name = 'index-data-converter'
 service_name = 'solr'
@@ -39,7 +38,7 @@ def deploy(ctx, clean=False):
     copy_solr_core(ctx)
 
     # Set correct permissions on config files...
-    ctx.run(f"chown -RH $USER.webadm {config_path}")
+    ctx.run(f"chown -RH $USER:webadm {config_path}")
     ctx.run(f"chmod -R g+w {config_path}")
 
     reload(ctx)
