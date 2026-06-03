@@ -308,6 +308,7 @@
         <field name="type" type="string" indexed="true" stored="true" multiValued="false" required="true"/>
         <field name="itemId" type="string" indexed="true" stored="true" multiValued="false" required="true"/>
         <field name="gid" type="long" indexed="true" stored="true" multiValued="false" required="false"/>
+        <field name="pid" type="string" indexed="true" stored="true" multiValued="false" required="false"/>
         <field name="childCount" type="int" indexed="true" stored="true" default="0" multiValued="false" required="false"/>
         <field name="parentId" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="ancestorIds" type="string" indexed="true" stored="true" multiValued="true"/>
