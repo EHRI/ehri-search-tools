@@ -17,12 +17,12 @@
 <schema name="portal schema" version="1.1">
     <types>
         <fieldtype name="string" class="solr.StrField" sortMissingLast="true" omitNorms="true"/>
-        <fieldType name="date" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="date" class="solr.DatePointField" docValues="true"/>
         <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
-        <fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
-        <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0"/>
-        <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
-        <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
+        <fieldType name="int" class="solr.IntPointField" docValues="true"/>
+        <fieldType name="float" class="solr.FloatPointField" docValues="true"/>
+        <fieldType name="long" class="solr.LongPointField" docValues="true"/>
+        <fieldType name="double" class="solr.DoublePointField" docValues="true"/>
         <fieldType name="date_range" class="solr.DateRangeField" />
 
         <!-- Case-insensitive exact-match field -->
@@ -72,11 +72,13 @@
 
         <fieldType name="text_general_edge_ngram" class="solr.TextField" positionIncrementGap="100">
             <analyzer type="index">
-                <tokenizer class="solr.LowerCaseTokenizerFactory"/>
+                <tokenizer class="solr.LetterTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
                 <filter class="solr.EdgeNGramFilterFactory" minGramSize="1" maxGramSize="15"/>
             </analyzer>
             <analyzer type="query">
-                <tokenizer class="solr.LowerCaseTokenizerFactory"/>
+                <tokenizer class="solr.LetterTokenizerFactory"/>
+                <filter class="solr.LowerCaseFilterFactory"/>
             </analyzer>
         </fieldType>
 
@@ -300,7 +302,7 @@
             </analyzer>
         </fieldType>
 
-        <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
+        <fieldType name="location" class="solr.LatLonPointSpatialField" docValues="true"/>
     </types>
     <fields>
         <!-- general -->
@@ -380,7 +382,10 @@
         <field name="targetTypes" type="string" indexed="true" stored="true" multiValued="true"/>
         <field name="targetCount" type="int" indexed="true" stored="true"/>
         <field name="addresses" type="text_general" indexed="true" stored="true" multiValued="true"/>
-        <field name="priority" type="int" indexed="true" stored="true"/>
+        <!-- NB: priority is a string rather than an int since it is used as a field facet
+             with grouping (group.facet=true), and grouped faceting does not support
+             numeric Point fields (Trie fields having been removed in Solr 9.) -->
+        <field name="priority" type="string" indexed="true" stored="true"/>
         <field name="creationProcess" type="string" indexed="true" stored="true" multiValued="false" default="MANUAL"/>
         <field name="charCount" type="int" indexed="true" stored="true" multiValued="false"/>
         <field name="latitude" type="double" indexed="true" stored="true" multiValued="false"/>
@@ -1199,11 +1204,9 @@
     <copyField source="scopeAndContent_generic" dest="text"/>
     <copyField source="title_generic" dest="text"/>
 
-    <!-- field for the QueryParser to use when an explicit fieldname is absent -->
-    <defaultSearchField>text</defaultSearchField>
-
-    <!-- SolrQueryParser configuration: defaultOperator="AND|OR" -->
-    <solrQueryParser defaultOperator="OR"/>
+    <!-- NB: defaultSearchField and solrQueryParser/defaultOperator are no longer
+         supported in the schema. The equivalent `df` and `q.op` defaults are now
+         set via initParams in solrconfig.xml. -->
 
     <!-- change ranking model to BM25/Okapi. It works better than the default Vector Space Model! -->
     <similarity class="solr.BM25SimilarityFactory"/>

@@ -110,16 +110,15 @@ public class SearchTest extends AbstractSolrTest {
 
     @Test
     public void testFacetOnIntValues() throws Exception {
-        // Test for SOLR-7495 bug which breaks faceting on non-multi-valued
-        // int fields. As a workaround the fields where made multi-valued.
-        // https://issues.apache.org/jira/browse/SOLR-7495
-        // Update: Fixed in Solr 6.4.0
+        // Grouped faceting (group.facet=true) does not support numeric Point
+        // fields, so priority, which is field-faceted, is indexed as a string.
         String json = runSearch("*", "fq", "priority:5", "facet.field", "priority", "rows", "0");
         //System.out.println(json);
         with(json)
                 .assertThat("$.grouped.itemId.matches", equalTo(221));
 
-        String json2 = runSearch("*", "fq", "promotionScore:1", "facet.field", "promotionScore", "rows", "0");
+        // Numeric Point fields can still be faceted using range queries.
+        String json2 = runSearch("*", "fq", "promotionScore:1", "facet.query", "promotionScore:[1 TO *]", "rows", "0");
         with(json2)
                 .assertThat("$.grouped.itemId.matches", equalTo(0));
     }
