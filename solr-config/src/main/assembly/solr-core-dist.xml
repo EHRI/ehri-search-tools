@@ -37,19 +37,17 @@
             <useStrictFiltering>true</useStrictFiltering>
             <includes>
                 <include>com.ibm.icu:icu4j</include>
-                <include>net.arnx:jsonic</include>
-                <include>xerces:xercesImpl</include>
                 <include>org.apache.solr:solr-analysis-extras</include>
-                <include>org.apache.lucene:lucene-analyzers-icu</include>
-                <include>org.apache.lucene:lucene-analyzers-morfologik</include>
-                <include>org.apache.lucene:lucene-analyzers-smartcn</include>
-                <include>org.apache.lucene:lucene-analyzers-stempel</include>
+                <include>org.apache.lucene:lucene-analysis-icu</include>
+                <include>org.apache.lucene:lucene-analysis-morfologik</include>
+                <include>org.apache.lucene:lucene-analysis-smartcn</include>
+                <include>org.apache.lucene:lucene-analysis-stempel</include>
                 <include>org.carrot2:morfologik-fsa</include>
                 <include>org.carrot2:morfologik-stemming</include>
                 <include>org.carrot2:morfologik-polish</include>
+                <include>ua.net.nlp:morfologik-ukrainian-search</include>
                 <include>org.apache.solr:solr-langid</include>
-                <include>org.slf4j:slf4j-log4j12</include>
-                <include>com.cybozu.labs:langdetect</include>
+                <include>io.github.azagniotov:language-detection</include>
             </includes>
         </dependencySet>
     </dependencySets>

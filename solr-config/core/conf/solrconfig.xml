@@ -17,7 +17,7 @@
 -->
 
 <config>
-    <luceneMatchVersion>LUCENE_6_1_0</luceneMatchVersion>
+    <luceneMatchVersion>10.4.0</luceneMatchVersion>
 
     <!-- Use the classic schema for the time being, since managed is the default since 2.6 -->
     <schemaFactory class="ClassicIndexSchemaFactory"/>
@@ -46,11 +46,20 @@
 
     <requestHandler name="/replication" class="solr.ReplicationHandler" startup="lazy"/>
 
-    <requestDispatcher handleSelect="true">
-        <requestParsers enableRemoteStreaming="true" multipartUploadLimitInKB="2048" formdataUploadLimitInKB="2048"/>
+    <requestDispatcher>
+        <requestParsers multipartUploadLimitInKB="2048" formdataUploadLimitInKB="2048"/>
     </requestDispatcher>
 
-    <requestHandler name="standard" class="solr.StandardRequestHandler" default="true">
+    <!-- Defaults previously set in schema.xml via defaultSearchField and
+         solrQueryParser/defaultOperator, which are no longer supported there. -->
+    <initParams path="/select,/spell,/suggest,/multilingsearch,/terms,/mlt,/tvrh">
+        <lst name="defaults">
+            <str name="df">text</str>
+            <str name="q.op">OR</str>
+        </lst>
+    </initParams>
+
+    <requestHandler name="/select" class="solr.SearchHandler">
         <!-- default values for query parameters -->
         <lst name="defaults">
             <str name="echoParams">explicit</str>
@@ -77,11 +86,6 @@
             <str name="echoParams">all</str>
         </lst>
     </requestHandler>
-
-    <!-- config for the admin interface -->
-    <admin>
-        <defaultQuery>solr</defaultQuery>
-    </admin>
 
     <!--
          A spellchecker built from a field of the main index. Copied from here:
@@ -154,7 +158,7 @@
     <searchComponent name="tvComponent" class="solr.TermVectorComponent"/>
 
     <!-- A request handler for the term vector component -->
-    <requestHandler name="tvrh" class="solr.SearchHandler" startup="lazy">
+    <requestHandler name="/tvrh" class="solr.SearchHandler" startup="lazy">
         <lst name="defaults">
             <str name="df">text</str>
             <bool name="tv">true</bool>
@@ -169,12 +173,12 @@
         <lst name="spellchecker">
             <str name="name">suggest</str>
             <str name="classname">org.apache.solr.spelling.suggest.Suggester</str>
-            <str name="lookupImpl">org.apache.solr.spelling.suggest.jaspell.JaspellLookup</str>
+            <!-- JaspellLookup, used previously, was removed in Lucene 9 -->
+            <str name="lookupImpl">org.apache.solr.spelling.suggest.tst.TSTLookupFactory</str>
             <!-- Alternatives to lookupImpl:
-                 org.apache.solr.spelling.suggest.fst.FSTLookup   [finite state automaton]
+                 org.apache.solr.spelling.suggest.fst.FSTLookupFactory  [finite state automaton]
                  org.apache.solr.spelling.suggest.fst.WFSTLookupFactory [weighted finite state automaton]
-                 org.apache.solr.spelling.suggest.jaspell.JaspellLookup [default, jaspell-based]
-                 org.apache.solr.spelling.suggest.tst.TSTLookup   [ternary trees]
+                 org.apache.solr.spelling.suggest.tst.TSTLookupFactory  [ternary trees]
             -->
             <str name="field">text</str>
             <!-- the indexed field to derive suggestions from -->
@@ -198,7 +202,7 @@
     </requestHandler>
 
     <!-- MoreLikeThis handler for generating result suggestions based on a selected document -->
-    <requestHandler name="mlt" class="solr.MoreLikeThisHandler">
+    <requestHandler name="/mlt" class="solr.MoreLikeThisHandler">
         <lst name="defaults">
             <str name="mlt.interestingTerms">list</str>
         </lst>
@@ -227,7 +231,7 @@
                 <bool name="langid.map">true</bool>
                 <!--       <bool name="langid.map.individual">true</bool>-->
 
-                <str name="langid.whitelist">en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro</str>
+                <str name="langid.allowlist">en,hu,ru,pl,de,nl,cs,it,fr,uk,hr,da,el,lv,no,ro</str>
                 <!--      <str name="langid.langField">language</str> -->
                 <str name="langid.fallback">generic</str>
             </lst>
@@ -241,7 +245,7 @@
          on them. This list is frequently longer than the default Lucene max boolean
          queries value of 1024, so triple it for good measure.  -->
     <query>
-        <maxBooleanClauses>3072</maxBooleanClauses>
+        <maxBooleanClauses>${solr.max.booleanClauses:3072}</maxBooleanClauses>
     </query>
 </config>
 
