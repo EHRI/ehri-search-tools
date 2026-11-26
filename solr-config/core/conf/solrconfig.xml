@@ -88,35 +88,22 @@
     </requestHandler>
 
     <!--
-         A spellchecker built from a field of the main index. Copied from here:
-         http://www.arunchinnachamy.com/apache-solr-spellchecker-configuration/
+         Spellcheck against the catch-all text field of the main index, so only
+         words that occur nowhere in it are treated as misspelt. This needs no
+         separate dictionary to be built on commit.
     -->
     <searchComponent name="spellcheck" class="solr.SpellCheckComponent">
-        <str name="queryAnalyzerFieldType">string</str>
-        <!-- Replace with Field Type of your schema -->
+        <str name="queryAnalyzerFieldType">text_general</str>
         <lst name="spellchecker">
             <str name="name">default</str>
-            <str name="field">title</str>
-            <!-- Replace with field name as per your scheme -->
-            <str name="spellcheckIndexDir">./spellchecker</str>
-            <str name="buildOnOptimize">true</str>
-            <str name="buildOnCommit">true</str>
-        </lst>
-        <!-- a spellchecker that uses a different distance measure -->
-        <lst name="spellchecker">
-            <str name="name">jarowinkler</str>
-            <str name="field">title</str>
-            <str name="distanceMeasure">org.apache.lucene.search.spell.JaroWinklerDistance</str>
-            <str name="spellcheckIndexDir">./spellchecker2</str>
-        </lst>
-
-        <!-- a file based spell checker -->
-        <lst name="spellchecker">
-            <str name="classname">solr.FileBasedSpellChecker</str>
-            <str name="name">file</str>
-            <str name="sourceLocation">spellings.txt</str>
-            <str name="characterEncoding">UTF-8</str>
-            <str name="spellcheckIndexDir">./spellchecker</str>
+            <str name="classname">solr.DirectSolrSpellChecker</str>
+            <str name="field">text</str>
+            <str name="distanceMeasure">internal</str>
+            <int name="maxEdits">2</int>
+            <int name="minPrefix">1</int>
+            <int name="minQueryLength">4</int>
+            <!-- ignore suggestions that are themselves rare, i.e. likely typos in the data -->
+            <float name="thresholdTokenFrequency">0.00002</float>
         </lst>
     </searchComponent>
 

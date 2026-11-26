@@ -49,7 +49,7 @@ public class SearchTest extends AbstractSolrTest {
         with(result)
                 .assertThat("$.grouped.itemId.matches", equalTo(0))
                 .assertThat("$.spellcheck.suggestions[0]", equalTo("warsav"))
-                .assertThat("$.spellcheck.suggestions[1].numFound", equalTo(3))
+                .assertThat("$.spellcheck.suggestions[1].numFound", equalTo(2))
                 .assertThat("$.spellcheck.suggestions[1].suggestion[0].word", equalTo("warsaw"));
 
     }
