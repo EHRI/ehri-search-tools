@@ -37,7 +37,6 @@ def deploy(ctx, clean=False):
 
     copy_solr_core(ctx)
 
-    # Set correct permissions on config files...
     ctx.run(f"chown -RH $USER:webadm {config_path}")
     ctx.run(f"chmod -R g+w {config_path}")
 
@@ -60,8 +59,8 @@ def status(ctx):
 def get_artifact_version(ctx):
     """Get the current artifact version from Maven"""
     return local(
-        "mvn org.apache.maven.plugins:maven-help-plugin:2.1.1:evaluate" +
-        " -Dexpression=project.version|grep -Ev '(^\[|Download\w+:)'").stdout.strip()
+        "mvn -q org.apache.maven.plugins:maven-help-plugin:3.5.1:evaluate" +
+        " -Dexpression=project.version -DforceStdout", hide=True).stdout.strip()
 
 
 @task
